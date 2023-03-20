@@ -23,7 +23,9 @@ public class Server {
      * Stops the Server
      * */
     public static void stop() {
+        terminal.print("Server wird geschlossen");
         System.exit(0);
+        terminal.print("Server geschlossen");
     }
 
 }
