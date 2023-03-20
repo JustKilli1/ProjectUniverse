@@ -9,6 +9,7 @@ import net.projectuniverse.general.logging.LogCategory;
 import net.projectuniverse.general.logging.LogLevel;
 import net.projectuniverse.general.logging.loggergroups.LoggerGroupConsoleTerminalFile;
 import net.projectuniverse.general.server.Server;
+import net.projectuniverse.general.terminal.commands.TerminalCommand;
 import net.projectuniverse.general.terminal.functionality.TerminusCompleter;
 import net.projectuniverse.general.terminal.functionality.TerminusHighlighter;
 import org.jline.reader.*;
@@ -24,7 +25,11 @@ import java.util.Set;
 public class ServerTerminal implements Runnable {
 
     public static final ILogger TERMINAL_LOGGER = new LoggerGroupConsoleTerminalFile("Terminal-Logger", LogCategory.SYSTEM, "terminal");
-    public static final Set<String> SHELL_COMMANDS = Set.of("stop", "help", "test");
+    public static final Set<TerminalCommand> SHELL_COMMANDS = Set.of(
+            new TerminalCommand("stop", "Stops the Server"),
+            new TerminalCommand("help", "Shows a list of all Terminal Commands"),
+            new TerminalCommand("test", "A Test command")
+    );
     private static final CommandManager COMMAND_MANAGER = MinecraftServer.getCommandManager();
     private static final String name = "Project-Universe";
     private static final String prefix = "[" + name + "] ";
@@ -101,20 +106,29 @@ public class ServerTerminal implements Runnable {
 
     public void executeCommand(String command) {
         String[] words = command.split(" ");
-        if (SHELL_COMMANDS.contains(words[0]))
-            switch (words[0]) {
+        if(SHELL_COMMANDS.stream().anyMatch(cmd -> words[0].equals(cmd.name()))) {
+            switch(words[0]) {
                 case "stop" -> {
                     stop();
                     Server.stop();
                 }
                 case "help" -> {
-                    TERMINAL_LOGGER.log(LogLevel.INFO, "Terminal Commands");
-                    SHELL_COMMANDS.forEach(cmd -> TERMINAL_LOGGER.log(LogLevel.INFO, "- " + cmd));
+                    print("Terminal Commands", TerminalColor.RESET);
+                    SHELL_COMMANDS.forEach(cmd -> print(" -  " + cmd + " --> " + cmd.description(), TerminalColor.RESET));
                 }
-                case "test" -> print("Test Message2");
+                case "test" -> {
+                    print("Test Message3");
+                    TERMINAL_LOGGER.log(LogLevel.INFO, "Info Message");
+                    TERMINAL_LOGGER.log(LogLevel.WARN, "Warn Message");
+                    TERMINAL_LOGGER.log(LogLevel.ERROR, "Error Message");
+                    TERMINAL_LOGGER.log(LogLevel.DEBUG, "Debug Message");
+                    TERMINAL_LOGGER.log(LogLevel.INFO, "Test Message2");
+                    TERMINAL_LOGGER.log(LogLevel.INFO, "Test Message2");
+                    print("Test Message3");
+                }
 
             }
-        else {
+        } else {
             CommandResult result = COMMAND_MANAGER.execute(terminusSender, command);
             switch (result.getType()) {
                 case UNKNOWN -> print("Unknown command: %s\n".formatted(result.getInput()));

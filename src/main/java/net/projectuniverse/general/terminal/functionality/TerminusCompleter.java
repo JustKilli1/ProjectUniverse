@@ -14,7 +14,7 @@ import java.util.Set;
 
 public class TerminusCompleter implements Completer {
     private static final Set<Candidate> SHELL_COMMANDS = Set.of(ServerTerminal.SHELL_COMMANDS.stream()
-            .map(Candidate::new).toArray(Candidate[]::new));
+            .map(cmd -> new Candidate(cmd.name())).toArray(Candidate[]::new));
 
     @Override
     public void complete(LineReader reader, ParsedLine line, List<Candidate> candidates) {
