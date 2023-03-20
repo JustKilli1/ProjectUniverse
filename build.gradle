@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'net.projectuniverse'
-version '0.2.0-dev'
+version '0.2.1-dev'
 
 repositories {
     mavenCentral()
@@ -15,6 +15,7 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
     implementation 'com.github.Minestom:Minestom:067227421f'
+    implementation group: 'org.jline', name: 'jline', version: '3.23.0'
 }
 
 test {

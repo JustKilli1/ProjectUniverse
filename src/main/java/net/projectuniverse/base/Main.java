@@ -8,6 +8,7 @@ import net.minestom.server.event.player.PlayerLoginEvent;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.instance.block.Block;
+import net.projectuniverse.general.server.Server;
 
 public class Main {
     public static void main(String[] args) {
@@ -28,6 +29,7 @@ public class Main {
             player.setRespawnPoint(new Pos(0, 42, 0));
         });
         // Start the server on port 25565
-        minecraftServer.start("127.0.0.1", 25565);
+        /*minecraftServer.start("127.0.0.1", 25565);*/
+        Server.start();
     }
 }
