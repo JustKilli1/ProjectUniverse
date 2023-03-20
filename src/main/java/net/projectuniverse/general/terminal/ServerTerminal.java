@@ -4,6 +4,9 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.command.CommandManager;
 import net.minestom.server.command.builder.CommandData;
 import net.minestom.server.command.builder.CommandResult;
+import net.projectuniverse.general.logging.ILogger;
+import net.projectuniverse.general.logging.LogCategory;
+import net.projectuniverse.general.logging.loggergroups.LoggerGroupConsoleTerminalFile;
 import net.projectuniverse.general.server.Server;
 import net.projectuniverse.general.terminal.functionality.TerminusCompleter;
 import net.projectuniverse.general.terminal.functionality.TerminusHighlighter;
@@ -14,7 +17,6 @@ import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -129,14 +131,16 @@ public class ServerTerminal implements Runnable {
         }
     }
 
-    public void print(String msg, List<TerminalColor> colors) {
+    public static void print(String msg, List<TerminalColor> colors) {
+        if(lineReader == null) return;
         lineReader.printAbove(prefix + TerminalColor.apply(msg, colors));
     }
-    public void print(String msg, TerminalColor textColor) {
+    public static void print(String msg, TerminalColor textColor) {
         print(msg, List.of(textColor));
     }
 
-    public void print(String msg) {
+    public static void print(String msg) {
+        if(lineReader == null) return;
         lineReader.printAbove(prefix + msg);
     }
 
