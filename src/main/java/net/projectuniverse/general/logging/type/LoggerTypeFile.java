@@ -1,10 +1,13 @@
 package net.projectuniverse.general.logging.type;
 
 
+import net.projectuniverse.general.logging.ILogger;
 import net.projectuniverse.general.logging.LogCategory;
 import net.projectuniverse.general.logging.LogLevel;
 import net.projectuniverse.general.logging.LoggingUtils;
 import net.projectuniverse.general.logging.files.FileHandler;
+import net.projectuniverse.general.terminal.ServerTerminal;
+import net.projectuniverse.general.terminal.TerminalColor;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -34,8 +37,9 @@ public class LoggerTypeFile {
      * @param message The Message that gets written to the File
      * @see FileHandler
      * */
-    public void logToFile(List<String> message) {
+    public void logToFile(LogLevel level, List<String> message) {
         try {
+            if(!level.equals(LogLevel.DEBUG)) if(!ILogger.debugMode) return;
             fileHandler.write(message, fileHandler.fileExists());
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -46,8 +50,8 @@ public class LoggerTypeFile {
      * Writes A LogMessage to a File
      * @param message The Message that gets written to the File
      * */
-    public void logToFile(String message) {
-        logToFile(Arrays.asList(message));
+    public void logToFile(LogLevel level, String message) {
+        logToFile(level, Arrays.asList(message));
     }
 
     /**

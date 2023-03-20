@@ -21,7 +21,7 @@ public class BaseFileLogger extends LoggerTypeFile implements ILogger {
 
     @Override
     public void log(LogLevel logLevel, List<String> message, Exception ex) {
-        logToFile(formatMessage(logLevel, name, message, ex));
+        logToFile(logLevel, formatMessage(logLevel, name, message, ex));
     }
 
     @Override

@@ -4,6 +4,8 @@ import java.util.List;
 
 public interface ILogger {
 
+    boolean debugMode = true;
+
     /**
      * Create a Log with the Given Params
      * @param logLevel The Level of the Log

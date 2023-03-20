@@ -2,8 +2,11 @@ package net.projectuniverse.general.logging.type;
 
 
 import net.minestom.server.MinecraftServer;
+import net.projectuniverse.general.logging.ILogger;
 import net.projectuniverse.general.logging.LogLevel;
 import net.projectuniverse.general.logging.LoggingUtils;
+import net.projectuniverse.general.terminal.ServerTerminal;
+import net.projectuniverse.general.terminal.TerminalColor;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,10 +20,12 @@ public class LoggerTypeConsole {
      * */
     public void logToConsole(LogLevel level, List<String> message) {
         switch(level) {
-            case INFO -> message.forEach(MinecraftServer.LOGGER::info);
-            case WARN -> message.forEach(MinecraftServer.LOGGER::warn);
-            case ERROR -> message.forEach(MinecraftServer.LOGGER::error);
-            case DEBUG -> message.forEach(MinecraftServer.LOGGER::debug);
+            case INFO -> message.forEach(ServerTerminal::print);
+            case WARN -> message.forEach(msg -> ServerTerminal.print(msg, TerminalColor.YELLOW));
+            case ERROR -> message.forEach(msg -> ServerTerminal.print(msg, TerminalColor.RED));
+            case DEBUG -> {
+                if(ILogger.debugMode) message.forEach(msg -> ServerTerminal.print(msg, TerminalColor.BLUE));
+            }
         }
     }
 
