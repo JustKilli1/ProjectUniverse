@@ -14,15 +14,17 @@ import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 public class ServerTerminal implements Runnable {
 
     public static final Set<String> SHELL_COMMANDS = Set.of("stop", "help", "test");
     private static final CommandManager COMMAND_MANAGER = MinecraftServer.getCommandManager();
-    private final TerminusSender terminusSender;
     private static final String name = "Project-Universe";
     private static final String prefix = "[" + name + "] ";
+    private final TerminusSender terminusSender;
     private static volatile LineReader lineReader;
     private static volatile Terminal terminal;
     private static volatile boolean running = false;
@@ -103,9 +105,9 @@ public class ServerTerminal implements Runnable {
                 }
                 case "help" -> {
                     print("Test Message");
-                    print(TerminalColor.GREEN,"Test Message");
+                    print("Test Message", TerminalColor.GREEN);
                     print("Test Message");
-                    print(TerminalColor.BLUE_BACKGROUND, TerminalColor.RED, "Test Message");
+                    print("Test Message", List.of(TerminalColor.BLUE_BACKGROUND, TerminalColor.RED));
                     print("Test Message");
                 }
                 case "test" -> print("Test Message2");
@@ -127,15 +129,15 @@ public class ServerTerminal implements Runnable {
         }
     }
 
-    public void print(TerminalColor backgroundColor, TerminalColor textColor, String msg) {
-        lineReader.printAbove(prefix + backgroundColor + textColor + msg + TerminalColor.RESET);
+    public void print(String msg, List<TerminalColor> colors) {
+        lineReader.printAbove(prefix + TerminalColor.apply(msg, colors));
     }
-    public void print(TerminalColor textColor, String msg) {
-        print(TerminalColor.RESET, textColor, msg);
+    public void print(String msg, TerminalColor textColor) {
+        print(msg, List.of(textColor));
     }
 
     public void print(String msg) {
-        print(TerminalColor.RESET, TerminalColor.RESET, msg);
+        lineReader.printAbove(prefix + msg);
     }
 
 }

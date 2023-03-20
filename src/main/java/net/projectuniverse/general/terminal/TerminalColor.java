@@ -1,5 +1,7 @@
 package net.projectuniverse.general.terminal;
 
+import java.util.List;
+
 public enum TerminalColor {
 
     RESET("\u001B[0m"),
@@ -29,12 +31,21 @@ public enum TerminalColor {
         this.ansiCode = ansiCode;
     }
 
-    @Override
-    public String toString() {
-        return ansiCode;
+    /**
+     * Adds the given Colors {@code colors} to the given String {@code target}. Resets color at the end of the String
+     * @param target The String where the Colors get added
+     * @param colors The Colors that get added to the String.
+     * @return Target String with applied Colors
+     * */
+    public static String apply(String target, List<TerminalColor> colors) {
+        StringBuilder builder = new StringBuilder();
+        colors.forEach(builder::append);
+        String colorStr = builder.toString();
+        return colorStr + target + RESET;
     }
 
-    public String ansiCode() {
+    @Override
+    public String toString() {
         return ansiCode;
     }
 }
