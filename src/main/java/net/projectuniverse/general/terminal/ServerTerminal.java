@@ -6,6 +6,7 @@ import net.minestom.server.command.builder.CommandData;
 import net.minestom.server.command.builder.CommandResult;
 import net.projectuniverse.general.logging.ILogger;
 import net.projectuniverse.general.logging.LogCategory;
+import net.projectuniverse.general.logging.LogLevel;
 import net.projectuniverse.general.logging.loggergroups.LoggerGroupConsoleTerminalFile;
 import net.projectuniverse.general.server.Server;
 import net.projectuniverse.general.terminal.functionality.TerminusCompleter;
@@ -22,6 +23,7 @@ import java.util.Set;
 
 public class ServerTerminal implements Runnable {
 
+    public static final ILogger TERMINAL_LOGGER = new LoggerGroupConsoleTerminalFile("Terminal-Logger", LogCategory.SYSTEM, "terminal");
     public static final Set<String> SHELL_COMMANDS = Set.of("stop", "help", "test");
     private static final CommandManager COMMAND_MANAGER = MinecraftServer.getCommandManager();
     private static final String name = "Project-Universe";
@@ -106,11 +108,8 @@ public class ServerTerminal implements Runnable {
                     Server.stop();
                 }
                 case "help" -> {
-                    print("Test Message");
-                    print("Test Message", TerminalColor.GREEN);
-                    print("Test Message");
-                    print("Test Message", List.of(TerminalColor.BLUE_BACKGROUND, TerminalColor.RED));
-                    print("Test Message");
+                    TERMINAL_LOGGER.log(LogLevel.INFO, "Terminal Commands");
+                    SHELL_COMMANDS.forEach(cmd -> TERMINAL_LOGGER.log(LogLevel.INFO, "- " + cmd));
                 }
                 case "test" -> print("Test Message2");
 
