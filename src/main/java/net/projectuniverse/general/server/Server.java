@@ -21,6 +21,7 @@ public class Server {
      * Stops the Server
      * */
     public static void stop() {
+        System.exit(0);
     }
 
 }
