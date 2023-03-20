@@ -18,7 +18,7 @@ import java.util.Set;
 
 public class ServerTerminal implements Runnable {
 
-    public static final Set<String> SHELL_COMMANDS = Set.of("exit", "stop");
+    public static final Set<String> SHELL_COMMANDS = Set.of("stop", "help", "test");
     private static final CommandManager COMMAND_MANAGER = MinecraftServer.getCommandManager();
     private final TerminusSender terminusSender;
     private static final String name = "Project-Universe";
@@ -97,11 +97,19 @@ public class ServerTerminal implements Runnable {
         String[] words = command.split(" ");
         if (SHELL_COMMANDS.contains(words[0]))
             switch (words[0]) {
-                case "exit" -> stop();
                 case "stop" -> {
-                    Server.stop();
                     stop();
+                    Server.stop();
                 }
+                case "help" -> {
+                    print("Test Message");
+                    print(TerminalColor.GREEN,"Test Message");
+                    print("Test Message");
+                    print(TerminalColor.BLUE_BACKGROUND, TerminalColor.RED, "Test Message");
+                    print("Test Message");
+                }
+                case "test" -> print("Test Message2");
+
             }
         else {
             CommandResult result = COMMAND_MANAGER.execute(terminusSender, command);
@@ -119,8 +127,15 @@ public class ServerTerminal implements Runnable {
         }
     }
 
-    public void print(String line) {
-        lineReader.printAbove(prefix + line);
+    public void print(TerminalColor backgroundColor, TerminalColor textColor, String msg) {
+        lineReader.printAbove(prefix + backgroundColor + textColor + msg + TerminalColor.RESET);
+    }
+    public void print(TerminalColor textColor, String msg) {
+        print(TerminalColor.RESET, textColor, msg);
+    }
+
+    public void print(String msg) {
+        print(TerminalColor.RESET, TerminalColor.RESET, msg);
     }
 
 }
