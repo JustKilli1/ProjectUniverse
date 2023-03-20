@@ -1,4 +1,4 @@
-package net.projectuniverse;
+package net.projectuniverse.base;
 
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;

@@ -23,7 +23,7 @@ test {
 
 jar {
     manifest {
-        attributes 'Main-Class': 'net.projectuniverse.Main',
+        attributes 'Main-Class': 'net.projectuniverse.base.Main',
                 "Multi-Release": true
     }
 }
