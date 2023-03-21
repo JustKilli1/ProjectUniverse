@@ -7,6 +7,7 @@ import net.minestom.server.command.builder.CommandResult;
 import net.projectuniverse.general.config.ConfigManager;
 import net.projectuniverse.general.config.ConfigParam;
 import net.projectuniverse.general.config.ConfigValue;
+import net.projectuniverse.general.config.ConfigValueBuilder;
 import net.projectuniverse.general.logging.ILogger;
 import net.projectuniverse.general.logging.LogCategory;
 import net.projectuniverse.general.logging.LogLevel;
@@ -130,15 +131,16 @@ public class ServerTerminal implements Runnable {
                     configManager.addDefault(new ConfigValue("that.is.a.test.path4", "That is a test value4"));
                     configManager.addDefault(new ConfigValue("that.is.a.test.lul", "That is a #param1# test lul", new ConfigParam("param1", "Hello")));
                     configManager.addDefault(new ConfigValue("that.is.a.test.lul2", "That is a #param1# test lul", new ConfigParam("param1", "Hello2")));
-                    configManager.addDefault(new ConfigValue("that.is.a.test.lul3", "That is a #param1# test #param2# lul",
-                                            List.of(new ConfigParam("param1", "Hello2"),
-                                                    new ConfigParam("param2", "HelloP2"))));
-                    configManager.addDefault(new ConfigValue("that.is.a.test.lul4", "That #param4# is #param3# a #param1# test #param2# lul",
-                            List.of(new ConfigParam("param1", "Hello1"),
-                                    new ConfigParam("param2", "HelloP2"),
-                                    new ConfigParam("param3", "HelloP3"),
-                                    new ConfigParam("param4", "HelloP4")
-                            )));
+                    configManager.addDefault(new ConfigValueBuilder("that.is.a.test.lul3", "That is a #param1# test #param2# lul")
+                            .addParameter("param1", "Hello2")
+                            .addParameter("param2", "HelloP2")
+                            .build());
+                    configManager.addDefault(new ConfigValueBuilder("that.is.a.test.lul4", "That #param4# is #param3# a #param1# test #param2# lul")
+                                    .addParameter("param1", "Hello1")
+                                    .addParameter("param2", "HelloP2")
+                                    .addParameter("param3", "HelloP3")
+                                    .addParameter("param4", "HelloP4")
+                                    .build());
                 }
 
             }

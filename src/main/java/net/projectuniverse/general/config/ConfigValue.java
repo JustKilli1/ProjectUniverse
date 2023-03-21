@@ -14,12 +14,9 @@ public class ConfigValue {
         setRawValue(rawValue);
     }
 
+    public ConfigValue(String path, String rawValue, ConfigParam param) { this(path, rawValue, List.of(param)); }
     public ConfigValue(String path, String rawValue) {
         this(path, rawValue, new ArrayList<>());
-    }
-
-    public ConfigValue(String path, String rawValue, ConfigParam param) {
-        this(path, rawValue, List.of(param));
     }
 
     private void setValue() {
@@ -46,5 +43,9 @@ public class ConfigValue {
 
     public List<ConfigParam> getParams() {
         return params;
+    }
+    public void addParam(ConfigParam param) {
+        params.add(param);
+        setValue();
     }
 }
