@@ -4,16 +4,20 @@ import net.projectuniverse.general.logging.ILogger;
 import net.projectuniverse.general.logging.LogCategory;
 import net.projectuniverse.general.logging.LogLevel;
 import net.projectuniverse.general.logging.loggergroups.LoggerGroupConsoleTerminalFile;
+import net.projectuniverse.general.logging.loggers.BaseConsoleLogger;
 import org.simpleyaml.configuration.file.YamlFile;
+
+import java.io.IOException;
+import java.util.List;
 
 public class ConfigManager {
 
-    private static final ILogger configLogger = new LoggerGroupConsoleTerminalFile("Config", LogCategory.SYSTEM, "config");
+    private static final ILogger configLogger = new BaseConsoleLogger("Config");
     private static final String DIR_PATH = "configs/";
     private final YamlFile file;
 
     public ConfigManager(String fileName) {
-        file = new YamlFile(DIR_PATH + fileName);
+        file = new YamlFile(DIR_PATH + fileName + ".yml");
         file.options().copyDefaults(true);
         createFile();
 
@@ -30,6 +34,26 @@ public class ConfigManager {
         } catch (final Exception ex) {
             configLogger.log(LogLevel.ERROR, "Could not create Config File", ex);
         }
+    }
+
+    public void save() {
+        try {
+            file.save();
+        } catch (final IOException ex) {
+            configLogger.log(LogLevel.ERROR, "Could not save " + file.getName() + " file.", ex);
+        }
+    }
+
+    public void addDefault(List<ConfigValue> defaultValues) {
+        if(file == null) {
+            configLogger.log(LogLevel.ERROR, "Could not add Default Config Value cause this.file is null", new NullPointerException());
+            return;
+        }
+        defaultValues.forEach(value -> file.addDefault(value.getPath(), value.getRawValue()));
+        save();
+    }
+    public void addDefault(ConfigValue defaultValue) {
+        addDefault(List.of(defaultValue));
     }
 
 }

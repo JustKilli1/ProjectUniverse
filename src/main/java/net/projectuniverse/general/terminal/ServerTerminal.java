@@ -5,10 +5,13 @@ import net.minestom.server.command.CommandManager;
 import net.minestom.server.command.builder.CommandData;
 import net.minestom.server.command.builder.CommandResult;
 import net.projectuniverse.general.config.ConfigManager;
+import net.projectuniverse.general.config.ConfigParam;
+import net.projectuniverse.general.config.ConfigValue;
 import net.projectuniverse.general.logging.ILogger;
 import net.projectuniverse.general.logging.LogCategory;
 import net.projectuniverse.general.logging.LogLevel;
 import net.projectuniverse.general.logging.loggergroups.LoggerGroupConsoleTerminalFile;
+import net.projectuniverse.general.logging.loggers.BaseTerminalFileLogger;
 import net.projectuniverse.general.server.Server;
 import net.projectuniverse.general.terminal.commands.TerminalCommand;
 import net.projectuniverse.general.terminal.functionality.TerminusCompleter;
@@ -25,7 +28,7 @@ import java.util.Set;
 
 public class ServerTerminal implements Runnable {
 
-    public static final ILogger TERMINAL_LOGGER = new LoggerGroupConsoleTerminalFile("Terminal-Logger", LogCategory.SYSTEM, "terminal");
+    public static final ILogger logger = new BaseTerminalFileLogger();
     public static final Set<TerminalCommand> SHELL_COMMANDS = Set.of(
             new TerminalCommand("stop", "Stops the Server"),
             new TerminalCommand("help", "Shows a list of all Terminal Commands"),
@@ -119,14 +122,12 @@ public class ServerTerminal implements Runnable {
                 }
                 case "test" -> {
                     print("Test Message3");
-                    TERMINAL_LOGGER.log(LogLevel.INFO, "Info Message");
-                    TERMINAL_LOGGER.log(LogLevel.WARN, "Warn Message");
-                    TERMINAL_LOGGER.log(LogLevel.ERROR, "Error Message");
-                    TERMINAL_LOGGER.log(LogLevel.DEBUG, "Debug Message");
-                    TERMINAL_LOGGER.log(LogLevel.INFO, "Test Message2");
-                    TERMINAL_LOGGER.log(LogLevel.INFO, "Test Message2");
                     print("Test Message3");
                     ConfigManager configManager = new ConfigManager("test");
+                    configManager.addDefault(new ConfigValue("that.is.a.test.path", "That is a test value"));
+                    configManager.addDefault(new ConfigValue("that.is.a.test.path2", "That is a test value2"));
+                    configManager.addDefault(new ConfigValue("that.is.a.test.path3", "That is a test value3"));
+                    configManager.addDefault(new ConfigValue("that.is.a.test.path4", "That is a test value4"));
                 }
 
             }
@@ -148,7 +149,9 @@ public class ServerTerminal implements Runnable {
 
     public static void print(String msg, List<TerminalColor> colors) {
         if(lineReader == null) return;
-        lineReader.printAbove(prefix + TerminalColor.apply(msg, colors));
+        String message = prefix + TerminalColor.apply(msg, colors);
+        lineReader.printAbove(message);
+        logger.log(null, message);
     }
     public static void print(String msg, TerminalColor textColor) {
         print(msg, List.of(textColor));
@@ -156,7 +159,9 @@ public class ServerTerminal implements Runnable {
 
     public static void print(String msg) {
         if(lineReader == null) return;
+        String message = prefix + msg;
         lineReader.printAbove(prefix + msg);
+        logger.log(null, message);
     }
 
 }
