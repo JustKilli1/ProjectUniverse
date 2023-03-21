@@ -4,6 +4,7 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.command.CommandManager;
 import net.minestom.server.command.builder.CommandData;
 import net.minestom.server.command.builder.CommandResult;
+import net.projectuniverse.general.config.ConfigManager;
 import net.projectuniverse.general.logging.ILogger;
 import net.projectuniverse.general.logging.LogCategory;
 import net.projectuniverse.general.logging.LogLevel;
@@ -125,6 +126,7 @@ public class ServerTerminal implements Runnable {
                     TERMINAL_LOGGER.log(LogLevel.INFO, "Test Message2");
                     TERMINAL_LOGGER.log(LogLevel.INFO, "Test Message2");
                     print("Test Message3");
+                    ConfigManager configManager = new ConfigManager("test");
                 }
 
             }

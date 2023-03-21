@@ -38,7 +38,7 @@ public class Server {
             player.setRespawnPoint(new Pos(0, 42, 0));
         });
 
-        server.start("5.75.144.98", 25565);
+        server.start("127.0.0.1", 25565);
     }
 
     /**
