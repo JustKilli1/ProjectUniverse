@@ -128,6 +128,17 @@ public class ServerTerminal implements Runnable {
                     configManager.addDefault(new ConfigValue("that.is.a.test.path2", "That is a test value2"));
                     configManager.addDefault(new ConfigValue("that.is.a.test.path3", "That is a test value3"));
                     configManager.addDefault(new ConfigValue("that.is.a.test.path4", "That is a test value4"));
+                    configManager.addDefault(new ConfigValue("that.is.a.test.lul", "That is a #param1# test lul", new ConfigParam("param1", "Hello")));
+                    configManager.addDefault(new ConfigValue("that.is.a.test.lul2", "That is a #param1# test lul", new ConfigParam("param1", "Hello2")));
+                    configManager.addDefault(new ConfigValue("that.is.a.test.lul3", "That is a #param1# test #param2# lul",
+                                            List.of(new ConfigParam("param1", "Hello2"),
+                                                    new ConfigParam("param2", "HelloP2"))));
+                    configManager.addDefault(new ConfigValue("that.is.a.test.lul4", "That #param4# is #param3# a #param1# test #param2# lul",
+                            List.of(new ConfigParam("param1", "Hello1"),
+                                    new ConfigParam("param2", "HelloP2"),
+                                    new ConfigParam("param3", "HelloP3"),
+                                    new ConfigParam("param4", "HelloP4")
+                            )));
                 }
 
             }
