@@ -8,22 +8,30 @@ import net.minestom.server.event.player.PlayerLoginEvent;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.instance.block.Block;
+import net.projectuniverse.base.Utils;
 import net.projectuniverse.general.config.ConfigManager;
+import net.projectuniverse.general.config.ConfigValue;
 import net.projectuniverse.general.logging.ILogger;
 import net.projectuniverse.general.logging.LogLevel;
 import net.projectuniverse.general.logging.loggers.BaseConsoleLogger;
 import net.projectuniverse.general.terminal.ServerTerminal;
 
+import java.util.Optional;
+
 public class Server {
 
     private static final ILogger serverLogger = new BaseConsoleLogger("Server");
+    private static ConfigManager serverConfig;
     private static MinecraftServer server;
     private static ServerTerminal terminal;
+    private static String ip;
+    private static int port;
 
     /**
      * Starts the Server
      * */
     public static void start() {
+
         server = MinecraftServer.init();
         MinecraftServer.setTerminalEnabled(false);
         terminal = new ServerTerminal();
@@ -34,7 +42,36 @@ public class Server {
         } catch(InterruptedException e) {
             throw new RuntimeException(e);
         }
+
         serverLogger.log(LogLevel.INFO, "Starting Project Universe...");
+        loadServerConfig();
+        createSpawnInstance();
+        serverLogger.log(LogLevel.INFO, "Starting Minestom Service...");
+        server.start(ip, port);
+        try {
+            //TODO IS SHIT
+            Thread.sleep(1000);
+        } catch(InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        serverLogger.log(LogLevel.INFO, "Minestom Service started successfully");
+        serverLogger.log(LogLevel.INFO, "Bound IP-Adresse: " + ip);
+        serverLogger.log(LogLevel.INFO, "Bound Port: " + port);
+        server.ge
+        serverLogger.log(LogLevel.INFO, "Project Universe startup complete.");
+        serverLogger.log(LogLevel.INFO, "Hello c:");
+
+    }
+
+    /**
+     * Stops the Server
+     * */
+    public static void stop() {
+        serverLogger.log(LogLevel.INFO, "Server closed");
+        System.exit(0);
+    }
+
+    private static void createSpawnInstance() {
         serverLogger.log(LogLevel.INFO, "Creating spawn instance...");
         InstanceManager instanceManager = MinecraftServer.getInstanceManager();
         // Create the instance
@@ -51,27 +88,19 @@ public class Server {
             serverLogger.log(LogLevel.INFO, "Player " + player.getName() + " connected.");
         });
         serverLogger.log(LogLevel.INFO, "Spawn instance created.");
-        serverLogger.log(LogLevel.INFO, "Starting Minestom Service...");
+    }
+    private static void loadServerConfig() {
+        serverLogger.log(LogLevel.INFO, "Loading Server Configuration...");
+        serverConfig = new ConfigManager("server");
 
-        server.start("127.0.0.1", 25565);
-        try {
-            //TODO IS SHIT
-            Thread.sleep(1000);
-        } catch(InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        serverLogger.log(LogLevel.INFO, "Minestom Service started successfully");
-        serverLogger.log(LogLevel.INFO, "Project Universe startup complete.");
-        serverLogger.log(LogLevel.INFO, "Hello c:");
-
+        serverConfig.addDefault(new ConfigValue("server.base.ip-adresse", "127.0.0.1"));
+        serverConfig.addDefault(new ConfigValue("server.base.port", "25565"));
+        serverConfig.addDefault(new ConfigValue("server.base.use-mojang-auth", "true"));
+        ip = serverConfig.getValue("server.base.ip-adresse");
+        Optional<Integer> portOpt = Utils.convertToInt(serverConfig.getValue("server.base.port"));
+        port = portOpt.isEmpty() ? 25565 : portOpt.get();
+        serverLogger.log(LogLevel.INFO, "Server Configuration loaded successfully.");
     }
 
-    /**
-     * Stops the Server
-     * */
-    public static void stop() {
-        serverLogger.log(LogLevel.INFO, "Server closed");
-        System.exit(0);
-    }
 
 }
