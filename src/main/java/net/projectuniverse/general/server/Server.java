@@ -57,7 +57,6 @@ public class Server {
         serverLogger.log(LogLevel.INFO, "Minestom Service started successfully");
         serverLogger.log(LogLevel.INFO, "Bound IP-Adresse: " + ip);
         serverLogger.log(LogLevel.INFO, "Bound Port: " + port);
-        server.ge
         serverLogger.log(LogLevel.INFO, "Project Universe startup complete.");
         serverLogger.log(LogLevel.INFO, "Hello c:");
 
