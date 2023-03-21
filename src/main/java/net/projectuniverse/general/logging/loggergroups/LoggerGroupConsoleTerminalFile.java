@@ -18,7 +18,7 @@ public class LoggerGroupConsoleTerminalFile implements ILoggerGroup {
     public LoggerGroupConsoleTerminalFile(String loggerName, LogCategory logCategory, String logFileName) {
         name = loggerName;
         loggers = Arrays.asList(
-                new BaseTerminalFileLogger(logCategory, logFileName, name),
+                new BaseTerminalFileLogger(),
                 new BaseConsoleLogger(name)
         );
     }

@@ -11,16 +11,15 @@ import java.util.List;
 
 public class BaseTerminalFileLogger extends LoggerTypeTerminalFile implements ILogger {
 
-    private String name;
+    private static final String logFileName = "terminal.txt";
 
-    public BaseTerminalFileLogger(LogCategory logCategory, String logFileName, String name) {
-        super(logCategory, logFileName + ".txt");
-        this.name = name;
+    public BaseTerminalFileLogger() {
+        super(LogCategory.SYSTEM, logFileName);
     }
 
     @Override
     public void log(LogLevel logLevel, List<String> message, Exception ex) {
-        logToFile(logLevel, formatMessage(logLevel, name, message, ex));
+        logToFile(LogLevel.INFO, formatMessage(null, null, message, null));
     }
 
     @Override
@@ -45,6 +44,6 @@ public class BaseTerminalFileLogger extends LoggerTypeTerminalFile implements IL
 
     @Override
     public String getName() {
-        return name;
+        return null;
     }
 }
