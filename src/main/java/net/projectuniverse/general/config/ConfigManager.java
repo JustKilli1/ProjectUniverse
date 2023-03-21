@@ -1,9 +1,7 @@
 package net.projectuniverse.general.config;
 
 import net.projectuniverse.general.logging.ILogger;
-import net.projectuniverse.general.logging.LogCategory;
 import net.projectuniverse.general.logging.LogLevel;
-import net.projectuniverse.general.logging.loggergroups.LoggerGroupConsoleTerminalFile;
 import net.projectuniverse.general.logging.loggers.BaseConsoleLogger;
 import org.simpleyaml.configuration.file.YamlFile;
 
@@ -54,6 +52,10 @@ public class ConfigManager {
     }
     public void addDefault(ConfigValue defaultValue) {
         addDefault(List.of(defaultValue));
+    }
+
+    public String getValue(String path) {
+        return (String) file.get(path);
     }
 
 }

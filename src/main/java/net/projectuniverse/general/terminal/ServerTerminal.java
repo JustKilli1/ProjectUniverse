@@ -9,9 +9,6 @@ import net.projectuniverse.general.config.ConfigParam;
 import net.projectuniverse.general.config.ConfigValue;
 import net.projectuniverse.general.config.ConfigValueBuilder;
 import net.projectuniverse.general.logging.ILogger;
-import net.projectuniverse.general.logging.LogCategory;
-import net.projectuniverse.general.logging.LogLevel;
-import net.projectuniverse.general.logging.loggergroups.LoggerGroupConsoleTerminalFile;
 import net.projectuniverse.general.logging.loggers.BaseTerminalFileLogger;
 import net.projectuniverse.general.server.Server;
 import net.projectuniverse.general.terminal.commands.TerminalCommand;
@@ -129,6 +126,7 @@ public class ServerTerminal implements Runnable {
                     configManager.addDefault(new ConfigValue("that.is.a.test.path2", "That is a test value2"));
                     configManager.addDefault(new ConfigValue("that.is.a.test.path3", "That is a test value3"));
                     configManager.addDefault(new ConfigValue("that.is.a.test.path4", "That is a test value4"));
+                    configManager.addDefault(new ConfigValue("that.is.a.test.path5", "1"));
                     configManager.addDefault(new ConfigValue("that.is.a.test.lul", "That is a #param1# test lul", new ConfigParam("param1", "Hello")));
                     configManager.addDefault(new ConfigValue("that.is.a.test.lul2", "That is a #param1# test lul", new ConfigParam("param1", "Hello2")));
                     configManager.addDefault(new ConfigValueBuilder("that.is.a.test.lul3", "That is a #param1# test #param2# lul")
@@ -141,6 +139,7 @@ public class ServerTerminal implements Runnable {
                                     .addParameter("param3", "HelloP3")
                                     .addParameter("param4", "HelloP4")
                                     .build());
+                    print(configManager.getValue("that.is.a.test.lul4"));
                 }
 
             }
