@@ -84,7 +84,7 @@ public class Server {
             final Player player = event.getPlayer();
             event.setSpawningInstance(instanceContainer);
             player.setRespawnPoint(new Pos(0, 42, 0));
-            serverLogger.log(LogLevel.INFO, "Player " + player.getName() + " connected.");
+            serverLogger.log(LogLevel.INFO, "Player " + player.getUsername() + " connected.");
         });
         serverLogger.log(LogLevel.INFO, "Spawn instance created.");
     }

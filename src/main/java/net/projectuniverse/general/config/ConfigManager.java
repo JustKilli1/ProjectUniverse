@@ -43,13 +43,24 @@ public class ConfigManager {
     }
 
     public void addDefault(List<ConfigValue> defaultValues) {
-        if(file == null) {
-            configLogger.log(LogLevel.ERROR, "Could not add Default Config Value cause this.file is null", new NullPointerException());
-            return;
-        }
+        if(!fileExists()) return;
         defaultValues.forEach(value -> file.addDefault(value.getPath(), value.getRawValue()));
         save();
     }
+
+    public void setValue(ConfigValue configValue) {
+        if(!fileExists()) return;
+        file.set(configValue.getPath(), configValue.getRawValue());
+    }
+
+    private boolean fileExists() {
+        if(file == null) {
+            configLogger.log(LogLevel.ERROR, "Could not add Default Config Value cause this.file is null", new NullPointerException());
+            return false;
+        }
+        return true;
+    }
+
     public void addDefault(ConfigValue defaultValue) {
         addDefault(List.of(defaultValue));
     }
