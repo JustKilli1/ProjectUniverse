@@ -9,6 +9,7 @@ import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.instance.block.Block;
 import net.projectuniverse.base.Utils;
+import net.projectuniverse.general.commands.CmdClearChat;
 import net.projectuniverse.general.config.ConfigManager;
 import net.projectuniverse.general.config.ConfigValue;
 import net.projectuniverse.general.database.DBAccessLayer;
@@ -49,6 +50,7 @@ public class Server {
         loadServerConfig();
         createSpawnInstance();
         serverLogger.log(LogLevel.INFO, "Starting Minestom Service...");
+        registerCommands();
         server.start(ip, port);
         try {
             //TODO IS SHIT
@@ -107,6 +109,10 @@ public class Server {
         serverConfig.addDefault(new ConfigValue("server.base.ip-adresse", "127.0.0.1"));
         serverConfig.addDefault(new ConfigValue("server.base.port", "25565"));
         serverConfig.addDefault(new ConfigValue("server.base.use-mojang-auth", "true"));
+    }
+
+    private static void registerCommands() {
+        MinecraftServer.getCommandManager().register(new CmdClearChat());
     }
 
 
