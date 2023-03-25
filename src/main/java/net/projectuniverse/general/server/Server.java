@@ -12,6 +12,7 @@ import net.minestom.server.instance.block.Block;
 import net.projectuniverse.base.Utils;
 import net.projectuniverse.general.commands.CmdClearChat;
 import net.projectuniverse.general.commands.CmdMuteChat;
+import net.projectuniverse.general.commands.CmdTeamChat;
 import net.projectuniverse.general.config.ConfigManager;
 import net.projectuniverse.general.config.ConfigValue;
 import net.projectuniverse.general.database.DBAccessLayer;
@@ -120,6 +121,7 @@ public class Server {
     private static void registerCommands() {
         MinecraftServer.getCommandManager().register(new CmdClearChat());
         MinecraftServer.getCommandManager().register(new CmdMuteChat());
+        MinecraftServer.getCommandManager().register(new CmdTeamChat());
     }
 
     private static void registerListener() {
