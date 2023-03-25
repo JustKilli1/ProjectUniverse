@@ -61,6 +61,14 @@ public class ConfigManager {
         return true;
     }
 
+    public void reload() {
+        try {
+            file.load();
+        } catch(Exception ex) {
+            configLogger.log(LogLevel.ERROR, "Could not reload Config File " + file.getFilePath(), ex);
+        }
+    }
+
     public void addDefault(ConfigValue defaultValue) {
         addDefault(List.of(defaultValue));
     }
