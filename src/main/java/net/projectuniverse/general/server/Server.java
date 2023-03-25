@@ -11,6 +11,8 @@ import net.minestom.server.instance.block.Block;
 import net.projectuniverse.base.Utils;
 import net.projectuniverse.general.config.ConfigManager;
 import net.projectuniverse.general.config.ConfigValue;
+import net.projectuniverse.general.database.DBAccessLayer;
+import net.projectuniverse.general.database.DBHandler;
 import net.projectuniverse.general.logging.ILogger;
 import net.projectuniverse.general.logging.LogLevel;
 import net.projectuniverse.general.logging.loggers.BaseConsoleLogger;
@@ -59,6 +61,8 @@ public class Server {
         serverLogger.log(LogLevel.INFO, "Bound Port: " + port);
         serverLogger.log(LogLevel.INFO, "Project Universe startup complete.");
         serverLogger.log(LogLevel.INFO, "Hello c:");
+        DBAccessLayer sql = new DBAccessLayer(new BaseConsoleLogger("Database"), new ConfigManager("mysql"));
+        DBHandler dbHandler = new DBHandler(sql);
 
     }
 
@@ -90,15 +94,19 @@ public class Server {
     }
     private static void loadServerConfig() {
         serverLogger.log(LogLevel.INFO, "Loading Server Configuration...");
+        createDefaultServerConfig();
+        ip = serverConfig.getValue("server.base.ip-adresse");
+        Optional<Integer> portOpt = Utils.convertToInt(serverConfig.getValue("server.base.port"));
+        port = portOpt.isEmpty() ? 25565 : portOpt.get();
+        serverLogger.log(LogLevel.INFO, "Server Configuration loaded successfully.");
+    }
+
+    private static void createDefaultServerConfig() {
         serverConfig = new ConfigManager("server");
 
         serverConfig.addDefault(new ConfigValue("server.base.ip-adresse", "127.0.0.1"));
         serverConfig.addDefault(new ConfigValue("server.base.port", "25565"));
         serverConfig.addDefault(new ConfigValue("server.base.use-mojang-auth", "true"));
-        ip = serverConfig.getValue("server.base.ip-adresse");
-        Optional<Integer> portOpt = Utils.convertToInt(serverConfig.getValue("server.base.port"));
-        port = portOpt.isEmpty() ? 25565 : portOpt.get();
-        serverLogger.log(LogLevel.INFO, "Server Configuration loaded successfully.");
     }
 
 
