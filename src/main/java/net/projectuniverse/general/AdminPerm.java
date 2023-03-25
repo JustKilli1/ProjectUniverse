@@ -5,7 +5,8 @@ import net.minestom.server.permission.Permission;
 
 public enum AdminPerm {
 
-    IGNORE_CHAT_CLEAR("chat.ignore_chat_clear")
+    IGNORE_CHAT_CLEAR("chat.ignore_chat_clear"),
+    IGNORE_CHAT_MUTE("chat.ignore_chat_mute")
 
     ;
     private static final String prefix = "projectuniverse.admin.";
