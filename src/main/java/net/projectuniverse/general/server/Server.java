@@ -5,6 +5,7 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.event.player.PlayerLoginEvent;
+import net.minestom.server.extras.MojangAuth;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.instance.block.Block;
@@ -29,6 +30,7 @@ public class Server {
     private static ServerTerminal terminal;
     private static String ip;
     private static int port;
+    private static boolean mojangAuth;
 
     /**
      * Starts the Server
@@ -98,8 +100,9 @@ public class Server {
         serverLogger.log(LogLevel.INFO, "Loading Server Configuration...");
         createDefaultServerConfig();
         ip = serverConfig.getValue("server.base.ip-adresse");
-        Optional<Integer> portOpt = Utils.convertToInt(serverConfig.getValue("server.base.port"));
-        port = portOpt.isEmpty() ? 25565 : portOpt.get();
+        port = Utils.convertToInt(serverConfig.getValue("server.base.port")).orElse(25565);
+        mojangAuth = Utils.convertToBool(serverConfig.getValue("server.base.use-mojang-auth")).orElse(true);
+        if(mojangAuth) MojangAuth.init();
         serverLogger.log(LogLevel.INFO, "Server Configuration loaded successfully.");
     }
 
