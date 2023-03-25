@@ -9,7 +9,6 @@ import net.minestom.server.entity.Player;
 import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.event.player.PlayerChatEvent;
 import net.projectuniverse.general.AdminPerm;
-import net.projectuniverse.general.listener.ChatListener;
 import net.projectuniverse.general.messenger.MessageDesign;
 
 public class CmdMuteChat extends Command {

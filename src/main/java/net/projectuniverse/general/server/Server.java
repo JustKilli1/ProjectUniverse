@@ -16,6 +16,7 @@ import net.projectuniverse.general.config.ConfigManager;
 import net.projectuniverse.general.config.ConfigValue;
 import net.projectuniverse.general.database.DBAccessLayer;
 import net.projectuniverse.general.database.DBHandler;
+import net.projectuniverse.general.listener.ChatListener;
 import net.projectuniverse.general.logging.ILogger;
 import net.projectuniverse.general.logging.LogLevel;
 import net.projectuniverse.general.logging.loggers.BaseConsoleLogger;
@@ -54,6 +55,7 @@ public class Server {
         createSpawnInstance();
         serverLogger.log(LogLevel.INFO, "Starting Minestom Service...");
         registerCommands();
+        registerListener();
         server.start(ip, port);
         try {
             //TODO IS SHIT
@@ -118,6 +120,10 @@ public class Server {
     private static void registerCommands() {
         MinecraftServer.getCommandManager().register(new CmdClearChat());
         MinecraftServer.getCommandManager().register(new CmdMuteChat());
+    }
+
+    private static void registerListener() {
+        new ChatListener();
     }
 
 
