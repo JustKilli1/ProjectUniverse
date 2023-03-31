@@ -2,6 +2,7 @@ package net.projectuniverse.general.config;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class ConfigValue {
 
@@ -19,7 +20,7 @@ public class ConfigValue {
         this(path, rawValue, new ArrayList<>());
     }
 
-    private void setValue() {
+    public void setValue() {
         value = rawValue;
         params.forEach(param -> value = value.replace(param.getName(), param.getValue()));
     }
@@ -44,8 +45,21 @@ public class ConfigValue {
     public List<ConfigParam> getParams() {
         return params;
     }
+    public Optional<ConfigParam> getParams(String paramName) {
+        for(ConfigParam param : params) {
+            if(param.getName().equals(paramName)) return Optional.of(param);
+        }
+        return Optional.empty();
+    }
+
     public void addParam(ConfigParam param) {
         params.add(param);
         setValue();
     }
+
+    @Override
+    public ConfigValue clone() {
+        return new ConfigValue(path, rawValue, params);
+    }
+
 }

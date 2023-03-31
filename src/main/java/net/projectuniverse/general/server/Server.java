@@ -11,6 +11,7 @@ import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.instance.block.Block;
 import net.projectuniverse.base.Utils;
 import net.projectuniverse.general.commands.CmdClearChat;
+import net.projectuniverse.general.commands.CmdKick;
 import net.projectuniverse.general.commands.CmdMuteChat;
 import net.projectuniverse.general.commands.CmdTeamChat;
 import net.projectuniverse.general.config.ConfigManager;
@@ -122,6 +123,7 @@ public class Server {
         MinecraftServer.getCommandManager().register(new CmdClearChat());
         MinecraftServer.getCommandManager().register(new CmdMuteChat());
         MinecraftServer.getCommandManager().register(new CmdTeamChat());
+        MinecraftServer.getCommandManager().register(new CmdKick());
     }
 
     private static void registerListener() {
