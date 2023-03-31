@@ -20,13 +20,15 @@ public class ConfigValue {
         this(path, rawValue, new ArrayList<>());
     }
 
-    public void setConfigParamValue(String name, String value) {
+    public ConfigValue setConfigParamValue(String name, String value) {
         for(ConfigParam param : params) {
             if(param.getName().equals(name)) {
                 param.setValue(value);
+                setValue();
                 break;
             }
         }
+        return this;
     }
 
     public void setValue() {
