@@ -5,16 +5,13 @@ import net.minestom.server.entity.Player;
 
 public class Messenger {
 
-
-    private static final String prefix = "&eProjectUniverse &f>> ";
-
     public static void sendPlayerMessage(Player player, MessageDesign design, String message) {
-        player.sendMessage(prefix + MessageDesign.apply(design, message));
+        player.sendMessage(MessageDesign.apply(design, message));
 
     }
 
     public static void sendMessage(CommandSender sender, MessageDesign design, String message) {
-        sender.sendMessage(prefix + MessageDesign.apply(design, message));
+        sender.sendMessage(MessageDesign.apply(design, message));
 
     }
 
