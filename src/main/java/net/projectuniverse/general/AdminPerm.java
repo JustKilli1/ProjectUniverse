@@ -7,6 +7,7 @@ public enum AdminPerm {
 
     IGNORE_CHAT_CLEAR("chat.ignore_chat_clear"),
     IGNORE_CHAT_MUTE("chat.ignore_chat_mute"),
+    IGNORE_KICK("punishment_system.ignore_kick"),
     USE_TEAM_CHAT("chat.use_team_chat")
 
     ;
@@ -17,7 +18,7 @@ public enum AdminPerm {
         this.perm = perm;
     }
 
-    public static boolean hasPerm(Player target, AdminPerm perm) {
+    public static boolean has(Player target, AdminPerm perm) {
         return target.hasPermission(new Permission(perm.getPerm()));
     }
 

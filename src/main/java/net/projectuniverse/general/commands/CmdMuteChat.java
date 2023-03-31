@@ -23,7 +23,7 @@ public class CmdMuteChat extends Command {
         GlobalEventHandler eventHandler = MinecraftServer.getGlobalEventHandler();
         eventHandler.addListener(PlayerChatEvent.class, event -> {
             Player player = event.getPlayer();
-           if(!AdminPerm.hasPerm(player, AdminPerm.IGNORE_CHAT_MUTE)){
+           if(!AdminPerm.has(player, AdminPerm.IGNORE_CHAT_MUTE)){
                event.setCancelled(globalMute);
                if(globalMute)
                    player.sendMessage(MessageDesign.apply(MessageDesign.PLAYER_MESSAGE, "The chat is muted at the moment."));

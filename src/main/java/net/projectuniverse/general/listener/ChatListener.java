@@ -27,7 +27,7 @@ public class ChatListener {
             String msg = event.getMessage();
             //CmdTeamChat
             if(CmdTeamChat.getTeamChatMember().contains(player)) {
-                Audience audience = Audiences.players(p -> AdminPerm.hasPerm(p, AdminPerm.USE_TEAM_CHAT));
+                Audience audience = Audiences.players(p -> AdminPerm.has(p, AdminPerm.USE_TEAM_CHAT));
                 String playerMsg = CmdTeamChat.prefix + "[" + player.getUsername() + "] " + MessageDesign.apply(MessageDesign.PLAYER_MESSAGE, msg);
                 audience.sendMessage(Component.text(playerMsg));
                 player.sendMessage(Component.text(playerMsg));

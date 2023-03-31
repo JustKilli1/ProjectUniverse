@@ -15,7 +15,7 @@ public class CmdClearChat extends Command {
         super("clearchat", "cc", "clear");
 
         addSyntax((sender, context) -> {
-            Audience audience = Audiences.players(player -> !AdminPerm.hasPerm(player, AdminPerm.IGNORE_CHAT_CLEAR));
+            Audience audience = Audiences.players(player -> !AdminPerm.has(player, AdminPerm.IGNORE_CHAT_CLEAR));
             String str = " ";
             for(int i = 0; i < 100; i++) {
                 audience.sendMessage(Component.text(str));
