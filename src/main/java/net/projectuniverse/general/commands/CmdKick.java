@@ -4,6 +4,7 @@ import net.minestom.server.command.builder.Command;
 import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.minestom.server.entity.Player;
 import net.minestom.server.utils.entity.EntityFinder;
+import net.projectuniverse.general.AdminPerm;
 import net.projectuniverse.general.config.configs.PlayerMessagesConfig;
 import net.projectuniverse.general.messenger.MessageDesign;
 import net.projectuniverse.general.messenger.Messenger;
@@ -27,6 +28,10 @@ public class CmdKick extends Command {
             }
             if(player.equals(sender)) {
                 Messenger.sendMessage(sender, MessageDesign.PLAYER_MESSAGE, PlayerMessagesConfig.KICK_YOURSELF.getValue());
+                return;
+            }
+            if(AdminPerm.has(player, AdminPerm.IGNORE_KICK)) {
+                Messenger.sendMessage(sender, MessageDesign.PLAYER_MESSAGE, PlayerMessagesConfig.CANT_KICK_PLAYER.getValue());
                 return;
             }
             String[] reasonArray = context.get(reasonArg);
