@@ -13,8 +13,7 @@ public class CmdKick extends Command {
     public CmdKick() {
         super("kick", "k");
 
-        /*setDefaultExecutor((sender, context));
-        var player =*/
+        setDefaultExecutor(new CmdNotFoundDefaultExecutor("/kick [PlayerName] [Reason...]"));
 
         var playerArg = ArgumentType.Entity("player-name");
         var reasonArg = ArgumentType.StringArray("reason");
