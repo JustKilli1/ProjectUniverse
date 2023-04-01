@@ -2,6 +2,7 @@ package net.projectuniverse.general.logging;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.List;
 
 public class LoggingUtils {
 
@@ -17,5 +18,16 @@ public class LoggingUtils {
         ex.printStackTrace(printWriter);
         return strWriter.toString();
     }
+
+    public static String getMessageStr(List<String> messages, boolean oneLine) {
+        StringBuilder combined = new StringBuilder();
+        for(int i = 0; i < messages.size(); i++) {
+            combined.append(messages.get(i));
+            if(i + 1 != messages.size() && !oneLine) combined.append(System.lineSeparator());
+            if(oneLine) combined.append(" ");
+        }
+        return combined.toString();
+    }
+
 
 }
