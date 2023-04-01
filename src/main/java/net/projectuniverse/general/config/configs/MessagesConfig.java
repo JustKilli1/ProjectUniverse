@@ -6,7 +6,7 @@ import net.projectuniverse.general.config.ConfigValue;
 public class MessagesConfig extends ConfigManager {
 
     public static final ConfigValue NO_PERMISSION = new ConfigValue("generell.no_permission", "You don't have Permission to use this Command");
-    public static final ConfigValue PLAYER_JOINED = new ConfigValue("generell.player_join_message", "Player " + MessagesParams.PLAYER.getName() + " joined");
+    public static final ConfigValue PLAYER_JOINED = new ConfigValue("generell.player_join_message", "Player " + MessagesParams.PLAYER.getName() + " joined", MessagesParams.PLAYER);
     public static final ConfigValue CLEAR_CHAT_DONE = new ConfigValue("chat.clear_chat.done", "Chat has been cleared.");
     public static final ConfigValue MUTE_CHAT_CHANGED = new ConfigValue("chat.mute_chat", "Global mute changed to " + MessagesParams.MUTED.getName(), MessagesParams.MUTED);
     public static final ConfigValue TEAM_CHAT_ACTIVATED = new ConfigValue("chat.team_chat.activated", "Team Chat activated");

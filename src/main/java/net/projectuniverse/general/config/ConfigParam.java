@@ -10,6 +10,11 @@ public class ConfigParam {
         this.value = value;
     }
 
+    private ConfigParam(ConfigParam param) {
+        name = param.getName();
+        value = param.getValue();
+    }
+
 
 
     public String getName() {
@@ -27,6 +32,6 @@ public class ConfigParam {
 
     @Override
     public ConfigParam clone() {
-        return new ConfigParam(name, value);
+        return new ConfigParam(this);
     }
 }
