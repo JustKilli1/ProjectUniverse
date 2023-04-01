@@ -1,6 +1,7 @@
 package net.projectuniverse.general.database;
 
 
+import net.minestom.server.entity.Player;
 import net.projectuniverse.general.config.ConfigManager;
 import net.projectuniverse.general.logging.ILogger;
 import net.projectuniverse.general.logging.LogLevel;
@@ -12,12 +13,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Normal Sql Queries no Data processing
+ * */
 public class DBAccessLayer {
 
-    protected ILogger logger = new LoggerBuilder("Database").addOutputPrinter(new TerminalPrinter()).build();
-    /**
-     * Normal Sql Commands no Data processing
-     * */
+    public static final ILogger logger = new LoggerBuilder("Database").addOutputPrinter(new TerminalPrinter()).build();
 
     private MySQL mySql;
 
@@ -26,6 +27,36 @@ public class DBAccessLayer {
         mySql.connect();
     }
 
+    /*
+    * Create Tables Queries
+    * */
+
+    public boolean createPlayerTable() {
+        String sqlQuery = "CREATE TABLE IF NOT EXISTS Player (" +
+                "PlayerID INT NOT NULL AUTO_INCREMENT, " +
+                "UUID VARCHAR(128) NOT NULL," +
+                "Name TEXT NOT NULL," +
+                "PRIMARY KEY(PlayerID)" +
+                ");";
+        return executeSQLRequest(sqlQuery);
+    }
+    /*
+     * Create Tables Queries END
+     * */
+
+
+    public boolean addPlayer(Player player) {
+        String sqlQuery = "INSERT INTO Player (UUID, Name) VALUES (" +
+                "'" + player.getUuid() + "'," +
+                "'" + player.getUsername() + "'" +
+                ");";
+        return executeSQLRequest(sqlQuery);
+    }
+
+    public ResultSet getPlayer(Player player) {
+        String sqlQuery = "SELECT * FROM Player WHERE UUID='" + player.getUuid() + "'";
+        return querySQLRequest(sqlQuery);
+    }
     public void disable() {
         mySql.disconnect();
     }

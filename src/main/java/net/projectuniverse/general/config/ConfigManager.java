@@ -39,7 +39,7 @@ public class ConfigManager {
         try {
             file.save();
         } catch (final IOException ex) {
-            configLogger.log(LogLevel.ERROR, "Could not save " + file.getName() + " file.", ex);
+            configLogger.log(LogLevel.ERROR, "Could not save " + file.getFilePath() + " file.", ex);
         }
     }
 

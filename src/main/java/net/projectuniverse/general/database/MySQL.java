@@ -62,7 +62,6 @@ public class MySQL {
                 + database
                 + "?autoReconnect=true&useSSL=false";
         try {
-
             con = DriverManager.getConnection(conStr, username, password);
         } catch (SQLException ex) {
             logger.log(LogLevel.ERROR, "Could not connect to Database. Connection Str: " + conStr, ex);

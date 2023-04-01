@@ -1,24 +1,18 @@
 package net.projectuniverse.general.server;
 
 import net.minestom.server.MinecraftServer;
-import net.minestom.server.coordinate.Pos;
-import net.minestom.server.entity.Player;
-import net.minestom.server.event.GlobalEventHandler;
-import net.minestom.server.event.player.PlayerLoginEvent;
 import net.minestom.server.extras.MojangAuth;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.instance.block.Block;
 import net.projectuniverse.base.Utils;
-import net.projectuniverse.general.commands.CmdClearChat;
-import net.projectuniverse.general.commands.CmdKick;
-import net.projectuniverse.general.commands.CmdMuteChat;
-import net.projectuniverse.general.commands.CmdTeamChat;
+import net.projectuniverse.general.commands.*;
 import net.projectuniverse.general.config.ConfigManager;
 import net.projectuniverse.general.config.ConfigValue;
 import net.projectuniverse.general.database.DBAccessLayer;
 import net.projectuniverse.general.database.DBHandler;
 import net.projectuniverse.general.listener.ChatListener;
+import net.projectuniverse.general.listener.JoinListener;
 import net.projectuniverse.general.logging.ILogger;
 import net.projectuniverse.general.logging.LogLevel;
 import net.projectuniverse.general.logging.loggers.LoggerBuilder;
@@ -27,19 +21,21 @@ import net.projectuniverse.general.terminal.ServerTerminal;
 
 public class Server {
 
-    private static final ILogger serverLogger = new LoggerBuilder("Server").addOutputPrinter(new TerminalPrinter()).build();
+    public static final ILogger SERVER_LOGGER = new LoggerBuilder("Server").addOutputPrinter(new TerminalPrinter()).build();
+    private static DBAccessLayer sql;
+    private static DBHandler dbHandler;
     private static ConfigManager serverConfig;
     private static MinecraftServer server;
     private static ServerTerminal terminal;
     private static String ip;
     private static int port;
     private static boolean mojangAuth;
+    private static InstanceContainer spawnInstance;
 
     /**
      * Starts the Server
      * */
     public static void start() {
-
         server = MinecraftServer.init();
         MinecraftServer.setTerminalEnabled(false);
         terminal = new ServerTerminal();
@@ -51,10 +47,12 @@ public class Server {
             throw new RuntimeException(e);
         }
 
-        serverLogger.log(LogLevel.INFO, "Starting Project Universe...");
+        SERVER_LOGGER.log(LogLevel.INFO, "Starting Project Universe...");
         loadServerConfig();
+        sql = new DBAccessLayer(new ConfigManager("mysql"));
+        dbHandler = new DBHandler(sql);
         createSpawnInstance();
-        serverLogger.log(LogLevel.INFO, "Starting Minestom Service...");
+        SERVER_LOGGER.log(LogLevel.INFO, "Starting Minestom Service...");
         registerCommands();
         registerListener();
         server.start(ip, port);
@@ -64,13 +62,12 @@ public class Server {
         } catch(InterruptedException e) {
             throw new RuntimeException(e);
         }
-        serverLogger.log(LogLevel.INFO, "Minestom Service started successfully");
-        serverLogger.log(LogLevel.INFO, "Bound IP-Adresse: " + ip);
-        serverLogger.log(LogLevel.INFO, "Bound Port: " + port);
-        serverLogger.log(LogLevel.INFO, "Project Universe startup complete.");
-        serverLogger.log(LogLevel.INFO, "Hello c:");
-        DBAccessLayer sql = new DBAccessLayer(new ConfigManager("mysql"));
-        DBHandler dbHandler = new DBHandler(sql);
+        SERVER_LOGGER.log(LogLevel.INFO, "Minestom Service started successfully");
+        SERVER_LOGGER.log(LogLevel.INFO, "Bound IP-Adresse: " + ip);
+        SERVER_LOGGER.log(LogLevel.INFO, "Bound Port: " + port);
+        createDatabase();
+        SERVER_LOGGER.log(LogLevel.INFO, "Project Universe startup complete.");
+        SERVER_LOGGER.log(LogLevel.INFO, "Hello c:");
 
     }
 
@@ -78,36 +75,30 @@ public class Server {
      * Stops the Server
      * */
     public static void stop() {
-        serverLogger.log(LogLevel.INFO, "Server closed");
+        SERVER_LOGGER.log(LogLevel.INFO, "Server closed");
         System.exit(0);
     }
 
     private static void createSpawnInstance() {
-        serverLogger.log(LogLevel.INFO, "Creating spawn instance...");
+        SERVER_LOGGER.log(LogLevel.INFO, "Creating spawn instance...");
         InstanceManager instanceManager = MinecraftServer.getInstanceManager();
         // Create the instance
-        InstanceContainer instanceContainer = instanceManager.createInstanceContainer();
+        spawnInstance = instanceManager.createInstanceContainer();
         // Set the ChunkGenerator
-        instanceContainer.setGenerator(unit ->
+        spawnInstance.setGenerator(unit ->
                 unit.modifier().fillHeight(0, 40, Block.GRASS_BLOCK));
         // Add an event callback to specify the spawning instance (and the spawn position)
-        GlobalEventHandler globalEventHandler = MinecraftServer.getGlobalEventHandler();
-        globalEventHandler.addListener(PlayerLoginEvent.class, event -> {
-            final Player player = event.getPlayer();
-            event.setSpawningInstance(instanceContainer);
-            player.setRespawnPoint(new Pos(0, 42, 0));
-            serverLogger.log(LogLevel.INFO, "Player " + player.getUsername() + " connected.");
-        });
-        serverLogger.log(LogLevel.INFO, "Spawn instance created.");
+
+        SERVER_LOGGER.log(LogLevel.INFO, "Spawn instance created.");
     }
     private static void loadServerConfig() {
-        serverLogger.log(LogLevel.INFO, "Loading Server Configuration...");
+        SERVER_LOGGER.log(LogLevel.INFO, "Loading Server Configuration...");
         createDefaultServerConfig();
         ip = serverConfig.getValue("server.base.ip-adresse");
         port = Utils.convertToInt(serverConfig.getValue("server.base.port")).orElse(25565);
         mojangAuth = Utils.convertToBool(serverConfig.getValue("server.base.use-mojang-auth")).orElse(true);
         if(mojangAuth) MojangAuth.init();
-        serverLogger.log(LogLevel.INFO, "Server Configuration loaded successfully.");
+        SERVER_LOGGER.log(LogLevel.INFO, "Server Configuration loaded successfully.");
     }
 
     private static void createDefaultServerConfig() {
@@ -123,9 +114,17 @@ public class Server {
         MinecraftServer.getCommandManager().register(new CmdMuteChat());
         MinecraftServer.getCommandManager().register(new CmdTeamChat());
         MinecraftServer.getCommandManager().register(new CmdKick());
+        MinecraftServer.getCommandManager().register(new CmdGameMode());
+    }
+
+    private static void createDatabase() {
+        SERVER_LOGGER.log(LogLevel.INFO, "Create Database...");
+        sql.createPunishmentReasonTable();
+        SERVER_LOGGER.log(LogLevel.INFO, "Database created.");
     }
 
     private static void registerListener() {
+        new JoinListener(sql, dbHandler, spawnInstance);
         new ChatListener();
     }
 
