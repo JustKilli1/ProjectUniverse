@@ -49,6 +49,21 @@ public class DBHandler {
         }
     }
 
+    public boolean playerHasActivePunishment(String playerName) {
+        try {
+            Optional<Integer> playerIdOpt = getPlayerId(playerName);
+            if(playerIdOpt.isEmpty()) return false;
+            int playerId = playerIdOpt.get();
+            ResultSet result = sql.getPunishment(playerId);
+            if(result == null) return false;
+            if(!result.next()) return false;
+            return true;
+        } catch(Exception ex) {
+            logger.log(LogLevel.ERROR, "Could not check for active Player Punishment for Player " + playerName, ex);
+            return false;
+        }
+    }
+
     public Optional<String> getPunishmentReason(Player player) {
         try {
             Optional<Integer> playerIdOpt = getPlayerId(player);
@@ -71,6 +86,13 @@ public class DBHandler {
         return sql.addPunishmentReason(playerId, reason, duration, durationId);
     }
 
+    public boolean removePlayerPunishment(String playerName) {
+        Optional<Integer> playerIdOpt = getPlayerId(playerName);
+        if(playerIdOpt.isEmpty()) return false;
+        int playerId = playerIdOpt.get();
+        return sql.removePunishmentReason(playerId);
+    }
+
     public Optional<Integer> getPlayerId(Player player) {
         try {
             ResultSet result = sql.getPlayer(player);
@@ -79,6 +101,18 @@ public class DBHandler {
             return Optional.ofNullable(result.getInt("PlayerID"));
         } catch(Exception ex) {
             logger.log(LogLevel.ERROR, "Could not get Id from Player " + player.getUsername(), ex);
+            return Optional.empty();
+        }
+    }
+
+    public Optional<Integer> getPlayerId(String playerName) {
+        try {
+            ResultSet result = sql.getPlayer(playerName);
+            if(result == null) return Optional.empty();
+            if(!result.next()) return Optional.empty();
+            return Optional.ofNullable(result.getInt("PlayerID"));
+        } catch(Exception ex) {
+            logger.log(LogLevel.ERROR, "Could not get Id from Player " + playerName, ex);
             return Optional.empty();
         }
     }

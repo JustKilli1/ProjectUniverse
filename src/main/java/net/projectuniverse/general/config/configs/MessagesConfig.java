@@ -17,10 +17,14 @@ public class MessagesConfig extends ConfigManager {
     public static final ConfigValue CHAT_MUTED = new ConfigValue("chat.chat_muted", "The chat is muted at the moment.");
     public static final ConfigValue KICK_YOURSELF = new ConfigValue("punishment_system.kick.kick_yourself", "You cannot kick yourself");
     public static final ConfigValue BAN_YOURSELF = new ConfigValue("punishment_system.ban.ban_yourself", "You cannot ban yourself");
+    public static final ConfigValue UNBAN_YOURSELF = new ConfigValue("punishment_system.ban.unban_yourself", "You cannot unban yourself");
     public static final ConfigValue CANT_KICK_PLAYER = new ConfigValue("punishment_system.kick.cannot_kick_player", "You don't have Permission to kick this Player");
     public static final ConfigValue KICK_SUCCESS = new ConfigValue("punishment_system.kick.kick_success", "Player " + MessagesParams.PLAYER.getName() + " kicked for " + MessagesParams.PUNISHMENT_REASON.getName(), MessagesParams.PLAYER, MessagesParams.PUNISHMENT_REASON);
     public static final ConfigValue BAN_SUCCESS = new ConfigValue("punishment_system.ban.ban_success", "Player " + MessagesParams.PLAYER.getName() + " banned for " + MessagesParams.PUNISHMENT_REASON.getName(), MessagesParams.PLAYER, MessagesParams.PUNISHMENT_REASON);
+    public static final ConfigValue UNBAN_SUCCESS = new ConfigValue("punishment_system.ban.unban_success", "Player " + MessagesParams.PLAYER.getName() + " unbanned", MessagesParams.PLAYER);
+    public static final ConfigValue PLAYER_NOT_BANNED = new ConfigValue("punishment_system.ban.player_not_banned", "Player " + MessagesParams.PLAYER.getName() + " is not banned", MessagesParams.PLAYER);
     public static final ConfigValue BAN_FAILED = new ConfigValue("punishment_system.ban.ban_failed", "Player " + MessagesParams.PLAYER.getName() + " could not get banned for " + MessagesParams.PUNISHMENT_REASON.getName(), MessagesParams.PLAYER, MessagesParams.PUNISHMENT_REASON);
+    public static final ConfigValue UNBAN_FAILED = new ConfigValue("punishment_system.ban.unban_failed", "Player " + MessagesParams.PLAYER.getName() + " could not get unbanned", MessagesParams.PLAYER);
     private static final MessagesConfig instance = new MessagesConfig();
 
 
@@ -47,8 +51,14 @@ public class MessagesConfig extends ConfigManager {
         addDefault(CHAT_MUTED);
         addDefault(KICK_YOURSELF);
         addDefault(BAN_YOURSELF);
+        addDefault(UNBAN_YOURSELF);
         addDefault(CANT_KICK_PLAYER);
         addDefault(KICK_SUCCESS);
+        addDefault(BAN_SUCCESS);
+        addDefault(UNBAN_SUCCESS);
+        addDefault(PLAYER_NOT_BANNED);
+        addDefault(BAN_FAILED);
+        addDefault(UNBAN_FAILED);
 
     }
 }

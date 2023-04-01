@@ -40,7 +40,7 @@ public class JoinListener {
             final Player player = event.getPlayer();
             event.setSpawningInstance(spawningInstance);
             player.setRespawnPoint(new Pos(0, 42, 0));
-            
+
             //Punishment System check
             if(dbHandler.playerHasActivePunishment(player)) {
                 String reason = dbHandler.getPunishmentReason(player).orElse("No Reason");

@@ -70,6 +70,10 @@ public class DBAccessLayer {
         String sqlQuery = "SELECT * FROM Player WHERE UUID='" + player.getUuid() + "'";
         return querySQLRequest(sqlQuery);
     }
+    public ResultSet getPlayer(String player) {
+        String sqlQuery = "SELECT * FROM Player WHERE Name='" + player + "'";
+        return querySQLRequest(sqlQuery);
+    }
 
     public boolean addPunishmentReason(int playerId, String reason, int duration, char durationId) {
         String sqlQuery = "INSERT INTO PunishmentSystemReason (PlayerId, Reason, Duration, DurationId) VALUES(" +
@@ -78,6 +82,11 @@ public class DBAccessLayer {
                 duration + ", " +
                 "'" + durationId + "'" +
                 ");";
+        return executeSQLRequest(sqlQuery);
+    }
+
+    public boolean removePunishmentReason(int playerId) {
+        String sqlQuery = "DELETE FROM PunishmentSystemReason WHERE PlayerId=" + playerId;
         return executeSQLRequest(sqlQuery);
     }
 
