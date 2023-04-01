@@ -117,6 +117,7 @@ public class Server {
         MinecraftServer.getCommandManager().register(new CmdBan(sql, dbHandler));
         MinecraftServer.getCommandManager().register(new CmdUnban(dbHandler));
         MinecraftServer.getCommandManager().register(new CmdGameMode());
+        MinecraftServer.getCommandManager().register(new CmdTeleport());
     }
 
     private static void createDatabase() {
