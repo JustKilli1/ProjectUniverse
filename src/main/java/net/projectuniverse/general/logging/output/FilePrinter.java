@@ -27,7 +27,7 @@ public class FilePrinter implements IOutputPrinter{
     @Override
     public void print(LogLevel level, List<String> message) {
         try {
-            if(!level.equals(LogLevel.DEBUG)) if(!ILogger.debugMode) return;
+            if(level != null && !level.equals(LogLevel.DEBUG)) if(!ILogger.debugMode) return;
             fileHandler.write(message, fileHandler.fileExists());
         } catch (IOException ex) {
             ex.printStackTrace();
