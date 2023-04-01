@@ -7,6 +7,8 @@ import java.util.List;
 
 /**
  * Calls Multiple Loggers
+ * @deprecated Combined to: {@link net.projectuniverse.general.logging.loggers.BaseLogger}
+ * @since 0.4.7-dev
  * */
 public interface ILoggerGroup extends ILogger {
 

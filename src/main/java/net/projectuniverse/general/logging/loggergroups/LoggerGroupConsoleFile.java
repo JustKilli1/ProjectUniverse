@@ -10,6 +10,10 @@ import net.projectuniverse.general.logging.loggers.BaseFileLogger;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * @deprecated Combined to: {@link net.projectuniverse.general.logging.loggers.BaseLogger}
+ * @since 0.4.7-dev
+ * */
 public class LoggerGroupConsoleFile implements ILoggerGroup {
 
     private String name;
