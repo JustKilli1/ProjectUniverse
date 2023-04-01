@@ -35,7 +35,7 @@ public class CmdKick extends Command {
                 Messenger.sendMessage(sender, MessageDesign.PLAYER_MESSAGE, MessagesConfig.KICK_YOURSELF.getValue());
                 return;
             }
-            if(AdminPerm.has(player, AdminPerm.IGNORE_KICK)) {
+            if(AdminPerm.has(player, AdminPerm.IGNORE_KICK, false)) {
                 Messenger.sendMessage(sender, MessageDesign.PLAYER_MESSAGE, MessagesConfig.CANT_KICK_PLAYER.getValue());
                 return;
             }

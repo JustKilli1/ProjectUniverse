@@ -20,7 +20,7 @@ public class CmdTeamChat extends Command {
         addSyntax((sender, context) -> {
             if(!(sender instanceof Player)) return;
             Player player = (Player) sender;
-            if(!AdminPerm.has(player, AdminPerm.USE_TEAM_CHAT)) return;
+            //if(!AdminPerm.has(player, AdminPerm.USE_TEAM_CHAT, true)) return;
             if(!teamChatMember.contains(player)) {
                 teamChatMember.add(player);
                 player.sendMessage(MessageDesign.apply(MessageDesign.PLAYER_MESSAGE, MessagesConfig.TEAM_CHAT_ACTIVATED.getValue()));

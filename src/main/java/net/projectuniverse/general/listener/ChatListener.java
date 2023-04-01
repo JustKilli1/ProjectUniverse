@@ -29,11 +29,13 @@ public class ChatListener {
             String msg = event.getMessage();
             //CmdTeamChat
             if(CmdTeamChat.getTeamChatMember().contains(player)) {
-                Audience audience = Audiences.players(p -> AdminPerm.has(p, AdminPerm.USE_TEAM_CHAT));
-                String playerMsg = CmdTeamChat.prefix + "[" + player.getUsername() + "] " + MessageDesign.apply(MessageDesign.PLAYER_MESSAGE, msg);
+                Audience audience = Audiences.players(p -> AdminPerm.has(p, AdminPerm.USE_TEAM_CHAT, false));
+                String playerMsg = MessageDesign.apply(MessageDesign.PLAYER_MESSAGE, CmdTeamChat.prefix + "[" + player.getUsername() + "] " + msg);
                 Messenger.sendAudienceMessage(audience, MessageDesign.PLAYER_MESSAGE, playerMsg);
                 player.sendMessage(Component.text(playerMsg));
                 event.setCancelled(true);
+                logger.log(LogLevel.INFO, CmdTeamChat.prefix + "[" + player.getUsername() + "] " + msg);
+                return;
             }
             logger.log(LogLevel.INFO, "[" + player.getUsername() + "] " + msg);
         });
