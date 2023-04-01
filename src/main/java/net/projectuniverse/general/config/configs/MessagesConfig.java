@@ -16,8 +16,11 @@ public class MessagesConfig extends ConfigManager {
     public static final ConfigValue TEAM_CHAT_DEACTIVATED = new ConfigValue("chat.team_chat.deactivated", "Team Chat deactivated");
     public static final ConfigValue CHAT_MUTED = new ConfigValue("chat.chat_muted", "The chat is muted at the moment.");
     public static final ConfigValue KICK_YOURSELF = new ConfigValue("punishment_system.kick.kick_yourself", "You cannot kick yourself");
+    public static final ConfigValue BAN_YOURSELF = new ConfigValue("punishment_system.ban.ban_yourself", "You cannot ban yourself");
     public static final ConfigValue CANT_KICK_PLAYER = new ConfigValue("punishment_system.kick.cannot_kick_player", "You don't have Permission to kick this Player");
     public static final ConfigValue KICK_SUCCESS = new ConfigValue("punishment_system.kick.kick_success", "Player " + MessagesParams.PLAYER.getName() + " kicked for " + MessagesParams.PUNISHMENT_REASON.getName(), MessagesParams.PLAYER, MessagesParams.PUNISHMENT_REASON);
+    public static final ConfigValue BAN_SUCCESS = new ConfigValue("punishment_system.ban.ban_success", "Player " + MessagesParams.PLAYER.getName() + " banned for " + MessagesParams.PUNISHMENT_REASON.getName(), MessagesParams.PLAYER, MessagesParams.PUNISHMENT_REASON);
+    public static final ConfigValue BAN_FAILED = new ConfigValue("punishment_system.ban.ban_failed", "Player " + MessagesParams.PLAYER.getName() + " could not get banned for " + MessagesParams.PUNISHMENT_REASON.getName(), MessagesParams.PLAYER, MessagesParams.PUNISHMENT_REASON);
     private static final MessagesConfig instance = new MessagesConfig();
 
 

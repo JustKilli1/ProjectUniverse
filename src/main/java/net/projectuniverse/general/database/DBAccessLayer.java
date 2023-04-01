@@ -40,6 +40,19 @@ public class DBAccessLayer {
                 ");";
         return executeSQLRequest(sqlQuery);
     }
+
+    public boolean createPunishmentReasonTable() {
+        String sqlQuery = "CREATE TABLE IF NOT EXISTS PunishmentSystemReason (" +
+                "ReasonID INT NOT NULL AUTO_INCREMENT, " +
+                "PlayerId INT NOT NULL, " +
+                "Reason LONGTEXT, " +
+                "Duration INT DEFAULT 9999, " +
+                "DurationId VARCHAR(1) DEFAULT 'y', " +
+                "PRIMARY KEY(ReasonID)" +
+                ");";
+        return executeSQLRequest(sqlQuery);
+    }
+
     /*
      * Create Tables Queries END
      * */
@@ -57,6 +70,22 @@ public class DBAccessLayer {
         String sqlQuery = "SELECT * FROM Player WHERE UUID='" + player.getUuid() + "'";
         return querySQLRequest(sqlQuery);
     }
+
+    public boolean addPunishmentReason(int playerId, String reason, int duration, char durationId) {
+        String sqlQuery = "INSERT INTO PunishmentSystemReason (PlayerId, Reason, Duration, DurationId) VALUES(" +
+                playerId + ", " +
+                "'" + reason + "', " +
+                duration + ", " +
+                "'" + durationId + "'" +
+                ");";
+        return executeSQLRequest(sqlQuery);
+    }
+
+    public ResultSet getPunishment(int playerId) {
+        String sqlQuery = "SELECT * FROM PunishmentSystemReason WHERE PlayerID=" + playerId;
+        return querySQLRequest(sqlQuery);
+    }
+
     public void disable() {
         mySql.disconnect();
     }

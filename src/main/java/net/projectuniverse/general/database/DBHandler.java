@@ -5,6 +5,7 @@ import net.projectuniverse.general.logging.ILogger;
 import net.projectuniverse.general.logging.LogLevel;
 
 import java.sql.ResultSet;
+import java.util.Optional;
 
 
 public class DBHandler {
@@ -32,5 +33,56 @@ public class DBHandler {
             return false;
         }
     }
+
+    public boolean playerHasActivePunishment(Player player) {
+        try {
+            Optional<Integer> playerIdOpt = getPlayerId(player);
+            if(playerIdOpt.isEmpty()) return false;
+            int playerId = playerIdOpt.get();
+            ResultSet result = sql.getPunishment(playerId);
+            if(result == null) return false;
+            if(! result.next()) return false;
+            return true;
+        } catch(Exception ex) {
+            logger.log(LogLevel.ERROR, "Could not check for active Player Punishment for Player " + player.getUsername(), ex);
+            return false;
+        }
+    }
+
+    public Optional<String> getPunishmentReason(Player player) {
+        try {
+            Optional<Integer> playerIdOpt = getPlayerId(player);
+            if(playerIdOpt.isEmpty()) return Optional.empty();
+            int playerId = playerIdOpt.get();
+            ResultSet result = sql.getPunishment(playerId);
+            if(result == null) return Optional.empty();
+            if(! result.next()) return Optional.empty();
+            return Optional.ofNullable(result.getString("Reason"));
+        } catch(Exception ex) {
+            logger.log(LogLevel.ERROR, "Could not get Punishment Reson for Player " + player.getUsername(), ex);
+            return Optional.empty();
+        }
+    }
+
+    public boolean addPlayerPunishmentReason(Player player, String reason, int duration, char durationId) {
+        Optional<Integer> playerIdOpt = getPlayerId(player);
+        if(playerIdOpt.isEmpty()) return false;
+        int playerId = playerIdOpt.get();
+        return sql.addPunishmentReason(playerId, reason, duration, durationId);
+    }
+
+    public Optional<Integer> getPlayerId(Player player) {
+        try {
+            ResultSet result = sql.getPlayer(player);
+            if(result == null) return Optional.empty();
+            if(!result.next()) return Optional.empty();
+            return Optional.ofNullable(result.getInt("PlayerID"));
+        } catch(Exception ex) {
+            logger.log(LogLevel.ERROR, "Could not get Id from Player " + player.getUsername(), ex);
+            return Optional.empty();
+        }
+    }
+
+
 
 }

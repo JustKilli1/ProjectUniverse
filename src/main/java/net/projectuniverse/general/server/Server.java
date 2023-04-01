@@ -114,11 +114,13 @@ public class Server {
         MinecraftServer.getCommandManager().register(new CmdMuteChat());
         MinecraftServer.getCommandManager().register(new CmdTeamChat());
         MinecraftServer.getCommandManager().register(new CmdKick());
+        MinecraftServer.getCommandManager().register(new CmdBan(sql, dbHandler));
         MinecraftServer.getCommandManager().register(new CmdGameMode());
     }
 
     private static void createDatabase() {
         SERVER_LOGGER.log(LogLevel.INFO, "Create Database...");
+        sql.createPlayerTable();
         sql.createPunishmentReasonTable();
         SERVER_LOGGER.log(LogLevel.INFO, "Database created.");
     }
