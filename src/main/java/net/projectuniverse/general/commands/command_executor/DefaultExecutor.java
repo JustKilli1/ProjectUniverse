@@ -1,4 +1,4 @@
-package net.projectuniverse.general.commands;
+package net.projectuniverse.general.commands.command_executor;
 
 import net.minestom.server.command.CommandSender;
 import net.minestom.server.command.builder.CommandContext;
@@ -7,11 +7,11 @@ import net.projectuniverse.general.messenger.MessageDesign;
 import net.projectuniverse.general.messenger.Messenger;
 import org.jetbrains.annotations.NotNull;
 
-public class CmdNotFoundDefaultExecutor implements CommandExecutor {
+public class DefaultExecutor implements CommandExecutor {
 
     private String syntax;
 
-    public CmdNotFoundDefaultExecutor(String syntax) {
+    public DefaultExecutor(String syntax) {
         this.syntax = syntax;
     }
 

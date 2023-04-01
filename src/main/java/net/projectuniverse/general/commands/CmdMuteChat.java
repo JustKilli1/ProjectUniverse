@@ -6,6 +6,8 @@ import net.minestom.server.entity.Player;
 import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.event.player.PlayerChatEvent;
 import net.projectuniverse.general.AdminPerm;
+import net.projectuniverse.general.config.configs.MessagesConfig;
+import net.projectuniverse.general.config.configs.MessagesParams;
 import net.projectuniverse.general.messenger.MessageDesign;
 
 public class CmdMuteChat extends Command {
@@ -17,7 +19,10 @@ public class CmdMuteChat extends Command {
 
         addSyntax((sender, context) -> {
             globalMute = !globalMute;
-            sender.sendMessage(MessageDesign.apply(MessageDesign.PLAYER_MESSAGE, "Global mute changed to " + globalMute));
+            sender.sendMessage(MessageDesign.apply(MessageDesign.PLAYER_MESSAGE, MessagesConfig.MUTE_CHAT_CHANGED
+                    .clone()
+                    .setConfigParamValue(MessagesParams.MUTED.clone().setValue(String.valueOf(globalMute)))
+                    .getValue()));
         });
 
         GlobalEventHandler eventHandler = MinecraftServer.getGlobalEventHandler();
@@ -26,7 +31,7 @@ public class CmdMuteChat extends Command {
            if(!AdminPerm.has(player, AdminPerm.IGNORE_CHAT_MUTE)){
                event.setCancelled(globalMute);
                if(globalMute)
-                   player.sendMessage(MessageDesign.apply(MessageDesign.PLAYER_MESSAGE, "The chat is muted at the moment."));
+                   player.sendMessage(MessageDesign.apply(MessageDesign.PLAYER_MESSAGE, MessagesConfig.CHAT_MUTED.getValue()));
            }
         });
 

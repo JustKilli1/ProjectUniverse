@@ -2,7 +2,7 @@ package net.projectuniverse.general;
 
 import net.minestom.server.entity.Player;
 import net.minestom.server.permission.Permission;
-import net.projectuniverse.general.config.configs.PlayerMessagesConfig;
+import net.projectuniverse.general.config.configs.MessagesConfig;
 import net.projectuniverse.general.messenger.MessageDesign;
 import net.projectuniverse.general.messenger.Messenger;
 
@@ -23,7 +23,7 @@ public enum AdminPerm {
 
     public static boolean has(Player target, AdminPerm perm) {
         boolean hasPerm = target.hasPermission(new Permission(perm.getPerm()));
-        if(!hasPerm) Messenger.sendMessage(target, MessageDesign.PLAYER_MESSAGE, PlayerMessagesConfig.NO_PERMISSION.getValue());
+        if(!hasPerm) Messenger.sendMessage(target, MessageDesign.PLAYER_MESSAGE, MessagesConfig.NO_PERMISSION.getValue());
         return hasPerm;
     }
 

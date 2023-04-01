@@ -1,6 +1,7 @@
 package net.projectuniverse.general.config;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +14,10 @@ public class ConfigValue {
         this.path = path;
         this.params = params;
         setRawValue(rawValue);
+    }
+
+    public ConfigValue(String path, String rawValue, ConfigParam... params) {
+        this(path, rawValue, Arrays.stream(params).toList());
     }
 
     public ConfigValue(String path, String rawValue, ConfigParam param) { this(path, rawValue, List.of(param)); }
@@ -29,6 +34,10 @@ public class ConfigValue {
             }
         }
         return this;
+    }
+
+    public ConfigValue setConfigParamValue(ConfigParam param) {
+        return setConfigParamValue(param.getName(), param.getValue());
     }
 
     public void setValue() {

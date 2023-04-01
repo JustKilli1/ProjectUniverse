@@ -20,7 +20,13 @@ public class ConfigParam {
         return value;
     }
 
-    public void setValue(String value) {
+    public ConfigParam setValue(String value) {
         this.value = value;
+        return this;
+    }
+
+    @Override
+    public ConfigParam clone() {
+        return new ConfigParam(name, value);
     }
 }
