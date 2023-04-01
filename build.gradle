@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'net.projectuniverse'
-version '0.4.7-dev'
+version '0.4.8-dev'
 
 repositories {
     mavenCentral()
@@ -14,6 +14,7 @@ repositories {
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    implementation group: 'mysql', name: 'mysql-connector-java', version: '5.1.44'
     implementation 'com.github.Minestom:Minestom:067227421f'
     implementation group: 'org.jline', name: 'jline', version: '3.23.0'
     implementation 'me.carleslc.Simple-YAML:Simple-Yaml:1.8.3'
