@@ -1,5 +1,5 @@
 # From https://github.com/github/gitignore/blob/master/Gradle.gitignore
-configs
+server_configurations
 logs
 .gradle
 /build/
