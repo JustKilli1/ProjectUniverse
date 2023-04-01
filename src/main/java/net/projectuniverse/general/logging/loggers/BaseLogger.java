@@ -2,7 +2,7 @@ package net.projectuniverse.general.logging.loggers;
 
 import net.projectuniverse.general.logging.ILogger;
 import net.projectuniverse.general.logging.LogLevel;
-import net.projectuniverse.general.logging.type.IOutputPrinter;
+import net.projectuniverse.general.logging.output.IOutputPrinter;
 
 import java.util.List;
 

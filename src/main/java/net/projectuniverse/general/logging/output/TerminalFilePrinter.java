@@ -1,4 +1,4 @@
-package net.projectuniverse.general.logging.type;
+package net.projectuniverse.general.logging.output;
 
 import net.projectuniverse.general.logging.LogCategory;
 import net.projectuniverse.general.logging.LogLevel;

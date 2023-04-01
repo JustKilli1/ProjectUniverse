@@ -22,7 +22,7 @@ import net.projectuniverse.general.listener.ChatListener;
 import net.projectuniverse.general.logging.ILogger;
 import net.projectuniverse.general.logging.LogLevel;
 import net.projectuniverse.general.logging.loggers.LoggerBuilder;
-import net.projectuniverse.general.logging.type.TerminalPrinter;
+import net.projectuniverse.general.logging.output.TerminalPrinter;
 import net.projectuniverse.general.terminal.ServerTerminal;
 
 public class Server {

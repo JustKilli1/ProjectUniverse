@@ -10,7 +10,7 @@ import net.projectuniverse.general.config.ConfigValue;
 import net.projectuniverse.general.config.ConfigValueBuilder;
 import net.projectuniverse.general.logging.ILogger;
 import net.projectuniverse.general.logging.loggers.LoggerBuilder;
-import net.projectuniverse.general.logging.type.TerminalFilePrinter;
+import net.projectuniverse.general.logging.output.TerminalFilePrinter;
 import net.projectuniverse.general.server.Server;
 import net.projectuniverse.general.terminal.commands.TerminalCommand;
 import net.projectuniverse.general.terminal.functionality.TerminusCompleter;
