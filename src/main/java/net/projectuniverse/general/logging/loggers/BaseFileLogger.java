@@ -8,7 +8,10 @@ import net.projectuniverse.general.logging.type.LoggerTypeFile;
 
 import java.util.Arrays;
 import java.util.List;
-
+/**
+ * @deprecated Combined to: {@link BaseLogger}
+ * @since 0.4.7-dev
+ * */
 public class BaseFileLogger extends LoggerTypeFile implements ILogger {
 
 

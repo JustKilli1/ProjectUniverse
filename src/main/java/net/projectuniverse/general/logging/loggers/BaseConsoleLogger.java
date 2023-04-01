@@ -8,6 +8,10 @@ import net.projectuniverse.general.logging.type.LoggerTypeConsole;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * @deprecated Combined to: {@link BaseLogger}
+ * @since 0.4.7-dev
+ * */
 public class BaseConsoleLogger extends LoggerTypeConsole implements ILogger {
 
     private String name;

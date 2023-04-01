@@ -8,7 +8,10 @@ import net.projectuniverse.general.logging.type.LoggerTypeTerminalFile;
 
 import java.util.Arrays;
 import java.util.List;
-
+/**
+ * @deprecated Combined to: {@link BaseLogger}
+ * @since 0.4.7-dev
+ * */
 public class BaseTerminalFileLogger extends LoggerTypeTerminalFile implements ILogger {
 
     private static final String logFileName = "terminal.txt";
