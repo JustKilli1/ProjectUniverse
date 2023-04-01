@@ -1,13 +1,12 @@
 package net.projectuniverse.general.logging.type;
 
 
+import com.google.gson.annotations.Since;
 import net.projectuniverse.general.logging.ILogger;
 import net.projectuniverse.general.logging.LogCategory;
 import net.projectuniverse.general.logging.LogLevel;
 import net.projectuniverse.general.logging.LoggingUtils;
 import net.projectuniverse.general.logging.files.FileHandler;
-import net.projectuniverse.general.terminal.ServerTerminal;
-import net.projectuniverse.general.terminal.TerminalColor;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -17,6 +16,8 @@ import java.util.List;
 
 /**
  * Class that provides default Methods to Write Logs to a File
+ * @deprecated New Implementation: {@link FilePrinter}
+ * @since 0.4.7-dev
  * */
 public class LoggerTypeFile {
 

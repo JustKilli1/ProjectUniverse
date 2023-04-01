@@ -1,7 +1,6 @@
 package net.projectuniverse.general.logging.type;
 
 
-import net.minestom.server.MinecraftServer;
 import net.projectuniverse.general.logging.ILogger;
 import net.projectuniverse.general.logging.LogLevel;
 import net.projectuniverse.general.logging.LoggingUtils;
@@ -11,6 +10,10 @@ import net.projectuniverse.general.terminal.TerminalColor;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * @deprecated New Implementation: {@link TerminalPrinter}
+ * @since 0.4.7-dev
+ * */
 public class LoggerTypeConsole {
 
     /**

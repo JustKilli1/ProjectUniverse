@@ -8,6 +8,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+/**
+ * @deprecated New Implementation: {@link TerminalFilePrinter}
+ * @since 0.4.7-dev
+ * */
 public class LoggerTypeTerminalFile extends LoggerTypeFile{
 
     public LoggerTypeTerminalFile(LogCategory logCategory, String logFileName) {
