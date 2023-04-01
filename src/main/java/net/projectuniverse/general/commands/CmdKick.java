@@ -27,7 +27,7 @@ public class CmdKick extends Command {
             if(player == null) {
                 Messenger.sendMessage(sender, MessageDesign.PLAYER_MESSAGE, MessagesConfig.KICK_PLAYER_NOT_FOUND
                         .clone()
-                        .setConfigParamValue(MessagesParams.PLAYER.clone().setValue(player.getUsername()))
+                        .setConfigParamValue(MessagesParams.PLAYER.clone().setValue(playerArg.toString()))
                         .getValue());
                 return;
             }
