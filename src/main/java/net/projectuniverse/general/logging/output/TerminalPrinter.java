@@ -31,7 +31,7 @@ public class TerminalPrinter implements IOutputPrinter{
 
     @Override
     public String format(LogLevel logLevel, String loggerName, List<String> message, Exception ex) {
-        String messageMSG = message == null ? "" : LoggingUtils.getMessageStr(message, true);
+        String messageMSG = message == null ? "" : LoggingUtils.getMessageStr(message, false);
         String exceptionMSG = ex == null ? "" : "\nException: " + LoggingUtils.getStackTraceAsStr(ex);
         return "[" + loggerName + "] " +
                 messageMSG +
