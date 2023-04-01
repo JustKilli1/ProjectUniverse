@@ -10,8 +10,10 @@ import java.util.List;
 
 public class TerminalFilePrinter extends FilePrinter{
 
-    public TerminalFilePrinter(LogCategory logCategory, String logFileName) {
-        super(logCategory, logFileName);
+    private static final String logFileName = "terminal.txt";
+
+    public TerminalFilePrinter() {
+        super(LogCategory.SYSTEM, logFileName);
     }
     public String format(LogLevel logLevel, String loggerName, List<String> message, Exception ex) {
         String messageMSG = message == null && message.size() == 0 ? "" : LoggingUtils.getMessageStr(message, false);

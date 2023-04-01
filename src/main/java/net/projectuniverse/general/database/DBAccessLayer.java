@@ -4,6 +4,8 @@ package net.projectuniverse.general.database;
 import net.projectuniverse.general.config.ConfigManager;
 import net.projectuniverse.general.logging.ILogger;
 import net.projectuniverse.general.logging.LogLevel;
+import net.projectuniverse.general.logging.loggers.LoggerBuilder;
+import net.projectuniverse.general.logging.type.TerminalPrinter;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,15 +14,14 @@ import java.sql.SQLException;
 
 public class DBAccessLayer {
 
-    protected ILogger logger;
+    protected ILogger logger = new LoggerBuilder("Database").addOutputPrinter(new TerminalPrinter()).build();
     /**
      * Normal Sql Commands no Data processing
      * */
 
     private MySQL mySql;
 
-    public DBAccessLayer(ILogger logger, ConfigManager mysqlConfig) {
-        this.logger = logger;
+    public DBAccessLayer(ConfigManager mysqlConfig) {
         mySql = new MySQL(logger, mysqlConfig);
         mySql.connect();
     }

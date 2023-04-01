@@ -2,7 +2,8 @@ package net.projectuniverse.general.config;
 
 import net.projectuniverse.general.logging.ILogger;
 import net.projectuniverse.general.logging.LogLevel;
-import net.projectuniverse.general.logging.loggers.BaseConsoleLogger;
+import net.projectuniverse.general.logging.loggers.LoggerBuilder;
+import net.projectuniverse.general.logging.type.TerminalPrinter;
 import org.simpleyaml.configuration.file.YamlFile;
 
 import java.io.IOException;
@@ -10,7 +11,7 @@ import java.util.List;
 
 public class ConfigManager {
 
-    private static final ILogger configLogger = new BaseConsoleLogger("Config");
+    private static final ILogger configLogger = new LoggerBuilder("Config").addOutputPrinter(new TerminalPrinter()).build();
     private static final String DIR_PATH = "server_configurations/";
     private final YamlFile file;
 

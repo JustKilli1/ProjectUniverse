@@ -9,7 +9,8 @@ import net.projectuniverse.general.config.ConfigParam;
 import net.projectuniverse.general.config.ConfigValue;
 import net.projectuniverse.general.config.ConfigValueBuilder;
 import net.projectuniverse.general.logging.ILogger;
-import net.projectuniverse.general.logging.loggers.BaseTerminalFileLogger;
+import net.projectuniverse.general.logging.loggers.LoggerBuilder;
+import net.projectuniverse.general.logging.type.TerminalFilePrinter;
 import net.projectuniverse.general.server.Server;
 import net.projectuniverse.general.terminal.commands.TerminalCommand;
 import net.projectuniverse.general.terminal.functionality.TerminusCompleter;
@@ -26,7 +27,7 @@ import java.util.Set;
 
 public class ServerTerminal implements Runnable {
 
-    public static final ILogger logger = new BaseTerminalFileLogger();
+    public static final ILogger logger = new LoggerBuilder("Terminal").addOutputPrinter(new TerminalFilePrinter()).build();
     public static final Set<TerminalCommand> SHELL_COMMANDS = Set.of(
             new TerminalCommand("stop", "Stops the Server"),
             new TerminalCommand("help", "Shows a list of all Terminal Commands"),

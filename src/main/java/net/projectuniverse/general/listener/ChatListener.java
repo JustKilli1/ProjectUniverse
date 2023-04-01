@@ -11,12 +11,13 @@ import net.projectuniverse.general.AdminPerm;
 import net.projectuniverse.general.commands.CmdTeamChat;
 import net.projectuniverse.general.logging.ILogger;
 import net.projectuniverse.general.logging.LogLevel;
-import net.projectuniverse.general.logging.loggers.BaseConsoleLogger;
+import net.projectuniverse.general.logging.loggers.LoggerBuilder;
+import net.projectuniverse.general.logging.type.TerminalPrinter;
 import net.projectuniverse.general.messenger.MessageDesign;
 
 public class ChatListener {
 
-    private static final ILogger logger = new BaseConsoleLogger("PlayerChat");
+    private static final ILogger logger = new LoggerBuilder("PlayerChat").addOutputPrinter(new TerminalPrinter()).build();
 
     public ChatListener() {
 

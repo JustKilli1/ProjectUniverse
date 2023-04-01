@@ -21,14 +21,13 @@ import net.projectuniverse.general.database.DBHandler;
 import net.projectuniverse.general.listener.ChatListener;
 import net.projectuniverse.general.logging.ILogger;
 import net.projectuniverse.general.logging.LogLevel;
-import net.projectuniverse.general.logging.loggers.BaseConsoleLogger;
+import net.projectuniverse.general.logging.loggers.LoggerBuilder;
+import net.projectuniverse.general.logging.type.TerminalPrinter;
 import net.projectuniverse.general.terminal.ServerTerminal;
-
-import java.util.Optional;
 
 public class Server {
 
-    private static final ILogger serverLogger = new BaseConsoleLogger("Server");
+    private static final ILogger serverLogger = new LoggerBuilder("Server").addOutputPrinter(new TerminalPrinter()).build();
     private static ConfigManager serverConfig;
     private static MinecraftServer server;
     private static ServerTerminal terminal;
@@ -70,7 +69,7 @@ public class Server {
         serverLogger.log(LogLevel.INFO, "Bound Port: " + port);
         serverLogger.log(LogLevel.INFO, "Project Universe startup complete.");
         serverLogger.log(LogLevel.INFO, "Hello c:");
-        DBAccessLayer sql = new DBAccessLayer(new BaseConsoleLogger("Database"), new ConfigManager("mysql"));
+        DBAccessLayer sql = new DBAccessLayer(new ConfigManager("mysql"));
         DBHandler dbHandler = new DBHandler(sql);
 
     }
