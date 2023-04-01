@@ -11,7 +11,7 @@ import java.util.List;
 public class ConfigManager {
 
     private static final ILogger configLogger = new BaseConsoleLogger("Config");
-    private static final String DIR_PATH = "configs/";
+    private static final String DIR_PATH = "server_configurations/";
     private final YamlFile file;
 
     public ConfigManager(String fileName) {
