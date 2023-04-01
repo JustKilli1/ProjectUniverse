@@ -2,6 +2,7 @@ package net.projectuniverse.general.messenger;
 
 public enum MessageDesign {
 
+    SERVER_MESSAGE(),
     PLAYER_MESSAGE()
 
     ;

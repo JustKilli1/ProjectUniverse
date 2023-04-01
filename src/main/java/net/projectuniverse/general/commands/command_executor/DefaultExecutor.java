@@ -17,6 +17,6 @@ public class DefaultExecutor implements CommandExecutor {
 
     @Override
     public void apply(@NotNull CommandSender sender, @NotNull CommandContext context) {
-        Messenger.sendMessage(sender, MessageDesign.PLAYER_MESSAGE, "Invalid Syntax use " + syntax);
+        Messenger.sendMessage(sender, MessageDesign.SERVER_MESSAGE, "Invalid Syntax use " + syntax);
     }
 }

@@ -25,25 +25,25 @@ public class CmdKick extends Command {
             EntityFinder playerFinder = context.get(playerArg);
             Player player = playerFinder.findFirstPlayer(sender);
             if(player == null) {
-                Messenger.sendMessage(sender, MessageDesign.PLAYER_MESSAGE, MessagesConfig.KICK_PLAYER_NOT_FOUND
+                Messenger.sendMessage(sender, MessageDesign.SERVER_MESSAGE, MessagesConfig.PLAYER_NOT_FOUND
                         .clone()
                         .setConfigParamValue(MessagesParams.PLAYER.clone().setValue(playerArg.toString()))
                         .getValue());
                 return;
             }
             if(player.equals(sender)) {
-                Messenger.sendMessage(sender, MessageDesign.PLAYER_MESSAGE, MessagesConfig.KICK_YOURSELF.getValue());
+                Messenger.sendMessage(sender, MessageDesign.SERVER_MESSAGE, MessagesConfig.KICK_YOURSELF.getValue());
                 return;
             }
             if(AdminPerm.has(player, AdminPerm.IGNORE_KICK, false)) {
-                Messenger.sendMessage(sender, MessageDesign.PLAYER_MESSAGE, MessagesConfig.CANT_KICK_PLAYER.getValue());
+                Messenger.sendMessage(sender, MessageDesign.SERVER_MESSAGE, MessagesConfig.CANT_KICK_PLAYER.getValue());
                 return;
             }
             String[] reasonArray = context.get(reasonArg);
             StringBuilder reason = new StringBuilder("");
             for(String s : reasonArray) reason.append(s + " ");
             player.kick(reason.toString());
-            Messenger.sendMessage(sender, MessageDesign.PLAYER_MESSAGE, MessagesConfig.KICK_SUCCESS
+            Messenger.sendMessage(sender, MessageDesign.SERVER_MESSAGE, MessagesConfig.KICK_SUCCESS
                             .clone()
                             .setConfigParamValue(MessagesParams.PLAYER.clone().setValue(player.getUsername()))
                             .setConfigParamValue(MessagesParams.PUNISHMENT_REASON.clone().setValue(reason.toString()))

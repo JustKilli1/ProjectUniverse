@@ -39,7 +39,7 @@ public class JoinListener {
             Server.SERVER_LOGGER.log(LogLevel.INFO, "Player " + player.getUsername() + " connected.");
             if(!dbHandler.playerInDatabase(player)) sql.addPlayer(player);
             Audience allOnlinePlayer = Audiences.all();
-            Messenger.sendAudienceMessage(allOnlinePlayer, MessageDesign.PLAYER_MESSAGE, MessagesConfig.PLAYER_JOINED
+            Messenger.sendAudienceMessage(allOnlinePlayer, MessageDesign.SERVER_MESSAGE, MessagesConfig.PLAYER_JOINED
                     .clone()
                     .setConfigParamValue(MessagesParams.PLAYER.clone().setValue(player.getUsername()))
                     .getValue()

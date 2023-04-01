@@ -2,7 +2,6 @@ package net.projectuniverse.general.commands;
 
 import net.minestom.server.command.builder.Command;
 import net.minestom.server.entity.Player;
-import net.projectuniverse.general.AdminPerm;
 import net.projectuniverse.general.config.configs.MessagesConfig;
 import net.projectuniverse.general.messenger.MessageDesign;
 
@@ -23,10 +22,10 @@ public class CmdTeamChat extends Command {
             //if(!AdminPerm.has(player, AdminPerm.USE_TEAM_CHAT, true)) return;
             if(!teamChatMember.contains(player)) {
                 teamChatMember.add(player);
-                player.sendMessage(MessageDesign.apply(MessageDesign.PLAYER_MESSAGE, MessagesConfig.TEAM_CHAT_ACTIVATED.getValue()));
+                player.sendMessage(MessageDesign.apply(MessageDesign.SERVER_MESSAGE, MessagesConfig.TEAM_CHAT_ACTIVATED.getValue()));
             } else {
                 teamChatMember.remove(player);
-                player.sendMessage(MessageDesign.apply(MessageDesign.PLAYER_MESSAGE, MessagesConfig.TEAM_CHAT_DEACTIVATED.getValue()));
+                player.sendMessage(MessageDesign.apply(MessageDesign.SERVER_MESSAGE, MessagesConfig.TEAM_CHAT_DEACTIVATED.getValue()));
             }
         });
 

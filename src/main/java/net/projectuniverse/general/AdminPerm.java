@@ -23,7 +23,7 @@ public enum AdminPerm {
 
     public static boolean has(Player target, AdminPerm perm, boolean sendMessage) {
         boolean hasPerm = target.hasPermission(new Permission(perm.getPerm()));
-        if(!hasPerm && sendMessage) Messenger.sendMessage(target, MessageDesign.PLAYER_MESSAGE, MessagesConfig.NO_PERMISSION.getValue());
+        if(!hasPerm && sendMessage) Messenger.sendMessage(target, MessageDesign.SERVER_MESSAGE, MessagesConfig.NO_PERMISSION.getValue());
         return hasPerm;
     }
 

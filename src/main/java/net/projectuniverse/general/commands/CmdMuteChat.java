@@ -19,7 +19,7 @@ public class CmdMuteChat extends Command {
 
         addSyntax((sender, context) -> {
             globalMute = !globalMute;
-            sender.sendMessage(MessageDesign.apply(MessageDesign.PLAYER_MESSAGE, MessagesConfig.MUTE_CHAT_CHANGED
+            sender.sendMessage(MessageDesign.apply(MessageDesign.SERVER_MESSAGE, MessagesConfig.MUTE_CHAT_CHANGED
                     .clone()
                     .setConfigParamValue(MessagesParams.MUTED.clone().setValue(String.valueOf(globalMute)))
                     .getValue()));
@@ -31,7 +31,7 @@ public class CmdMuteChat extends Command {
            if(!AdminPerm.has(player, AdminPerm.IGNORE_CHAT_MUTE, false)){
                event.setCancelled(globalMute);
                if(globalMute)
-                   player.sendMessage(MessageDesign.apply(MessageDesign.PLAYER_MESSAGE, MessagesConfig.CHAT_MUTED.getValue()));
+                   player.sendMessage(MessageDesign.apply(MessageDesign.SERVER_MESSAGE, MessagesConfig.CHAT_MUTED.getValue()));
            }
         });
 

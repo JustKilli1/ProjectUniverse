@@ -23,7 +23,7 @@ public class CmdGameMode extends Command {
             Player player = (Player) sender;
             int modeId = context.get(modeIdArg);
             if(modeId < 0 || modeId > GameMode.values().length) {
-                Messenger.sendPlayerMessage(player, MessageDesign.PLAYER_MESSAGE, MessagesConfig.GAME_MODE_NOT_FOUND
+                Messenger.sendPlayerMessage(player, MessageDesign.SERVER_MESSAGE, MessagesConfig.GAME_MODE_NOT_FOUND
                         .clone()
                         .setConfigParamValue(MessagesParams.GAME_MODE.clone().setValue(String.valueOf(modeId)))
                         .getValue()
@@ -32,7 +32,7 @@ public class CmdGameMode extends Command {
             }
             GameMode gameMode = GameMode.fromId(modeId);
             player.setGameMode(gameMode);
-            Messenger.sendPlayerMessage(player, MessageDesign.PLAYER_MESSAGE, MessagesConfig.GAME_MODE_CHANGED
+            Messenger.sendPlayerMessage(player, MessageDesign.SERVER_MESSAGE, MessagesConfig.GAME_MODE_CHANGED
                     .clone()
                     .setConfigParamValue(MessagesParams.GAME_MODE.clone().setValue(gameMode.name()))
                     .getValue()

@@ -10,7 +10,6 @@ public class Messenger {
 
     public static void sendPlayerMessage(Player player, MessageDesign design, String message) {
         player.sendMessage(MessageDesign.apply(design, message));
-
     }
 
     public static void sendMessage(CommandSender sender, MessageDesign design, String message) {
@@ -19,6 +18,10 @@ public class Messenger {
 
     public static void sendAudienceMessage(Audience audience, MessageDesign design, String message) {
         audience.sendMessage(Component.text(MessageDesign.apply(design, message)));
+    }
+
+    public static void sendAudienceMessage(Audience audience, Component message) {
+        audience.sendMessage(message);
     }
 
 }
