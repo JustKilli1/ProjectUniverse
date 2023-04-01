@@ -14,6 +14,7 @@ import net.projectuniverse.general.logging.LogLevel;
 import net.projectuniverse.general.logging.loggers.LoggerBuilder;
 import net.projectuniverse.general.logging.output.TerminalPrinter;
 import net.projectuniverse.general.messenger.MessageDesign;
+import net.projectuniverse.general.messenger.Messenger;
 
 public class ChatListener {
 
@@ -30,7 +31,7 @@ public class ChatListener {
             if(CmdTeamChat.getTeamChatMember().contains(player)) {
                 Audience audience = Audiences.players(p -> AdminPerm.has(p, AdminPerm.USE_TEAM_CHAT));
                 String playerMsg = CmdTeamChat.prefix + "[" + player.getUsername() + "] " + MessageDesign.apply(MessageDesign.PLAYER_MESSAGE, msg);
-                audience.sendMessage(Component.text(playerMsg));
+                Messenger.sendAudienceMessage(audience, MessageDesign.PLAYER_MESSAGE, playerMsg);
                 player.sendMessage(Component.text(playerMsg));
                 event.setCancelled(true);
             }
