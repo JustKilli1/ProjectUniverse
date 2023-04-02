@@ -87,8 +87,6 @@ public class Server {
         // Set the ChunkGenerator
         spawnInstance.setGenerator(unit ->
                 unit.modifier().fillHeight(0, 40, Block.GRASS_BLOCK));
-        // Add an event callback to specify the spawning instance (and the spawn position)
-
         SERVER_LOGGER.log(LogLevel.INFO, "Spawn instance created.");
     }
     private static void loadServerConfig() {
