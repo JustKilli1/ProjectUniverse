@@ -34,26 +34,24 @@ public class ChatListener {
             Player player = event.getPlayer();
             String msg = event.getMessage();
             //CmdTeamChat
-            if(CmdTeamChat.getTeamChatMember().contains(player)) {
-                Audience audience = Audiences.players(p -> AdminPerm.has(p, AdminPerm.USE_TEAM_CHAT, false));
-                String playerMsg = MessageDesign.apply(MessageDesign.SERVER_MESSAGE, CmdTeamChat.prefix + "[" + player.getUsername() + "] " + msg);
-                Messenger.sendAudienceMessage(audience, MessageDesign.SERVER_MESSAGE, playerMsg);
-                player.sendMessage(Component.text(playerMsg));
-                event.setCancelled(true);
-                logger.log(LogLevel.INFO, CmdTeamChat.prefix + "[" + player.getUsername() + "] " + msg);
-                return;
-            }
-
-            //Send Player Message
             TextComponent msgComponent = Component.text()
                     .content(player.getUsername())
                     .color(TextColor.color(ColorDesign.getPlayerName()))
                     .append(Component.text().content(" >> ").color(TextColor.color(ColorDesign.getChatSeparator())).build())
                     .append(Component.text().content(msg).color(TextColor.color(ColorDesign.getBaseText())).build())
                     .build();
-            Messenger.sendAudienceMessage(Audiences.players(), msgComponent);
+            if(CmdTeamChat.getTeamChatMember().contains(player)) {
+                Audience audience = Audiences.players(p -> !AdminPerm.has(p, AdminPerm.USE_TEAM_CHAT, false));
+                Messenger.sendAudienceMessage(audience, msgComponent.content("[TeamChat] " + player.getUsername()));
+                event.setCancelled(true);
+                logger.log(LogLevel.INFO, CmdTeamChat.prefix + "[" + player.getUsername() + "] " + msg);
+                return;
+            }
+
+            //Send Player Message
+
+            event.setChatFormat(events -> msgComponent);
             logger.log(LogLevel.INFO, "[" + player.getUsername() + "] " + msg);
-            event.setCancelled(true);
         });
     }
 
