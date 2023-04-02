@@ -29,6 +29,7 @@ public class CmdTeleport extends Command {
             }
             if(!(sender instanceof Player)) return;
             Player senderPlayer = (Player) sender;
+            senderPlayer.setInstance(player.getInstance());
             senderPlayer.teleport(player.getPosition());
             Messenger.sendMessage(sender, MessageDesign.SERVER_MESSAGE, MessagesConfig.TELEPORT_SUCCESS.clone()
                     .setConfigParamValue(MessagesParams.PLAYER.clone().setValue(player.getUsername()))
