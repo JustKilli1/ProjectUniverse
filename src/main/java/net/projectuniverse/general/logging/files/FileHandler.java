@@ -57,7 +57,7 @@ public class FileHandler {
     /**
      * Creates Directorys of the File
      * */
-    private void createDirectorys() {
+    public void createDirectorys() {
         if(file.isDirectory()) file.mkdirs();
         else getDirectory(file).ifPresent(file -> file.mkdirs());
     }

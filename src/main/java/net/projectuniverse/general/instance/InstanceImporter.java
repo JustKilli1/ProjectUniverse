@@ -1,4 +1,4 @@
-package net.projectuniverse.general.instances;
+package net.projectuniverse.general.instance;
 
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.instance.AnvilLoader;

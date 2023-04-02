@@ -3,7 +3,6 @@ package net.projectuniverse.general.server;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.extras.MojangAuth;
 import net.minestom.server.instance.InstanceContainer;
-import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.instance.block.Block;
 import net.projectuniverse.base.Utils;
 import net.projectuniverse.general.commands.*;
@@ -11,6 +10,7 @@ import net.projectuniverse.general.config.ConfigManager;
 import net.projectuniverse.general.config.ConfigValue;
 import net.projectuniverse.general.database.DBAccessLayer;
 import net.projectuniverse.general.database.DBHandler;
+import net.projectuniverse.general.instance.InstanceHandler;
 import net.projectuniverse.general.listener.ChatListener;
 import net.projectuniverse.general.listener.JoinListener;
 import net.projectuniverse.general.logging.ILogger;
@@ -81,9 +81,10 @@ public class Server {
 
     private static void createSpawnInstance() {
         SERVER_LOGGER.log(LogLevel.INFO, "Creating spawn instance...");
-        InstanceManager instanceManager = MinecraftServer.getInstanceManager();
+        new InstanceHandler();
         // Create the instance
-        spawnInstance = instanceManager.createInstanceContainer();
+        spawnInstance = InstanceHandler.LOBBY;
+        InstanceHandler.addInstance("lobby", spawnInstance);
         // Set the ChunkGenerator
         spawnInstance.setGenerator(unit ->
                 unit.modifier().fillHeight(0, 40, Block.GRASS_BLOCK));
