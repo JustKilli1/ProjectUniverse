@@ -18,6 +18,7 @@ import net.projectuniverse.general.logging.LogLevel;
 import net.projectuniverse.general.logging.loggers.LoggerBuilder;
 import net.projectuniverse.general.logging.output.TerminalPrinter;
 import net.projectuniverse.general.terminal.ServerTerminal;
+import net.projectuniverse.modules.tower_defence.commands.CmdLeave;
 import net.projectuniverse.modules.tower_defence.commands.CmdPlay;
 
 public class Server {
@@ -119,6 +120,7 @@ public class Server {
         MinecraftServer.getCommandManager().register(new CmdGameMode());
         MinecraftServer.getCommandManager().register(new CmdTeleport());
         MinecraftServer.getCommandManager().register(new CmdPlay());
+        MinecraftServer.getCommandManager().register(new CmdLeave());
     }
 
     private static void createDatabase() {
