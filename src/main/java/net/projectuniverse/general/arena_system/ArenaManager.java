@@ -31,6 +31,22 @@ public class ArenaManager {
         logger.log(LogLevel.INFO, "Player " + player.getUsername() + " created a new Arena");
     }
 
+    public static void unregister(Player player) {
+        Arena arena = find(player);
+        if(arena == null) {
+            logger.log(LogLevel.WARN, "Player " + player.getUsername() + " left a Arena. But the Arena could not be found in the arenas Map");
+            return;
+        }
+        arena.stop();
+        arenas.remove(player);
+        CompletableFuture.delayedExecutor(1, TimeUnit.SECONDS)
+                .execute(() -> {
+                            instanceManager.unregisterInstance(arena.getInstance());
+                            logger.log(LogLevel.INFO, "Player " + player.getUsername() + " left his Arena");
+                        }
+                );
+    }
+
     public static Arena find(Player player) {
         return arenas.get(player);
     }
