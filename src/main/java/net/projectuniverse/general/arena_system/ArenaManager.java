@@ -31,6 +31,10 @@ public class ArenaManager {
         logger.log(LogLevel.INFO, "Player " + player.getUsername() + " created a new Arena");
     }
 
+    public static Arena find(Player player) {
+        return arenas.get(player);
+    }
+
     public static ArenaManager getInstance() { return instance; }
 
 
