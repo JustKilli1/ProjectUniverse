@@ -27,4 +27,9 @@ public class Arena {
         player.setInstance(instance, new Pos(4, 71, 19));
     }
 
+    public void stop() {
+        player.setInstance(InstanceHandler.LOBBY, new Pos(0, 100, 0));
+        instanceManager.unregisterInstance(instance);
+    }
+
 }
