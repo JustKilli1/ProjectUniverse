@@ -7,6 +7,7 @@ import net.kyori.adventure.text.format.TextColor;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.adventure.audience.Audiences;
 import net.minestom.server.coordinate.Pos;
+import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.event.player.PlayerLoginEvent;
@@ -39,7 +40,7 @@ public class JoinListener {
         globalEventHandler.addListener(PlayerLoginEvent.class, event -> {
             final Player player = event.getPlayer();
             event.setSpawningInstance(spawningInstance);
-            player.setRespawnPoint(new Pos(0, 42, 0));
+            player.setRespawnPoint(new Pos(4, 71, 19));
 
             //Punishment System check
             if(dbHandler.playerHasActivePunishment(player)) {
@@ -63,6 +64,7 @@ public class JoinListener {
                     .setConfigParamValue(MessagesParams.PLAYER.clone().setValue(player.getUsername()))
                     .getValue()
             );
+            player.setGameMode(GameMode.CREATIVE);
         });
     }
 

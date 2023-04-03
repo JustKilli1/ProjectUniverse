@@ -18,6 +18,7 @@ import net.projectuniverse.general.logging.LogLevel;
 import net.projectuniverse.general.logging.loggers.LoggerBuilder;
 import net.projectuniverse.general.logging.output.TerminalPrinter;
 import net.projectuniverse.general.terminal.ServerTerminal;
+import net.projectuniverse.modules.tower_defence.commands.CmdPlay;
 
 public class Server {
 
@@ -83,7 +84,7 @@ public class Server {
         SERVER_LOGGER.log(LogLevel.INFO, "Creating spawn instance...");
         new InstanceHandler();
         // Create the instance
-        spawnInstance = InstanceHandler.LOBBY;
+        spawnInstance = InstanceHandler.TOWER_DEFENCE_ARENA;
         InstanceHandler.addInstance("lobby", spawnInstance);
         // Set the ChunkGenerator
         spawnInstance.setGenerator(unit ->
@@ -117,6 +118,7 @@ public class Server {
         MinecraftServer.getCommandManager().register(new CmdUnban(dbHandler));
         MinecraftServer.getCommandManager().register(new CmdGameMode());
         MinecraftServer.getCommandManager().register(new CmdTeleport());
+        MinecraftServer.getCommandManager().register(new CmdPlay());
     }
 
     private static void createDatabase() {
