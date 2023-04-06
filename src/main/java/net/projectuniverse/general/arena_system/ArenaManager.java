@@ -39,6 +39,7 @@ public class ArenaManager {
         }
         arena.stop();
         arenas.remove(player);
+        //TODO UGLY
         CompletableFuture.delayedExecutor(1, TimeUnit.SECONDS)
                 .execute(() -> {
                             instanceManager.unregisterInstance(arena.getInstance());

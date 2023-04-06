@@ -1,6 +1,7 @@
 package net.projectuniverse.general.commands;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.ComponentBuilder;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.TextColor;
 import net.minestom.server.command.builder.Command;
@@ -47,7 +48,6 @@ public class CmdBan extends Command {
             String[] reasonArray = context.get(reasonArg);
             StringBuilder reason = new StringBuilder("");
             for(String s : reasonArray) reason.append(s + " ");
-
             TextComponent textComponent = Component.text()
                     .content("You were banned from the Server for")
                     .color(TextColor.color(ColorDesign.getPunishmentColor()))
