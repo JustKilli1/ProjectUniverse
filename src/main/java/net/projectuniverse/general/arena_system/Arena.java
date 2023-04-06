@@ -2,21 +2,23 @@ package net.projectuniverse.general.arena_system;
 
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Player;
+import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.InstanceContainer;
 import net.projectuniverse.general.instance.InstanceHandler;
 
 public class Arena {
 
-    private InstanceContainer instance;
+    private Instance instance;
     private Player player;
 
-    public Arena(Player player) {
+    public Arena(Player player, Instance instance) {
         this.player = player;
+        this.instance = instance;
         init();
     }
 
     private void init() {
-        instance = InstanceHandler.TOWER_DEFENCE_ARENA.copy();
+        //Init stuff idk
     }
 
     public void start() {
@@ -27,7 +29,7 @@ public class Arena {
         player.setInstance(InstanceHandler.LOBBY, new Pos(0, 100, 0));
     }
 
-    public InstanceContainer getInstance() {
+    public Instance getInstance() {
         return instance;
     }
 }

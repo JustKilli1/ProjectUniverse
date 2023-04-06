@@ -12,7 +12,7 @@ public class CmdClearChat extends Command {
     private static final MessagesConfig config = MessagesConfig.getInstance();
 
     public CmdClearChat() {
-        super("clearchat", "cc", "clear");
+        super("clearchat");
 
         addSyntax((sender, context) -> {
             Audience audience = Audiences.players(player -> !AdminPerm.has(player, AdminPerm.IGNORE_CHAT_CLEAR, true));

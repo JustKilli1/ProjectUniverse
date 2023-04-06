@@ -1,7 +1,6 @@
 package net.projectuniverse.general.commands;
 
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.ComponentBuilder;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.TextColor;
 import net.minestom.server.command.builder.Command;
@@ -22,7 +21,7 @@ public class CmdBan extends Command {
     private DBHandler dbHandler;
 
     public CmdBan(DBAccessLayer sql, DBHandler dbHandler) {
-        super("ban", "b");
+        super("ban");
         this.sql = sql;
         this.dbHandler = dbHandler;
 
@@ -67,6 +66,5 @@ public class CmdBan extends Command {
                         .getValue());
             }
         }, playerArg, reasonArg);
-
     }
 }
