@@ -2,7 +2,6 @@ package net.projectuniverse.modules.tower_defence.commands;
 
 import net.minestom.server.command.builder.Command;
 import net.minestom.server.entity.Player;
-import net.projectuniverse.general.arena_system.Arena;
 import net.projectuniverse.general.arena_system.ArenaManager;
 
 public class CmdLeave extends Command {

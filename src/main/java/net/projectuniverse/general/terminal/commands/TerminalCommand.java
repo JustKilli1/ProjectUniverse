@@ -1,7 +1,5 @@
 package net.projectuniverse.general.terminal.commands;
 
-import java.util.Objects;
-
 public record TerminalCommand(String name, String description) {
     @Override
     public String toString() {

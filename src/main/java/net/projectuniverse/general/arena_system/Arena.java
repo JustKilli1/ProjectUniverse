@@ -3,7 +3,6 @@ package net.projectuniverse.general.arena_system;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Player;
 import net.minestom.server.instance.Instance;
-import net.minestom.server.instance.InstanceContainer;
 import net.projectuniverse.general.instance.InstanceHandler;
 
 public class Arena {

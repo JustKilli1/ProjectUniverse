@@ -4,7 +4,6 @@ import net.minestom.server.command.builder.Command;
 import net.minestom.server.entity.Player;
 import net.projectuniverse.general.arena_system.Arena;
 import net.projectuniverse.general.arena_system.ArenaManager;
-import net.projectuniverse.modules.tower_defence.game.GameManager;
 
 public class CmdPlay  extends Command {
 
@@ -13,8 +12,8 @@ public class CmdPlay  extends Command {
         addSyntax((sender, context) -> {
             if(!(sender instanceof Player)) return;
             Player player = (Player) sender;
-            Arena arena = new Arena(player);
-            ArenaManager.register(player, arena);
+            //Arena arena = new Arena(player);
+            //ArenaManager.register(player, arena);
         });
     }
 
