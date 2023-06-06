@@ -119,30 +119,6 @@ public class ServerTerminal implements Runnable {
                     print("Terminal Commands", TerminalColor.RESET);
                     SHELL_COMMANDS.forEach(cmd -> print(" -  " + cmd + " --> " + cmd.description(), TerminalColor.RESET));
                 }
-                case "test" -> {
-                    print("Test Message3");
-                    print("Test Message3");
-                    ConfigManager configManager = new ConfigManager("test");
-                    configManager.addDefault(new ConfigValue("that.is.a.test.path", "That is a test value"));
-                    configManager.addDefault(new ConfigValue("that.is.a.test.path2", "That is a test value2"));
-                    configManager.addDefault(new ConfigValue("that.is.a.test.path3", "That is a test value3"));
-                    configManager.addDefault(new ConfigValue("that.is.a.test.path4", "That is a test value4"));
-                    configManager.addDefault(new ConfigValue("that.is.a.test.path5", "1"));
-                    configManager.addDefault(new ConfigValue("that.is.a.test.lul", "That is a #param1# test lul", new ConfigParam("param1", "Hello")));
-                    configManager.addDefault(new ConfigValue("that.is.a.test.lul2", "That is a #param1# test lul", new ConfigParam("param1", "Hello2")));
-                    configManager.addDefault(new ConfigValueBuilder("that.is.a.test.lul3", "That is a #param1# test #param2# lul")
-                            .addParameter("param1", "Hello2")
-                            .addParameter("param2", "HelloP2")
-                            .build());
-                    configManager.addDefault(new ConfigValueBuilder("that.is.a.test.lul4", "That #param4# is #param3# a #param1# test #param2# lul")
-                                    .addParameter("param1", "Hello1")
-                                    .addParameter("param2", "HelloP2")
-                                    .addParameter("param3", "HelloP3")
-                                    .addParameter("param4", "HelloP4")
-                                    .build());
-                    print(configManager.getValue("that.is.a.test.lul4"));
-                }
-
             }
         } else {
             CommandResult result = COMMAND_MANAGER.execute(terminusSender, command);
