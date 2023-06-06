@@ -35,7 +35,6 @@ public class CmdAddMoney extends UniverseCommand {
 
         addSyntax((sender, context) -> {
             EntityFinder playerFinder = context.get(playerArg);
-            if(!(sender instanceof Player)) return;
             Player targetPlayer = playerFinder.findFirstPlayer(sender);
             if(targetPlayer == null) {
                 Messenger.sendMessage(sender, MessageDesign.SERVER_MESSAGE, MessagesConfig.PLAYER_NOT_FOUND.clone()
