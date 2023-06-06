@@ -32,10 +32,10 @@ public class DBHMoney extends DBHandler {
         }
     }
 
-    public List<PlayerPurse> getRichestPlayers(PlayerPurse.Currency currency) {
+    public List<PlayerPurse> getRichestPlayers(PlayerPurse.Currency currency, int limit) {
         List<PlayerPurse> richestPlayers = new ArrayList<>();
         try {
-            ResultSet result = sql.getRichestPlayers(currency);
+            ResultSet result = sql.getRichestPlayers(currency, limit);
             if(result == null) return richestPlayers;
             while(result.next()) {
                 String playerName = result.getString("Name");

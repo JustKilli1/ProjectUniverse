@@ -35,7 +35,7 @@ public class CmdBalanceTop extends UniverseCommand {
             PlayerPurse.Currency currency = PlayerPurse.Currency.UNIS;
 
             StringBuilder message = new StringBuilder("[Top 10 Richest Players]\n");
-            List<PlayerPurse> richestPlayers = dbHandler.getRichestPlayers(currency);
+            List<PlayerPurse> richestPlayers = dbHandler.getRichestPlayers(currency, max_displayable_player);
             for(int i = 1; i <= richestPlayers.size(); i++) {
                 PlayerPurse purse = richestPlayers.get(i - 1);
                 message.append(i)
