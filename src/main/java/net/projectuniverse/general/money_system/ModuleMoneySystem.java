@@ -5,6 +5,8 @@ import net.projectuniverse.general.Module;
 import net.projectuniverse.general.logging.LogLevel;
 import net.projectuniverse.general.logging.loggers.LoggerBuilder;
 import net.projectuniverse.general.logging.output.TerminalPrinter;
+import net.projectuniverse.general.money_system.commands.CmdMoney;
+import net.projectuniverse.general.money_system.commands.CmdPay;
 import net.projectuniverse.general.money_system.database.DBALMoney;
 import net.projectuniverse.general.money_system.database.DBHMoney;
 import net.projectuniverse.general.money_system.listener.JoinListener;
@@ -41,6 +43,8 @@ public class ModuleMoneySystem extends Module {
     }
 
     private void registerCommands() {
+        MinecraftServer.getCommandManager().register(new CmdPay(sql, dbHandler));
+        MinecraftServer.getCommandManager().register(new CmdMoney(sql, dbHandler));
     }
 
     @Override
