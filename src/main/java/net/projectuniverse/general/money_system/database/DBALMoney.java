@@ -41,4 +41,13 @@ public class DBALMoney extends DBAccessLayer {
         return executeSQLRequest(sqlQuery);
     }
 
+    public ResultSet getRichestPlayers(PlayerPurse.Currency currency) {
+        String sqlQuery = "SELECT * FROM PlayerMoneyTable " +
+                "JOIN Player ON PlayerMoneyTable.PlayerID=Player.PlayerID " +
+                "WHERE PlayerMoneyTable.Currency='" + currency + "' " +
+                "ORDER BY PlayerMoneyTable.Amount DESC " +
+                "LIMIT 10";
+        return querySQLRequest(sqlQuery);
+    }
+
 }

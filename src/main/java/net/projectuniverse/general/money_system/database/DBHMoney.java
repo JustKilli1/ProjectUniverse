@@ -6,6 +6,8 @@ import net.projectuniverse.general.logging.LogLevel;
 import net.projectuniverse.general.money_system.PlayerPurse;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class DBHMoney extends DBHandler {
@@ -27,6 +29,23 @@ public class DBHMoney extends DBHandler {
         } catch(Exception ex) {
             logger.log(LogLevel.ERROR, "Could not retrieve Player Purse from Player " + player.getUsername(), ex);
             return Optional.empty();
+        }
+    }
+
+    public List<PlayerPurse> getRichestPlayers(PlayerPurse.Currency currency) {
+        List<PlayerPurse> richestPlayers = new ArrayList<>();
+        try {
+            ResultSet result = sql.getRichestPlayers(currency);
+            if(result == null) return richestPlayers;
+            while(result.next()) {
+                String playerName = result.getString("Name");
+                int amount = result.getInt("Amount");
+                richestPlayers.add(new PlayerPurse(playerName, currency, sql, amount));
+            }
+            return richestPlayers;
+        } catch(Exception ex) {
+            logger.log(LogLevel.ERROR, "Could not get a List of the richest Players", ex);
+            return richestPlayers;
         }
     }
 

@@ -5,14 +5,23 @@ import net.projectuniverse.general.money_system.database.DBALMoney;
 
 public class PlayerPurse {
 
+    private final String playerName;
     private final Currency currency;
-    private final Player player;
     private final DBALMoney sql;
+    private Player player;
     private int amount;
 
     public PlayerPurse(Player player, Currency currency, DBALMoney sql, int amount) {
         this.currency = currency;
         this.player = player;
+        this.playerName = this.player.getUsername();
+        this.sql = sql;
+        this.amount = amount;
+    }
+
+    public PlayerPurse(String playerName, Currency currency, DBALMoney sql, int amount) {
+        this.playerName = playerName;
+        this.currency = currency;
         this.sql = sql;
         this.amount = amount;
     }
@@ -60,6 +69,10 @@ public class PlayerPurse {
 
     public int getAmount() {
         return amount;
+    }
+
+    public String getPlayerName() {
+        return playerName;
     }
 
     /**
