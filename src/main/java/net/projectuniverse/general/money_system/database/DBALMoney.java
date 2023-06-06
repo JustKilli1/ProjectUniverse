@@ -16,4 +16,13 @@ public class DBALMoney extends DBAccessLayer {
                 ");";
         return executeSQLRequest(sqlQuery);
     }
+
+    public boolean updatePlayerPurse(Player player, PlayerPurse.Currency currency, int newAmount) {
+        String sqlQuery = "UPDATE PlayerMoneyTable " +
+                "SET Amount=" + newAmount + " " +
+                "WHERE PlayerID=(SELECT PlayerID FROM PLAYER WHERE UUID='" + player.getUuid() + "') " +
+                "AND Currency='" + currency + "'";
+        return executeSQLRequest(sqlQuery);
+    }
+
 }
