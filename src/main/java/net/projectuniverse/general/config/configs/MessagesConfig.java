@@ -37,6 +37,7 @@ public class MessagesConfig extends ConfigManager {
     public static final ConfigValue TRANSACTION_SUCCESS_TARGET = new ConfigValue("money_system.transactions.pay.transaction_success_target", MessagesParams.PLAYER + " send you " + MessagesParams.AMOUNT + MessagesParams.CURRENCY_SYMBOL, MessagesParams.AMOUNT, MessagesParams.PLAYER, MessagesParams.CURRENCY_SYMBOL);
     public static final ConfigValue SHOW_PLAYER_MONEY = new ConfigValue("money_system.transactions.money.show_player_money", MessagesParams.CURRENCY + ": " + MessagesParams.AMOUNT + MessagesParams.CURRENCY_SYMBOL, MessagesParams.AMOUNT, MessagesParams.CURRENCY, MessagesParams.CURRENCY_SYMBOL);
     public static final ConfigValue SHOW_PLAYER_MONEY_TARGET = new ConfigValue("money_system.transactions.money.show_player_money_target", MessagesParams.PLAYER + ": " + MessagesParams.AMOUNT + MessagesParams.CURRENCY_SYMBOL, MessagesParams.AMOUNT, MessagesParams.PLAYER, MessagesParams.CURRENCY_SYMBOL);
+    public static final ConfigValue ADD_SERVER_MONEY = new ConfigValue("money_system.transactions.money.add_server_money", "You received " + MessagesParams.AMOUNT + " " + MessagesParams.CURRENCY + " from the Server.", MessagesParams.AMOUNT, MessagesParams.CURRENCY);
     private static final MessagesConfig instance = new MessagesConfig();
 
 
