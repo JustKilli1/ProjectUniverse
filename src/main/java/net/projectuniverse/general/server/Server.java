@@ -17,13 +17,16 @@ import net.projectuniverse.general.logging.ILogger;
 import net.projectuniverse.general.logging.LogLevel;
 import net.projectuniverse.general.logging.loggers.LoggerBuilder;
 import net.projectuniverse.general.logging.output.TerminalPrinter;
+import net.projectuniverse.general.money_system.ModuleMoneySystem;
 import net.projectuniverse.general.terminal.ServerTerminal;
 import net.projectuniverse.modules.tower_defence.commands.CmdLeave;
+import net.projectuniverse.modules.tower_defence.commands.CmdMap;
 import net.projectuniverse.modules.tower_defence.commands.CmdPlay;
 
 public class Server {
 
     public static final ILogger SERVER_LOGGER = new LoggerBuilder("Server").addOutputPrinter(new TerminalPrinter()).build();
+    public static ConfigManager MYSQL_CONFIG;
     private static DBAccessLayer sql;
     private static DBHandler dbHandler;
     private static ConfigManager serverConfig;
@@ -42,6 +45,11 @@ public class Server {
         MinecraftServer.setTerminalEnabled(false);
         terminal = new ServerTerminal();
         terminal.start();
+
+        MYSQL_CONFIG = new ConfigManager("mysql");
+        sql = new DBAccessLayer();
+        dbHandler = new DBHandler(sql);
+
         try {
             //TODO IS SHIT
             Thread.sleep(1000);
@@ -51,20 +59,20 @@ public class Server {
 
         SERVER_LOGGER.log(LogLevel.INFO, "Starting Project Universe...");
         loadServerConfig();
-        sql = new DBAccessLayer(new ConfigManager("mysql"));
-        dbHandler = new DBHandler(sql);
         createSpawnInstance();
         SERVER_LOGGER.log(LogLevel.INFO, "Starting Minestom Service...");
         registerCommands();
         registerListener();
         server.start(ip, port);
+        SERVER_LOGGER.log(LogLevel.INFO, "Minestom Service started successfully");
         try {
             //TODO IS SHIT
             Thread.sleep(1000);
         } catch(InterruptedException e) {
             throw new RuntimeException(e);
         }
-        SERVER_LOGGER.log(LogLevel.INFO, "Minestom Service started successfully");
+        startModules();
+
         SERVER_LOGGER.log(LogLevel.INFO, "Bound IP-Adresse: " + ip);
         SERVER_LOGGER.log(LogLevel.INFO, "Bound Port: " + port);
         createDatabase();
@@ -79,6 +87,13 @@ public class Server {
     public static void stop() {
         SERVER_LOGGER.log(LogLevel.INFO, "Server closed");
         System.exit(0);
+    }
+
+    private static void startModules() {
+        SERVER_LOGGER.log(LogLevel.INFO, "Modules startup...");
+        ModuleMoneySystem moneySystem = new ModuleMoneySystem();
+        moneySystem.start();
+        SERVER_LOGGER.log(LogLevel.INFO, "Modules started");
     }
 
     private static void createSpawnInstance() {
@@ -96,6 +111,7 @@ public class Server {
         SERVER_LOGGER.log(LogLevel.INFO, "Loading Server Configuration...");
         createDefaultServerConfig();
         ip = serverConfig.getValue("server.base.ip-adresse");
+        System.out.println(ip);
         port = Utils.convertToInt(serverConfig.getValue("server.base.port")).orElse(25565);
         mojangAuth = Utils.convertToBool(serverConfig.getValue("server.base.use-mojang-auth")).orElse(true);
         if(mojangAuth) MojangAuth.init();
@@ -121,6 +137,7 @@ public class Server {
         MinecraftServer.getCommandManager().register(new CmdTeleport());
         MinecraftServer.getCommandManager().register(new CmdPlay());
         MinecraftServer.getCommandManager().register(new CmdLeave());
+        MinecraftServer.getCommandManager().register(new CmdMap());
     }
 
     private static void createDatabase() {
