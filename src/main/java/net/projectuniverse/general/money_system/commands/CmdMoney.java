@@ -42,7 +42,7 @@ public class CmdMoney extends UniverseCommand {
             PlayerPurse targetPurse = dbHandler.getPlayerPurse(targetPlayer, currency).orElse(new PlayerPurse(targetPlayer, PlayerPurse.Currency.UNIS, sql));
             Messenger.sendMessage(sender, MessageDesign.SERVER_MESSAGE, MessagesConfig.SHOW_PLAYER_MONEY_TARGET.clone()
                     .setConfigParamValue(MessagesParams.AMOUNT.clone().setValue(String.valueOf(targetPurse.getAmount())))
-                    .setConfigParamValue(MessagesParams.PLAYER.clone().setValue(senderPlayer.getUsername()))
+                    .setConfigParamValue(MessagesParams.PLAYER.clone().setValue(targetPlayer.getUsername()))
                     .setConfigParamValue(MessagesParams.CURRENCY_SYMBOL.clone().setValue(currency.getSymbol()))
                     .getValue());
 
