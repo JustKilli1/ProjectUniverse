@@ -8,5 +8,8 @@ public class MessagesParams {
     public static final ConfigParam PLAYER = new ConfigParam("player", "Player");
     public static final ConfigParam PUNISHMENT_REASON = new ConfigParam("reason", "Reason");
     public static final ConfigParam GAME_MODE = new ConfigParam("gamemode", "Game Mode");
+    public static final ConfigParam AMOUNT = new ConfigParam("amount", "0");
+    public static final ConfigParam CURRENCY = new ConfigParam("currency", "Unis");
+    public static final ConfigParam CURRENCY_SYMBOL = new ConfigParam("currency-symbol", "€");
 
 }

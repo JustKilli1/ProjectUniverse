@@ -2,6 +2,9 @@ package net.projectuniverse.general.config.configs;
 
 import net.projectuniverse.general.config.ConfigManager;
 import net.projectuniverse.general.config.ConfigValue;
+import net.projectuniverse.general.logging.LogLevel;
+
+import java.lang.reflect.Field;
 
 public class MessagesConfig extends ConfigManager {
 
@@ -19,7 +22,6 @@ public class MessagesConfig extends ConfigManager {
     public static final ConfigValue CHAT_MUTED = new ConfigValue("chat.chat_muted", "The chat is muted at the moment.");
     public static final ConfigValue KICK_YOURSELF = new ConfigValue("punishment_system.kick.kick_yourself", "You cannot kick yourself");
     public static final ConfigValue BAN_YOURSELF = new ConfigValue("punishment_system.ban.ban_yourself", "You cannot ban yourself");
-    public static final ConfigValue UNBAN_YOURSELF = new ConfigValue("punishment_system.ban.unban_yourself", "You cannot unban yourself");
     public static final ConfigValue CANT_KICK_PLAYER = new ConfigValue("punishment_system.kick.cannot_kick_player", "You don't have Permission to kick this Player");
     public static final ConfigValue KICK_SUCCESS = new ConfigValue("punishment_system.kick.kick_success", "Player " + MessagesParams.PLAYER.getName() + " kicked for " + MessagesParams.PUNISHMENT_REASON.getName(), MessagesParams.PLAYER, MessagesParams.PUNISHMENT_REASON);
     public static final ConfigValue BAN_SUCCESS = new ConfigValue("punishment_system.ban.ban_success", "Player " + MessagesParams.PLAYER.getName() + " banned for " + MessagesParams.PUNISHMENT_REASON.getName(), MessagesParams.PLAYER, MessagesParams.PUNISHMENT_REASON);
@@ -27,6 +29,14 @@ public class MessagesConfig extends ConfigManager {
     public static final ConfigValue PLAYER_NOT_BANNED = new ConfigValue("punishment_system.ban.player_not_banned", "Player " + MessagesParams.PLAYER.getName() + " is not banned", MessagesParams.PLAYER);
     public static final ConfigValue BAN_FAILED = new ConfigValue("punishment_system.ban.ban_failed", "Player " + MessagesParams.PLAYER.getName() + " could not get banned for " + MessagesParams.PUNISHMENT_REASON.getName(), MessagesParams.PLAYER, MessagesParams.PUNISHMENT_REASON);
     public static final ConfigValue UNBAN_FAILED = new ConfigValue("punishment_system.ban.unban_failed", "Player " + MessagesParams.PLAYER.getName() + " could not get unbanned", MessagesParams.PLAYER);
+    public static final ConfigValue CANNOT_PAY_TO_YOURSELF = new ConfigValue("money_system.transactions.pay.cannot_pay_yourself", "You cannot Pay Money to yourself");
+    public static final ConfigValue PAY_AMOUNT_GREATER_THAN_ZERO = new ConfigValue("money_system.transactions.pay.amount_greater_than_zero", "The Amount must be greater than 0");
+    public static final ConfigValue NOT_ENOUGH_MONEY = new ConfigValue("money_system.transactions.pay.not_enough_money", "You don't have enough Money");
+    public static final ConfigValue TRANSACTION_FAILED = new ConfigValue("money_system.transactions.pay.transaction_failed", "The Transaction Failed please Contact an Administrator.");
+    public static final ConfigValue TRANSACTION_SUCCESS = new ConfigValue("money_system.transactions.pay.transaction_success", "The Transaction was Successful. You Transferred " + MessagesParams.AMOUNT + MessagesParams.CURRENCY_SYMBOL + " to " + MessagesParams.PLAYER, MessagesParams.AMOUNT, MessagesParams.CURRENCY_SYMBOL, MessagesParams.PLAYER);
+    public static final ConfigValue TRANSACTION_SUCCESS_TARGET = new ConfigValue("money_system.transactions.pay.transaction_success_target", MessagesParams.PLAYER + " send you " + MessagesParams.AMOUNT + MessagesParams.CURRENCY_SYMBOL, MessagesParams.AMOUNT, MessagesParams.PLAYER, MessagesParams.CURRENCY_SYMBOL);
+    public static final ConfigValue SHOW_PLAYER_MONEY = new ConfigValue("money_system.transactions.money.show_player_money", MessagesParams.CURRENCY + ": " + MessagesParams.AMOUNT + MessagesParams.CURRENCY_SYMBOL, MessagesParams.AMOUNT, MessagesParams.CURRENCY, MessagesParams.CURRENCY_SYMBOL);
+    public static final ConfigValue SHOW_PLAYER_MONEY_TARGET = new ConfigValue("money_system.transactions.money.show_player_money_target", MessagesParams.PLAYER + ": " + MessagesParams.AMOUNT + MessagesParams.CURRENCY_SYMBOL, MessagesParams.AMOUNT, MessagesParams.PLAYER, MessagesParams.CURRENCY_SYMBOL);
     private static final MessagesConfig instance = new MessagesConfig();
 
 
