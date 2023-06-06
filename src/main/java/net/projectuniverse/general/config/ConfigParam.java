@@ -34,4 +34,9 @@ public class ConfigParam {
     public ConfigParam clone() {
         return new ConfigParam(this);
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }
