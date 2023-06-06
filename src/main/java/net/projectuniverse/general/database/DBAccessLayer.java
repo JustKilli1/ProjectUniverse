@@ -7,6 +7,7 @@ import net.projectuniverse.general.logging.ILogger;
 import net.projectuniverse.general.logging.LogLevel;
 import net.projectuniverse.general.logging.loggers.LoggerBuilder;
 import net.projectuniverse.general.logging.output.TerminalPrinter;
+import net.projectuniverse.general.server.Server;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,12 +19,12 @@ import java.sql.SQLException;
  * */
 public class DBAccessLayer {
 
-    public static final ILogger logger = new LoggerBuilder("Database").addOutputPrinter(new TerminalPrinter()).build();
+    protected static final ILogger logger = new LoggerBuilder("Database").addOutputPrinter(new TerminalPrinter()).build();
 
     private MySQL mySql;
 
-    public DBAccessLayer(ConfigManager mysqlConfig) {
-        mySql = new MySQL(logger, mysqlConfig);
+    public DBAccessLayer() {
+        mySql = new MySQL(logger, Server.MYSQL_CONFIG);
         mySql.connect();
     }
 

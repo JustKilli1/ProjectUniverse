@@ -10,13 +10,13 @@ import java.util.Optional;
 
 public class DBHandler {
 
+    protected static final ILogger logger = DBAccessLayer.logger;
     /**
      * Gets ResultSets from sql request
      * --> Gets Information needed from ResultSet and returns it
      * Works with sql return data(ResultSets)
      * */
     protected DBAccessLayer sql;
-    private static final ILogger logger = DBAccessLayer.logger;
 
     public DBHandler(DBAccessLayer sql) {
         this.sql = sql;

@@ -11,7 +11,7 @@ import java.util.List;
 
 public class ConfigManager {
 
-    private static final ILogger configLogger = new LoggerBuilder("Config").addOutputPrinter(new TerminalPrinter()).build();
+    protected static final ILogger configLogger = new LoggerBuilder("Config").addOutputPrinter(new TerminalPrinter()).build();
     private static final String DIR_PATH = "server_configurations/";
     private final YamlFile file;
 
