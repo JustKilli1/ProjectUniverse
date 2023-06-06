@@ -50,29 +50,14 @@ public class MessagesConfig extends ConfigManager {
     }
 
     private void createDefaultConfig() {
-
-        addDefault(NO_PERMISSION);
-        addDefault(PLAYER_NOT_FOUND);
-        addDefault(PLAYER_JOINED);
-        addDefault(GAME_MODE_CHANGED);
-        addDefault(GAME_MODE_NOT_FOUND);
-        addDefault(TELEPORT_TO_YOURSELF);
-        addDefault(TELEPORT_SUCCESS);
-        addDefault(CLEAR_CHAT_DONE);
-        addDefault(MUTE_CHAT_CHANGED);
-        addDefault(TEAM_CHAT_ACTIVATED);
-        addDefault(TEAM_CHAT_DEACTIVATED);
-        addDefault(CHAT_MUTED);
-        addDefault(KICK_YOURSELF);
-        addDefault(BAN_YOURSELF);
-        addDefault(UNBAN_YOURSELF);
-        addDefault(CANT_KICK_PLAYER);
-        addDefault(KICK_SUCCESS);
-        addDefault(BAN_SUCCESS);
-        addDefault(UNBAN_SUCCESS);
-        addDefault(PLAYER_NOT_BANNED);
-        addDefault(BAN_FAILED);
-        addDefault(UNBAN_FAILED);
-
+        for(Field declaredField : this.getClass().getDeclaredFields()) {
+            try {
+                Object value = declaredField.get(null);
+                if(!(value instanceof ConfigValue configValue)) continue;
+                addDefault(configValue);
+            } catch(Exception ex) {
+                configLogger.log(LogLevel.ERROR, "Could not Create Default Messages Config", ex);
+            }
+        }
     }
 }
