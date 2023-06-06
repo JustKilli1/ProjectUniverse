@@ -8,6 +8,7 @@ import net.projectuniverse.general.logging.output.TerminalPrinter;
 import net.projectuniverse.general.money_system.commands.CmdAddMoney;
 import net.projectuniverse.general.money_system.commands.CmdMoney;
 import net.projectuniverse.general.money_system.commands.CmdPay;
+import net.projectuniverse.general.money_system.commands.CmdRemoveMoney;
 import net.projectuniverse.general.money_system.database.DBALMoney;
 import net.projectuniverse.general.money_system.database.DBHMoney;
 import net.projectuniverse.general.money_system.listener.JoinListener;
@@ -47,6 +48,7 @@ public class ModuleMoneySystem extends Module {
         MinecraftServer.getCommandManager().register(new CmdPay(sql, dbHandler));
         MinecraftServer.getCommandManager().register(new CmdMoney(sql, dbHandler));
         MinecraftServer.getCommandManager().register(new CmdAddMoney(moduleLogger, sql, dbHandler));
+        MinecraftServer.getCommandManager().register(new CmdRemoveMoney(moduleLogger, sql, dbHandler));
     }
 
     @Override
