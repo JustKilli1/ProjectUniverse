@@ -7,6 +7,7 @@ import net.projectuniverse.general.logging.loggers.LoggerBuilder;
 import net.projectuniverse.general.logging.output.TerminalPrinter;
 import net.projectuniverse.general.money_system.database.DBALMoney;
 import net.projectuniverse.general.money_system.database.DBHMoney;
+import net.projectuniverse.general.money_system.listener.JoinListener;
 
 public class ModuleMoneySystem extends Module {
 
@@ -36,6 +37,7 @@ public class ModuleMoneySystem extends Module {
     }
 
     private void registerListener() {
+        new JoinListener(moduleLogger, sql, dbHandler);
     }
 
     private void registerCommands() {
