@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SingletonInventory {
-
     private final Inventory inventory;
     private final Map<Integer, ClickableItem> invItems = new HashMap<>();
 
@@ -28,6 +27,11 @@ public class SingletonInventory {
         invItems.put(slot, new ClickableItem(item, action));
         inventory.setItemStack(slot, item);
     }
+    public void setItem(int slot, ClickableItem clickableItem) {
+        invItems.put(slot, clickableItem);
+        inventory.setItemStack(slot, clickableItem.getItem());
+    }
+
 
     public void open(Player player) {
         player.openInventory(inventory);
@@ -37,4 +41,12 @@ public class SingletonInventory {
         if(invItems.containsKey(slot)) invItems.get(slot).click(player);
     }
 
+    public void removeItem(int slot) {
+        inventory.setItemStack(slot, ItemStack.AIR);
+        invItems.remove(slot);
+    }
+
+    public Inventory getInventory() {
+        return inventory;
+    }
 }
