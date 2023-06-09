@@ -6,6 +6,7 @@ import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.block.Block;
 import net.projectuniverse.base.Utils;
 import net.projectuniverse.general.commands.*;
+import net.projectuniverse.general.commands.warps.CmdWarp;
 import net.projectuniverse.general.config.ConfigManager;
 import net.projectuniverse.general.config.ConfigValue;
 import net.projectuniverse.general.database.DBAccessLayer;
@@ -139,6 +140,7 @@ public class Server {
         MinecraftServer.getCommandManager().register(new CmdLeave());
         MinecraftServer.getCommandManager().register(new CmdMap());
         MinecraftServer.getCommandManager().register(new CmdTest());
+        MinecraftServer.getCommandManager().register(new CmdWarp());
     }
 
     private static void createDatabase() {

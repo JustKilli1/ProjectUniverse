@@ -10,57 +10,84 @@ import java.util.List;
 
 public abstract class PageableInventory<T> extends SingletonInventory {
 
-    private int currentPage = 1;
-    private static final ItemStack NEXT_PAGE_ITEM = ItemStack.of(Material.ARROW).withDisplayName(Component.text(">> Nächste Seite"));
-    private static final ItemStack PREVIOUS_PAGE_ITEM = ItemStack.of(Material.ARROW).withDisplayName(Component.text(">> Vorherige Seite"));
-    private final ClickableItem localNextPageItem = new ClickableItem(NEXT_PAGE_ITEM, player -> buildPage(++currentPage));
-    private final ClickableItem localPreviousPageItem = new ClickableItem(NEXT_PAGE_ITEM, player -> buildPage(--currentPage));
     private final List<T> elements;
-    private int[] possibleSlots;
+    private final int[] possibleSlots;
+    private int currentPage = 1;
 
+    private static final ItemStack NEXT_PAGE_ITEM = ItemStack.of(Material.ARROW).withDisplayName(Component.text("§8» §bNächste §7Seite"));
+    private static final ItemStack BE_PAGE_ITEM = ItemStack.of(Material.ARROW).withDisplayName(Component.text("§8» §bVorherige §7Seite"));
+    private final ClickableItem localNextPageItem = new ClickableItem(NEXT_PAGE_ITEM, player -> buildPage(++currentPage));
+    private final ClickableItem localBehaviorPageItem = new ClickableItem(BE_PAGE_ITEM, player -> buildPage(--currentPage));
 
-    public PageableInventory(InventoryType type, String title, boolean clickable, int[] possibleSlots, List<T> elements) {
-        super(type, title, clickable);
+    public PageableInventory(InventoryType inventoryType, String title, boolean clickable, int[] possibleSlots, List<T> values) {
+        super(inventoryType, clickable, title);
 
-        this.elements = elements;
+        this.elements = values;
         this.possibleSlots = possibleSlots;
-        buildPage(currentPage);
+
+        this.fill();
+        buildPage(1);
     }
 
-    public int calculateNextPageSlot() { return getInventory().getSize() - 1; }
-    public int calculatePreviousPageSlot() { return getInventory().getSize() - 9; }
+    public void fill() {}
 
-    public void buildPage(int page) {
-        this.currentPage = page;
+    public int calculateNextPageSlot() {
+        return this.getInventory().getSize() - 1;
+    }
+
+    public int calculateBehaviorPageSlot() {
+        return this.getInventory().getSize() - 9;
+    }
+
+    public int calculatePageCountSlot() {
+        return this.getInventory().getSize() - 5;
+    }
+
+    public void onPageChange(PageableInventory<T> inventory) {}
+
+    public void buildPage(int id) {
+
+        this.currentPage = id;
         this.clear();
 
-        if(currentPage > 1) setItem(calculatePreviousPageSlot(), localPreviousPageItem);
-        else removeItem(calculatePreviousPageSlot());
-
-        if(elements.size() == possibleSlots.length) removeItem(calculateNextPageSlot());
-        else if(currentPage < getMaxPage()) setItem(calculateNextPageSlot(), localNextPageItem);
-        else removeItem(calculateNextPageSlot());
-        
-        int stepId = 0;
-
-        System.out.println(stepId);
-        for(T element : elements.subList(possibleSlots.length * (currentPage - 1), Math.min(elements.size(), possibleSlots.length + (currentPage - 1) + possibleSlots.length))) {
-            System.out.println(stepId);
-            setItem(stepId, constructItem(element));
-            stepId++;
+        if (currentPage > 1) {
+            setItem(calculateBehaviorPageSlot(), localBehaviorPageItem);
+        } else {
+            removeItem(calculateBehaviorPageSlot());
         }
-        
+
+        if (elements.size() == possibleSlots.length) {
+            removeItem(calculateNextPageSlot());
+        } else if (currentPage < getMaximalPage()) {
+            setItem(calculateNextPageSlot(), localNextPageItem);
+        } else {
+            removeItem(calculateNextPageSlot());
+        }
+
+        ItemStack pageCountItem = ItemStack.of(Material.PAPER).withDisplayName(Component.text(currentPage + " / " + getMaximalPage()));
+        setItem(calculatePageCountSlot(), pageCountItem, null);
+
+        int stepID = 0;
+        for (T element : elements.subList(possibleSlots.length * (currentPage - 1), Math.min(elements.size(), possibleSlots.length * (currentPage - 1) + possibleSlots.length))) {
+            setItem(possibleSlots[stepID], constructItem(element));
+            stepID++;
+        }
+        onPageChange(this);
     }
 
-    private int getMaxPage() {
-        return elements.size() / possibleSlots.length;
+    public void clear() {
+        for (int slot : possibleSlots) {
+            getInventory().setItemStack(slot, ItemStack.AIR);
+        }
+    }
+
+    public int getMaximalPage() {
+        return (int) Math.ceil((double) elements.size() / (double) possibleSlots.length);
     }
 
     public abstract ClickableItem constructItem(T value);
 
-    private void clear() {
-        for(int possibleSlot : possibleSlots) {
-            getInventory().setItemStack(possibleSlot, ItemStack.AIR);
-        }
+    public int getCurrentPage() {
+        return currentPage;
     }
 }
