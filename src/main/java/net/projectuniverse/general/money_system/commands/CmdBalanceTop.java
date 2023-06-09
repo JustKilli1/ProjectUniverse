@@ -1,12 +1,8 @@
 package net.projectuniverse.general.money_system.commands;
 
-import net.minestom.server.command.builder.arguments.minecraft.ArgumentEntity;
 import net.minestom.server.entity.Player;
-import net.minestom.server.utils.entity.EntityFinder;
 import net.projectuniverse.general.commands.UniverseCommand;
 import net.projectuniverse.general.commands.command_executor.DefaultExecutor;
-import net.projectuniverse.general.config.configs.MessagesConfig;
-import net.projectuniverse.general.config.configs.MessagesParams;
 import net.projectuniverse.general.messenger.MessageDesign;
 import net.projectuniverse.general.messenger.Messenger;
 import net.projectuniverse.general.money_system.PlayerPurse;
@@ -49,7 +45,6 @@ public class CmdBalanceTop extends UniverseCommand {
                 if(i < richestPlayers.size()) message.append("\n");
             }
             Messenger.sendMessage(sender, MessageDesign.PLAYER_MESSAGE, message.toString());
-
         });
 
     }

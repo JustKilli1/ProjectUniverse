@@ -138,6 +138,7 @@ public class Server {
         MinecraftServer.getCommandManager().register(new CmdPlay());
         MinecraftServer.getCommandManager().register(new CmdLeave());
         MinecraftServer.getCommandManager().register(new CmdMap());
+        MinecraftServer.getCommandManager().register(new CmdTest());
     }
 
     private static void createDatabase() {
