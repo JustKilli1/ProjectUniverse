@@ -7,7 +7,7 @@ import net.minestom.server.command.builder.arguments.number.ArgumentInteger;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class UniverseCommand extends Command {
+public abstract class UniverseCommand extends Command {
 
 
     public static final ArgumentEntity PLAYER_ARGUMENT = ArgumentType.Entity("player-name");
