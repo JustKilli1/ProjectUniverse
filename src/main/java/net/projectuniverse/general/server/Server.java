@@ -11,6 +11,8 @@ import net.projectuniverse.general.config.ConfigManager;
 import net.projectuniverse.general.config.ConfigValue;
 import net.projectuniverse.general.database.DBAccessLayer;
 import net.projectuniverse.general.database.DBHandler;
+import net.projectuniverse.general.database.Database;
+import net.projectuniverse.general.database.DatabaseCreator;
 import net.projectuniverse.general.instance.InstanceHandler;
 import net.projectuniverse.general.listener.ChatListener;
 import net.projectuniverse.general.listener.JoinListener;
@@ -24,8 +26,11 @@ import net.projectuniverse.modules.tower_defence.commands.CmdLeave;
 import net.projectuniverse.modules.tower_defence.commands.CmdMap;
 import net.projectuniverse.modules.tower_defence.commands.CmdPlay;
 
+import java.util.List;
+
 public class Server {
 
+    public static final long START_TIME = System.currentTimeMillis();
     public static final ILogger SERVER_LOGGER = new LoggerBuilder("Server").addOutputPrinter(new TerminalPrinter()).build();
     public static ConfigManager MYSQL_CONFIG;
     private static DBAccessLayer sql;
@@ -141,15 +146,72 @@ public class Server {
         MinecraftServer.getCommandManager().register(new CmdMap());
         MinecraftServer.getCommandManager().register(new CmdTest());
         MinecraftServer.getCommandManager().register(new CmdWarp());
+        MinecraftServer.getCommandManager().register(new CmdPerformance());
     }
 
+    /**
+     * Create Database Tables
+     *
+     * This method creates the necessary database tables for the server to function properly.
+     * It initializes a DatabaseCreator object and uses it to create the tables.
+     *
+     * <p>The DatabaseCreator object is initialized with the following parameters:
+     * <ul>
+     *   <li>SERVER_LOGGER: The logger object used to log messages during the database creation process.</li>
+     *   <li>sql: The SQL database connection Object.</li>
+     *   <li>getDatabaseList(): A method that returns a list of tables to be created.</li>
+     * </ul>
+     *
+     * <p>After creating the tables, a log message is generated to indicate successful completion.
+     *
+     * <p>Note: The DatabaseCreator class and the LOGGER object used must be properly initialized before calling this method.
+     *
+     * @see DatabaseCreator
+     * @see ILogger
+     */
     private static void createDatabase() {
-        SERVER_LOGGER.log(LogLevel.INFO, "Create Database...");
-        sql.createPlayerTable();
-        sql.createPunishmentReasonTable();
-        SERVER_LOGGER.log(LogLevel.INFO, "Database created.");
+        SERVER_LOGGER.log(LogLevel.INFO, "Create Database Tables...");
+        DatabaseCreator databaseCreator = new DatabaseCreator(SERVER_LOGGER, sql, getDatabaseList());
+        databaseCreator.create();
+        SERVER_LOGGER.log(LogLevel.INFO, "Database Tables created.");
     }
 
+    /**
+     * Retrieves the list of databases.
+     *
+     * @return The list of databases.
+     */
+    private static List<Database> getDatabaseList() {
+        return List.of(buildPlayerDatabase(), buildPunishmentReasonDatabase());
+    }
+
+    /**
+     * Builds and returns the database for players.
+     *
+     * @return The constructed player database.
+     */
+    private static Database buildPlayerDatabase() {
+        return new Database.DatabaseBuilder("Player")
+                .addField(new Database.Column("PlayerID", Database.ColumnType.INTEGER, true, true, true, null))
+                .addField(new Database.Column("UUID", Database.ColumnType.TEXT, false, false, true, ""))
+                .addField(new Database.Column("Name", Database.ColumnType.TEXT, false, false, true, null))
+                .build();
+    }
+
+    /**
+     * Builds and returns the database for punishment reasons.
+     *
+     * @return The constructed punishment reason database.
+     */
+    private static Database buildPunishmentReasonDatabase() {
+        return new Database.DatabaseBuilder("PunishmentSystemReason")
+                .addField(new Database.Column("ReasonID", Database.ColumnType.INTEGER, true, true, true, null))
+                .addField(new Database.Column("PlayerId", Database.ColumnType.INTEGER, false, false, true, null))
+                .addField(new Database.Column("Reason", Database.ColumnType.LONG_TEXT, false, false, false, null))
+                .addField(new Database.Column("Duration", Database.ColumnType.INTEGER, false, false, false, "9999"))
+                .addField(new Database.Column("DurationId", Database.ColumnType.VARCHAR_1, false, false, false, "y"))
+                .build();
+    }
     private static void registerListener() {
         new JoinListener(sql, dbHandler, spawnInstance);
         new ChatListener();
