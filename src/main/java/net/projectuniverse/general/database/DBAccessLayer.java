@@ -29,32 +29,6 @@ public class DBAccessLayer {
         mySql.connect();
     }
 
-    /*
-    * Create Tables Queries
-    * */
-
-    public boolean createPlayerTable() {
-        String sqlQuery = "CREATE TABLE IF NOT EXISTS Player (" +
-                "PlayerID INT NOT NULL AUTO_INCREMENT, " +
-                "UUID VARCHAR(128) NOT NULL," +
-                "Name TEXT NOT NULL," +
-                "PRIMARY KEY(PlayerID)" +
-                ");";
-        return executeSQLRequest(sqlQuery);
-    }
-
-    public boolean createPunishmentReasonTable() {
-        String sqlQuery = "CREATE TABLE IF NOT EXISTS PunishmentSystemReason (" +
-                "ReasonID INT NOT NULL AUTO_INCREMENT, " +
-                "PlayerId INT NOT NULL, " +
-                "Reason LONGTEXT, " +
-                "Duration INT DEFAULT 9999, " +
-                "DurationId VARCHAR(1) DEFAULT 'y', " +
-                "PRIMARY KEY(ReasonID)" +
-                ");";
-        return executeSQLRequest(sqlQuery);
-    }
-
     /**
      * Creates a new database using the given Database object.
      *
@@ -65,11 +39,6 @@ public class DBAccessLayer {
         String sqlQuery = database.getDatabaseCreationQuery();
         return executeSQLRequest(sqlQuery);
     }
-
-    /*
-     * Create Tables Queries END
-     * */
-
 
     public boolean addPlayer(Player player) {
         String sqlQuery = "INSERT INTO Player (UUID, Name) VALUES (" +
