@@ -8,17 +8,6 @@ import java.sql.ResultSet;
 
 public class DBALMoney extends DBAccessLayer {
 
-    public boolean createPlayerMoneyTable() {
-        String sqlQuery = "CREATE TABLE IF NOT EXISTS PlayerMoneyTable (" +
-                "PlayerPurseID INT NOT NULL AUTO_INCREMENT, " +
-                "PlayerID INT NOT NULL, " +
-                "Currency VARCHAR(20) NOT NULL," +
-                "Amount INTEGER DEFAULT 0," +
-                "PRIMARY KEY(PlayerPurseID)" +
-                ");";
-        return executeSQLRequest(sqlQuery);
-    }
-
     public boolean addNewPlayerPurse(Player player, PlayerPurse.Currency currency, int amount) {
         String sqlQuery = "INSERT INTO PlayerMoneyTable (PlayerID, Currency, Amount) VALUES " +
                 "((SELECT PlayerID FROM Player WHERE UUID='" + player.getUuid() + "'), " +
