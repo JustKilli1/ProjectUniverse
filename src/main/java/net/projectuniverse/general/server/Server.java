@@ -5,6 +5,7 @@ import net.minestom.server.extras.MojangAuth;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.block.Block;
 import net.projectuniverse.base.Utils;
+import net.projectuniverse.general.ModuleLoader;
 import net.projectuniverse.general.commands.*;
 import net.projectuniverse.general.commands.warps.CmdWarp;
 import net.projectuniverse.general.config.ConfigManager;
@@ -96,10 +97,8 @@ public class Server {
     }
 
     private static void startModules() {
-        SERVER_LOGGER.log(LogLevel.INFO, "Modules startup...");
-        ModuleMoneySystem moneySystem = new ModuleMoneySystem();
-        moneySystem.start();
-        SERVER_LOGGER.log(LogLevel.INFO, "Modules started");
+        ModuleLoader moduleLoader = new ModuleLoader();
+        moduleLoader.startModules();
     }
 
     private static void createSpawnInstance() {
