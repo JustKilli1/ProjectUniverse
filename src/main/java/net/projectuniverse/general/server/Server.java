@@ -33,6 +33,7 @@ public class Server {
 
     public static final long START_TIME = System.currentTimeMillis();
     public static final ILogger SERVER_LOGGER = new LoggerBuilder("Server").addOutputPrinter(new TerminalPrinter()).build();
+    public static final ModuleLoader MODULE_LOADER = new ModuleLoader();
     public static ConfigManager MYSQL_CONFIG;
     private static DBAccessLayer sql;
     private static DBHandler dbHandler;
@@ -92,13 +93,13 @@ public class Server {
      * Stops the Server
      * */
     public static void stop() {
+        MODULE_LOADER.stopModules();
         SERVER_LOGGER.log(LogLevel.INFO, "Server closed");
         System.exit(0);
     }
 
     private static void startModules() {
-        ModuleLoader moduleLoader = new ModuleLoader();
-        moduleLoader.startModules();
+        MODULE_LOADER.startModules();
     }
 
     private static void createSpawnInstance() {
