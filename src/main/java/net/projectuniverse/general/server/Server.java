@@ -77,11 +77,11 @@ public class Server {
         } catch(InterruptedException e) {
             throw new RuntimeException(e);
         }
+        createDatabase();
         startModules();
 
         SERVER_LOGGER.log(LogLevel.INFO, "Bound IP-Adresse: " + ip);
         SERVER_LOGGER.log(LogLevel.INFO, "Bound Port: " + port);
-        createDatabase();
         SERVER_LOGGER.log(LogLevel.INFO, "Project Universe startup complete.");
         SERVER_LOGGER.log(LogLevel.INFO, "Hello c:");
 
