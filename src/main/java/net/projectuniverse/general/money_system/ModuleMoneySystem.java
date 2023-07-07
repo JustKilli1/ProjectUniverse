@@ -64,7 +64,7 @@ public class ModuleMoneySystem extends Module {
     }
 
     @Override
-    public void reload() {
-
+    public boolean reload() {
+        return true;
     }
 }
