@@ -1,6 +1,5 @@
 package net.projectuniverse.base;
 
-import net.minestom.server.MinecraftServer;
 import net.projectuniverse.general.server.Server;
 
 public class Main {
