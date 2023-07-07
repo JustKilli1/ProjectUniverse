@@ -2,6 +2,8 @@ package net.projectuniverse.general.money_system;
 
 import net.minestom.server.MinecraftServer;
 import net.projectuniverse.general.Module;
+import net.projectuniverse.general.database.Database;
+import net.projectuniverse.general.database.DatabaseCreator;
 import net.projectuniverse.general.logging.LogLevel;
 import net.projectuniverse.general.logging.loggers.LoggerBuilder;
 import net.projectuniverse.general.logging.output.TerminalPrinter;
@@ -10,6 +12,7 @@ import net.projectuniverse.general.money_system.database.DBALMoney;
 import net.projectuniverse.general.money_system.database.DBHMoney;
 import net.projectuniverse.general.money_system.listener.JoinListener;
 
+import java.util.List;
 
 
 /**
@@ -39,10 +42,38 @@ public class ModuleMoneySystem extends Module {
 
         moduleLogger.log(LogLevel.INFO, "Started successfully.");
     }
+
+    /**
+     * Create the database tables.
+     */
+    private void createDatabase() {
+        moduleLogger.log(LogLevel.INFO, "Create Database Tables...");
+        DatabaseCreator databaseCreator = new DatabaseCreator(moduleLogger, sql, getDatabaseList());
+        databaseCreator.create();
+        moduleLogger.log(LogLevel.INFO, "Database Tables created.");
     }
 
-    private void createDatabases() {
-        sql.createPlayerMoneyTable();
+    /**
+     * Retrieves the list of databases.
+     *
+     * @return The list of databases.
+     */
+    private List<Database> getDatabaseList() {
+        return List.of(buildPlayerMoneyTable());
+    }
+
+    /**
+     * Builds and returns the database for players.
+     *
+     * @return The constructed player database.
+     */
+    private Database buildPlayerMoneyTable() {
+        return new Database.DatabaseBuilder("PlayerMoneyTable")
+                .addField(new Database.Column("PlayerPurseID", Database.ColumnType.INTEGER, true, true, true, null))
+                .addField(new Database.Column("PlayerId", Database.ColumnType.INTEGER, false, false, true, null))
+                .addField(new Database.Column("Currency", Database.ColumnType.VARCHAR_20, false, false, true, null))
+                .addField(new Database.Column("Amount", Database.ColumnType.INTEGER, false, false, false, "0"))
+                .build();
     }
 
     private void registerListener() {
