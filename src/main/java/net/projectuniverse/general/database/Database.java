@@ -94,6 +94,7 @@ public record Database(String name, List<Column> fields) {
     public static enum ColumnType {
         INTEGER("INTEGER"),
         TEXT("TEXT"),
+        LONG_TEXT("LONGTEXT"),
         VARCHAR_1("VARCHAR(1)"),
         VARCHAR_2("VARCHAR(2)"),
         VARCHAR_3("VARCHAR(3)"),
