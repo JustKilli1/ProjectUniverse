@@ -6,8 +6,6 @@ import net.projectuniverse.general.logging.loggers.LoggerBuilder;
 import net.projectuniverse.general.logging.output.TerminalPrinter;
 import org.reflections.Reflections;
 
-import java.lang.reflect.Constructor;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -80,14 +78,28 @@ public class ModuleLoader {
         logger.log(LogLevel.INFO, "Modules started");
     }
 
+    /**
+     * Stops all the modules.
+     *
+     * This method iterates over the list of modules and stops each module by calling their stop method.
+     * It logs the module shutdown process using the logger.
+     */
     public void stopModules() {
         logger.log(LogLevel.INFO, "Module Shutdown...");
         modules.forEach(Module::stop);
         logger.log(LogLevel.INFO, "Module Shutdown successfully.");
     }
 
+    /**
+     * Reloads all the modules.
+     *
+     * This method iterates over the list of modules and reloads each module by calling their reload method.
+     * It logs the module reloading process using the logger.
+     */
     public void reloadModules() {
+        logger.log(LogLevel.INFO, "Modules Reloading...");
         modules.forEach(Module::reload);
+        logger.log(LogLevel.INFO, "Modules Reloaded");
     }
 
     public List<Module> getModules() {
