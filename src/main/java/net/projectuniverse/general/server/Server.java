@@ -33,7 +33,7 @@ public class Server {
 
     public static final long START_TIME = System.currentTimeMillis();
     public static final ILogger SERVER_LOGGER = new LoggerBuilder("Server").addOutputPrinter(new TerminalPrinter()).build();
-    public static final ModuleLoader MODULE_LOADER = new ModuleLoader();
+    public static ModuleLoader MODULE_LOADER;
     public static ConfigManager MYSQL_CONFIG;
     private static DBAccessLayer sql;
     private static DBHandler dbHandler;
@@ -99,6 +99,7 @@ public class Server {
     }
 
     private static void startModules() {
+        MODULE_LOADER = new ModuleLoader();
         MODULE_LOADER.startModules();
     }
 
