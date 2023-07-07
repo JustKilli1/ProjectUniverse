@@ -119,7 +119,7 @@ public record Database(String name, List<Column> fields) {
      * Each DBColumn object has a name, type, primary key indicator, auto-increment indicator, and not null indicator.
      */
 
-    public record Column(String name, Database.ColumnType type, boolean isPrimaryKey, boolean isAutoIncrement, boolean isNotNull) {
+    public record Column(String name, Database.ColumnType type, boolean isPrimaryKey, boolean isAutoIncrement, boolean isNotNull, String defaultValue) {
 
         /**
          * Returns a string representation of the object.
@@ -146,6 +146,9 @@ public record Database(String name, List<Column> fields) {
 
             if (isNotNull)
                 builder.append(" NOT NULL");
+
+            if(defaultValue != null && !defaultValue.isEmpty())
+                builder.append(" DEFAULT ").append("'").append(defaultValue).append("'");
 
             return builder.toString();
         }
