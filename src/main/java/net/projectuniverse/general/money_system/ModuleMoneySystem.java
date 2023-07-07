@@ -10,27 +10,35 @@ import net.projectuniverse.general.money_system.database.DBALMoney;
 import net.projectuniverse.general.money_system.database.DBHMoney;
 import net.projectuniverse.general.money_system.listener.JoinListener;
 
+
+
+/**
+ * The ModuleMoneySystem class is a module that controls everything related to money management and transactions.
+ */
+
 public class ModuleMoneySystem extends Module {
 
     private final DBALMoney sql;
     private final DBHMoney dbHandler;
 
     public ModuleMoneySystem() {
-        super("Money System", "This System Controls everything related to Money Management/Transactions.", new LoggerBuilder("ModuleMoneySystem").addOutputPrinter(new TerminalPrinter()).build());
+        super("Money System", "This System Controls everything related to Money Management/Transactions.", new LoggerBuilder("MoneySystem").addOutputPrinter(new TerminalPrinter()).build());
         sql = new DBALMoney();
         dbHandler = new DBHMoney(sql);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void start() {
-        moduleLogger.log(LogLevel.INFO, "Module [" + getName() + "] startup...");
-        moduleLogger.log(LogLevel.INFO, "Creating Databases...");
-        createDatabases();
-        moduleLogger.log(LogLevel.INFO, "Databases created.");
+        moduleLogger.log(LogLevel.INFO, "Startup...");
+        createDatabase();
         registerListener();
         registerCommands();
 
-        moduleLogger.log(LogLevel.INFO, "Module [" + getName() + "] started");
+        moduleLogger.log(LogLevel.INFO, "Started successfully.");
+    }
     }
 
     private void createDatabases() {
@@ -51,7 +59,8 @@ public class ModuleMoneySystem extends Module {
 
     @Override
     public void stop() {
-
+        moduleLogger.log(LogLevel.INFO, "Shutting down...");
+        moduleLogger.log(LogLevel.INFO, "Shutting down successfully.");
     }
 
     @Override
