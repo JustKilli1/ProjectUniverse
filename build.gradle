@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'net.projectuniverse'
-version '0.6.22-dev'
+version '0.7.0-dev'
 
 repositories {
     mavenCentral()
@@ -19,6 +19,7 @@ dependencies {
     implementation 'com.github.Minestom.Minestom:Minestom:954e8b3915'
     implementation group: 'org.jline', name: 'jline', version: '3.23.0'
     implementation 'me.carleslc.Simple-YAML:Simple-Yaml:1.8.3'
+    implementation 'org.reflections:reflections:0.10.2'
 }
 
 test {
