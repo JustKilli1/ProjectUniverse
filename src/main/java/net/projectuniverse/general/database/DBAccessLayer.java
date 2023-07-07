@@ -9,6 +9,7 @@ import net.projectuniverse.general.logging.loggers.LoggerBuilder;
 import net.projectuniverse.general.logging.output.TerminalPrinter;
 import net.projectuniverse.general.server.Server;
 
+import javax.xml.crypto.Data;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -51,6 +52,17 @@ public class DBAccessLayer {
                 "DurationId VARCHAR(1) DEFAULT 'y', " +
                 "PRIMARY KEY(ReasonID)" +
                 ");";
+        return executeSQLRequest(sqlQuery);
+    }
+
+    /**
+     * Creates a new database using the given Database object.
+     *
+     * @param database the Database object containing the database creation query
+     * @return true if the database was created successfully, false otherwise
+     */
+    public boolean createDatabase(Database database) {
+        String sqlQuery = database.getDatabaseCreationQuery();
         return executeSQLRequest(sqlQuery);
     }
 
