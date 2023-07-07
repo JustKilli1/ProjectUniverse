@@ -1,15 +1,15 @@
 package net.projectuniverse.general.database;
 
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.StringJoiner;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Represents a database.
  */
 
-public record Database(String name, Map<String, ColumnType> fields) {
+public record Database(String name, List<Column> fields) {
 
     /**
      * Returns the database creation query for creating a table with the given name and fields.
@@ -19,11 +19,10 @@ public record Database(String name, Map<String, ColumnType> fields) {
      * @return the database creation query as a string
      */
     public String getDatabaseCreationQuery() {
-        StringJoiner fieldsJoiner = new StringJoiner(", ");
-        for(Map.Entry<String, ColumnType> entry : fields.entrySet()) {
-            fieldsJoiner.add(entry.getKey() + " " + entry.getValue());
-        }
-        return "CREATE TABLE IF NOT EXISTS " + name + " (" + fieldsJoiner.toString() + ");";
+    String fieldsJoined = fields.stream()
+                                .map(Object::toString)
+                                .collect(Collectors.joining(", "));
+    return String.format("CREATE TABLE IF NOT EXISTS %s (%s);", name, fieldsJoined);
     }
 
     /**
@@ -37,23 +36,24 @@ public record Database(String name, Map<String, ColumnType> fields) {
          */
         private final String name;
         /**
-         * A map representing the fields.
+         * Represents a list of columns.
+         * The list contains Column objects which represent individual fields.
          */
-        private final Map<String, ColumnType> fields;
+        private List<Column> fields;
 
         /**
          * Constructs a new DatabaseBuilder object with the specified name and fields.
          *
          * @param name   the name of the database (must not be null)
-         * @param fields a map of field names and their corresponding values (must not be null)
+         * @param fields a list of column objects representing the fields of the database (must not be null)
          * @throws IllegalArgumentException if name or fields parameter is null
          */
-        public DatabaseBuilder(String name, Map<String, ColumnType> fields) {
+        public DatabaseBuilder(String name, List<Column> fields) {
             if (name == null || fields == null) {
                 throw new IllegalArgumentException("Name and fields must not be null");
             }
             this.name = name;
-            this.fields = new HashMap<>(fields);
+            this.fields = new ArrayList<>(fields);
         }
 
         /**
@@ -62,22 +62,19 @@ public record Database(String name, Map<String, ColumnType> fields) {
          * @param name the name of the database
          */
         public DatabaseBuilder(String name) {
-            this(name, new HashMap<>());
+            this(name, new ArrayList<>());
         }
 
         /**
          * Adds a field to the database builder.
          *
-         * @param name the name of the field to be added
-         * @param type the type of the field to be added
-         * @throws IllegalArgumentException if the name or type is null
+         * @param column the column representing the field to be added
+         * @throws IllegalArgumentException if the column is null
          * @return the DatabaseBuilder instance with the added field
          */
-        public DatabaseBuilder addField(String name, ColumnType type) {
-            if (name == null || type == null) {
-                throw new IllegalArgumentException("Field name and type must not be null");
-            }
-            fields.put(name, type);
+        public DatabaseBuilder addField(Column column) {
+            if (column == null) throw new IllegalArgumentException("Field name and type must not be null");
+            fields.add(column);
             return this;
         }
 
@@ -114,6 +111,43 @@ public record Database(String name, Map<String, ColumnType> fields) {
         @Override
         public String toString() {
             return sqlType;
+        }
+    }
+
+    /**
+     * The DBColumn class represents a column in a database table.
+     * Each DBColumn object has a name, type, primary key indicator, auto-increment indicator, and not null indicator.
+     */
+
+    public record Column(String name, Database.ColumnType type, boolean isPrimaryKey, boolean isAutoIncrement, boolean isNotNull) {
+
+        /**
+         * Returns a string representation of the object.
+         * The returned string contains the name and type of the object followed by any additional properties.
+         * If the object is a primary key, " PRIMARY KEY" is appended to the string.
+         * If the object has an autoincrement property, " AUTOINCREMENT" is appended.
+         * If the object has a not null property, " NOT NULL" is appended.
+         *
+         * @return a string representation of the object.
+         */
+        @Override
+        public String toString() {
+            StringBuilder builder = new StringBuilder();
+
+            builder.append(name)
+              .append(' ')
+              .append(type);
+
+            if (isPrimaryKey)
+                builder.append(" PRIMARY KEY");
+
+            if (isAutoIncrement)
+                builder.append(" AUTO_INCREMENT");
+
+            if (isNotNull)
+                builder.append(" NOT NULL");
+
+            return builder.toString();
         }
     }
 

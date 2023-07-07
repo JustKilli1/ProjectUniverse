@@ -59,12 +59,12 @@ public class DatabaseCreator {
     private boolean createDatabaseAndLogStatus(Database database) {
         String databaseName = database.name();
 
-        logger.log(LogLevel.INFO, String.format("Creating database %s...", databaseName));
+        logger.log(LogLevel.INFO, String.format("Creating database table %s...", databaseName));
         if(!sql.createDatabase(database)) {
-            logger.log(LogLevel.ERROR, String.format("Failed to create database %s", databaseName));
+            logger.log(LogLevel.ERROR, String.format("Failed to create database table %s", databaseName));
             return false;
         }
-        logger.log(LogLevel.INFO, String.format("Created database %s", databaseName));
+        logger.log(LogLevel.INFO, String.format("Created database table %s", databaseName));
         return true;
     }
 
