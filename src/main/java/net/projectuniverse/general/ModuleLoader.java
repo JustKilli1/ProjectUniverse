@@ -14,16 +14,34 @@ import java.util.Set;
 public class ModuleLoader {
 
     private final ILogger logger = new LoggerBuilder("ModuleLoader").addOutputPrinter(new TerminalPrinter()).build();
+    /**
+     * Represents a list of modules.
+     * @see Module
+     */
     private final List<Module> modules;
 
+    /**
+     * Constructs a new ModuleLoader instance with the given modules.
+     *
+     * @param modules the list of modules to load
+     */
     public ModuleLoader(List<Module> modules) {
         this.modules = modules;
     }
 
+    /**
+     * Constructs a new ModuleLoader instance and loads all modules in the net.projectuniverse package
+     * and its sub-packages.
+     */
     public ModuleLoader() {
         modules = loadModules();
     }
 
+    /**
+     * Loads all modules in the net.projectuniverse package and its sub-packages.
+     *
+     * @return a List of Module objects representing the loaded modules
+     */
     public List<Module> loadModules() {
         List<Module> modules = new ArrayList<>();
         Reflections reflections = new Reflections("net.projectuniverse");
@@ -39,6 +57,12 @@ public class ModuleLoader {
         return modules;
     }
 
+    /**
+     * Starts all the modules.
+     *
+     * This method iterates over the list of modules and starts each module by calling their start method.
+     * It logs the module startup process using the logger.
+     */
     public void startModules() {
         logger.log(LogLevel.INFO, "Modules startup...");
         modules.forEach(Module::start);
