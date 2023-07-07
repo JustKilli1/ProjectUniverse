@@ -61,17 +61,4 @@ public class ModuleLoader {
         return modules.stream().filter(module -> module.getName().equals(name)).findFirst().orElse(null);
     }
 
-    public static class ModuleLoaderBuilder {
-        private List<Module> modules;
-
-        public ModuleLoaderBuilder addModule(Module module) {
-            modules.add(module);
-            return this;
-        }
-
-        public ModuleLoader build() {
-            return new ModuleLoader(modules);
-        }
-    }
-
 }
