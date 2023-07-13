@@ -1,4 +1,4 @@
-package net.projectuniverse.general.commands;
+package net.projectuniverse.general.penalty_system.commands;
 
 import net.minestom.server.command.builder.Command;
 import net.minestom.server.command.builder.arguments.ArgumentType;

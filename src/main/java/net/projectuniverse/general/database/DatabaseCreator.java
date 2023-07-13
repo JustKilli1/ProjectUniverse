@@ -26,7 +26,7 @@ public class DatabaseCreator {
      * Represents a list of databases to be created.
      * This list contains the databases that need to be created.
      */
-    private final List<Database> databases;
+    private final List<DatabaseTable> databases;
 
     /**
      * Constructs a new DatabaseCreator with the specified logger, SQL access layer, and list of databases.
@@ -35,10 +35,10 @@ public class DatabaseCreator {
      * @param sql       the SQL access layer used to create databases
      * @param databases the list of databases to be created
      */
-    public DatabaseCreator(ILogger logger, DBAccessLayer sql, List<Database> databases) {
+    public DatabaseCreator(ILogger logger, DBAccessLayer sql, List<DatabaseTable> databases) {
         this.logger = logger;
         this.sql = sql;
-        this.databases = databases;
+        this.databases = databases == null ? List.of() : databases;
     }
 
     /**
@@ -56,7 +56,7 @@ public class DatabaseCreator {
      * @param database the database to create
      * @return true if the database creation is successful, false otherwise
      */
-    private boolean createDatabaseAndLogStatus(Database database) {
+    private boolean createDatabaseAndLogStatus(DatabaseTable database) {
         String databaseName = database.name();
 
         logger.log(LogLevel.INFO, String.format("Creating database table %s...", databaseName));

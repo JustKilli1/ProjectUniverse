@@ -30,10 +30,14 @@ public class PlayerPurse {
         this(player, currency, sql, 0);
     }
 
-    private void loadPlayerAmount() {
-        amount = 0;
-    }
 
+    /**
+     * Updates the amount in the player's purse and returns the result of the transaction.
+     *
+     * @param newAmount The new amount to update in the player's purse.
+     * @return The result of the transaction. Returns {@link TransactionResult#SUCCESS} if the transaction succeeded.
+     *         Returns {@link TransactionResult#FAILED} if the transaction failed with no reason.
+     */
     private TransactionResult updateAmount(int newAmount) {
         if(newAmount < 0) return TransactionResult.FAILED;
         amount = newAmount;

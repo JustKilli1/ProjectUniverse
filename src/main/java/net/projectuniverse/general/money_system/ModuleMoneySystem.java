@@ -2,7 +2,7 @@ package net.projectuniverse.general.money_system;
 
 import net.minestom.server.MinecraftServer;
 import net.projectuniverse.general.Module;
-import net.projectuniverse.general.database.Database;
+import net.projectuniverse.general.database.DatabaseTable;
 import net.projectuniverse.general.database.DatabaseCreator;
 import net.projectuniverse.general.logging.LogLevel;
 import net.projectuniverse.general.logging.loggers.LoggerBuilder;
@@ -25,7 +25,7 @@ public class ModuleMoneySystem extends Module {
     private final DBHMoney dbHandler;
 
     public ModuleMoneySystem() {
-        super("Money System", "This System Controls everything related to Money Management/Transactions.", new LoggerBuilder("MoneySystem").addOutputPrinter(new TerminalPrinter()).build());
+        super("Money System", "This System Controls everything related to Money Management/Transactions.");
         sql = new DBALMoney();
         dbHandler = new DBHMoney(sql);
     }
@@ -43,22 +43,9 @@ public class ModuleMoneySystem extends Module {
         moduleLogger.log(LogLevel.INFO, "Started successfully.");
     }
 
-    /**
-     * Create the database tables.
-     */
-    private void createDatabase() {
-        moduleLogger.log(LogLevel.INFO, "Create Database Tables...");
-        DatabaseCreator databaseCreator = new DatabaseCreator(moduleLogger, sql, getDatabaseList());
-        databaseCreator.create();
-        moduleLogger.log(LogLevel.INFO, "Database Tables created.");
-    }
 
-    /**
-     * Retrieves the list of databases.
-     *
-     * @return The list of databases.
-     */
-    private List<Database> getDatabaseList() {
+    @Override
+    public List<DatabaseTable> getDatabase() {
         return List.of(buildPlayerMoneyTable());
     }
 
@@ -67,12 +54,12 @@ public class ModuleMoneySystem extends Module {
      *
      * @return The constructed player database.
      */
-    private Database buildPlayerMoneyTable() {
-        return new Database.DatabaseBuilder("PlayerMoneyTable")
-                .addField(new Database.Column("PlayerPurseID", Database.ColumnType.INTEGER, true, true, true, null))
-                .addField(new Database.Column("PlayerId", Database.ColumnType.INTEGER, false, false, true, null))
-                .addField(new Database.Column("Currency", Database.ColumnType.VARCHAR_20, false, false, true, null))
-                .addField(new Database.Column("Amount", Database.ColumnType.INTEGER, false, false, false, "0"))
+    private DatabaseTable buildPlayerMoneyTable() {
+        return new DatabaseTable.DatabaseTableBuilder("PlayerMoneyTable")
+                .addField(new DatabaseTable.Column("PlayerPurseID", DatabaseTable.ColumnType.INTEGER, true, true, true, null))
+                .addField(new DatabaseTable.Column("PlayerId", DatabaseTable.ColumnType.INTEGER, false, false, true, null))
+                .addField(new DatabaseTable.Column("Currency", DatabaseTable.ColumnType.VARCHAR_20, false, false, true, null))
+                .addField(new DatabaseTable.Column("Amount", DatabaseTable.ColumnType.INTEGER, false, false, false, "0"))
                 .build();
     }
 

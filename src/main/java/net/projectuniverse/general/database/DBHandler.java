@@ -1,5 +1,6 @@
 package net.projectuniverse.general.database;
 
+import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.projectuniverse.general.logging.ILogger;
 import net.projectuniverse.general.logging.LogLevel;
@@ -7,6 +8,13 @@ import net.projectuniverse.general.logging.LogLevel;
 import java.sql.ResultSet;
 import java.util.Optional;
 
+
+/**
+ * DBHandler class is responsible for handling database operations.
+ * It works with ResultSets obtained from SQL queries.
+ *
+ * @see DBAccessLayer
+ */
 
 public class DBHandler {
 
@@ -22,101 +30,119 @@ public class DBHandler {
         this.sql = sql;
     }
 
-
+    /**
+     * Checks if the given player exists in the database.
+     *
+     * @param player the player to check for existence in the database
+     * @return true if the player exists in the database, false otherwise
+     */
     public boolean playerInDatabase(Player player) {
         try {
-            ResultSet result = sql.getPlayer(player);
-            if(result == null || !result.next()) return false;
-            return true;
+            return resultSetIsEmpty(sql.getPlayer(player)).isPresent();
         } catch(Exception ex) {
             logger.log(LogLevel.ERROR, "Could not execute Player in Database Query", ex);
             return false;
         }
     }
 
-    public boolean playerHasActivePunishment(Player player) {
-        try {
-            Optional<Integer> playerIdOpt = getPlayerId(player);
-            if(playerIdOpt.isEmpty()) return false;
-            int playerId = playerIdOpt.get();
-            ResultSet result = sql.getPunishment(playerId);
-            if(result == null) return false;
-            if(! result.next()) return false;
-            return true;
-        } catch(Exception ex) {
-            logger.log(LogLevel.ERROR, "Could not check for active Player Punishment for Player " + player.getUsername(), ex);
-            return false;
-        }
-    }
-
-    public boolean playerHasActivePunishment(String playerName) {
-        try {
-            Optional<Integer> playerIdOpt = getPlayerId(playerName);
-            if(playerIdOpt.isEmpty()) return false;
-            int playerId = playerIdOpt.get();
-            ResultSet result = sql.getPunishment(playerId);
-            if(result == null) return false;
-            if(!result.next()) return false;
-            return true;
-        } catch(Exception ex) {
-            logger.log(LogLevel.ERROR, "Could not check for active Player Punishment for Player " + playerName, ex);
-            return false;
-        }
-    }
-
-    public Optional<String> getPunishmentReason(Player player) {
-        try {
-            Optional<Integer> playerIdOpt = getPlayerId(player);
-            if(playerIdOpt.isEmpty()) return Optional.empty();
-            int playerId = playerIdOpt.get();
-            ResultSet result = sql.getPunishment(playerId);
-            if(result == null) return Optional.empty();
-            if(! result.next()) return Optional.empty();
-            return Optional.ofNullable(result.getString("Reason"));
-        } catch(Exception ex) {
-            logger.log(LogLevel.ERROR, "Could not get Punishment Reson for Player " + player.getUsername(), ex);
-            return Optional.empty();
-        }
-    }
-
-    public boolean addPlayerPunishmentReason(Player player, String reason, int duration, char durationId) {
-        Optional<Integer> playerIdOpt = getPlayerId(player);
-        if(playerIdOpt.isEmpty()) return false;
-        int playerId = playerIdOpt.get();
-        return sql.addPunishmentReason(playerId, reason, duration, durationId);
-    }
-
-    public boolean removePlayerPunishment(String playerName) {
-        Optional<Integer> playerIdOpt = getPlayerId(playerName);
-        if(playerIdOpt.isEmpty()) return false;
-        int playerId = playerIdOpt.get();
-        return sql.removePunishmentReason(playerId);
-    }
-
+    /**
+     * Gets the ID of the given player.
+     *
+     * @param player the name of the player to get the ID for
+     * @return an Optional containing the ID of the player if it exists, otherwise an empty Optional
+     */
     public Optional<Integer> getPlayerId(Player player) {
         try {
-            ResultSet result = sql.getPlayer(player);
-            if(result == null) return Optional.empty();
-            if(!result.next()) return Optional.empty();
-            return Optional.ofNullable(result.getInt("PlayerID"));
+            Optional<ResultSet> resultOpt = resultSetIsEmpty(sql.getPlayer(player));
+            if(resultOpt.isEmpty()) return Optional.empty();
+            ResultSet result = resultOpt.get();
+            return Optional.of(result.getInt("PlayerID"));
         } catch(Exception ex) {
-            logger.log(LogLevel.ERROR, "Could not get Id from Player " + player.getUsername(), ex);
+            logger.log(LogLevel.ERROR, String.format("Could not get Id from Player %s.", player.getUsername()), ex);
             return Optional.empty();
         }
     }
 
+    /**
+     * Gets the ID of the player with the given name.
+     *
+     * @param playerName the name of the player to get the ID for
+     * @return an Optional containing the ID of the player if it exists, otherwise an empty Optional
+     */
     public Optional<Integer> getPlayerId(String playerName) {
         try {
-            ResultSet result = sql.getPlayer(playerName);
-            if(result == null) return Optional.empty();
-            if(!result.next()) return Optional.empty();
-            return Optional.ofNullable(result.getInt("PlayerID"));
+            Optional<ResultSet> resultOpt = resultSetIsEmpty(sql.getPlayer(playerName));
+            if(resultOpt.isEmpty()) return Optional.empty();
+            ResultSet result = resultOpt.get();
+            return Optional.of(result.getInt("PlayerID"));
         } catch(Exception ex) {
-            logger.log(LogLevel.ERROR, "Could not get Id from Player " + playerName, ex);
+            logger.log(LogLevel.ERROR, String.format("Could not get Id from Player %s.", playerName), ex);
             return Optional.empty();
         }
     }
 
+    /**
+     * Closes the provided ResultSet
+     *
+     * @param result ResultSet to be closed
+     */
+    private void closeResultSet(ResultSet result) {
+        try {
+            result.close();
+        } catch (Exception ex) {
+            logger.log(LogLevel.ERROR, "Could not close ResultSet", ex);
+        }
+    }
 
+    /**
+     * Checks if the given ResultSet is empty.
+     *
+     * @param result the ResultSet to check
+     * @param close if true, the ResultSet will be closed after checking
+     * @return an Optional containing the non-empty ResultSet if it exists, otherwise an empty Optional
+     */
+    public Optional<ResultSet> resultSetIsEmpty(ResultSet result, boolean close) {
+        if(result == null) return Optional.empty();
+        try {
+            if(!result.next()) return Optional.empty();
+            return Optional.of(result);
+        } catch(Exception ex) {
+            logger.log(LogLevel.ERROR, "Could not check if ResultSet is empty", ex);
+            return Optional.empty();
+        } finally {
+            if(close) closeResultSet(result);
+        }
+    }
 
+    /**
+     * Checks if the given ResultSet is empty.
+     *
+     * @param result the ResultSet to check for emptiness
+     * @return an Optional containing the ResultSet if it is not empty, otherwise an empty Optional
+     */
+    public Optional<ResultSet> resultSetIsEmpty(ResultSet result) {
+        return resultSetIsEmpty(result, false);
+    }
+
+    /**
+     * Checks if the given Optional<ResultSet> is empty.
+     *
+     * @param resultOpt the Optional<ResultSet> to check for emptiness
+     * @param close a flag specifying whether to close the ResultSet after checking for emptiness
+     * @return an Optional containing the ResultSet if it is not empty, otherwise an empty Optional
+     */
+    public Optional<ResultSet> resultSetIsEmpty(Optional<ResultSet> resultOpt, boolean close) {
+        if(resultOpt.isEmpty()) return Optional.empty();
+        return resultSetIsEmpty(resultOpt.get(), close);
+    }
+
+    /**
+     * Checks if the given ResultSet is empty.
+     *
+     * @param resultOpt the ResultSet to check for emptiness
+     * @return an Optional containing the ResultSet if it is not empty, otherwise an empty Optional
+     */
+    public Optional<ResultSet> resultSetIsEmpty(Optional<ResultSet> resultOpt) {
+        return resultSetIsEmpty(resultOpt, false);
+    }
 }

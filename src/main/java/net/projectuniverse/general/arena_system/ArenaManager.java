@@ -7,6 +7,8 @@ import net.projectuniverse.general.logging.ILogger;
 import net.projectuniverse.general.logging.LogLevel;
 import net.projectuniverse.general.logging.loggers.LoggerBuilder;
 import net.projectuniverse.general.logging.output.TerminalPrinter;
+import net.projectuniverse.general.messenger.MessageDesign;
+import net.projectuniverse.general.messenger.Messenger;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,6 +37,7 @@ public class ArenaManager {
         Arena arena = find(player);
         if(arena == null) {
             logger.log(LogLevel.WARN, "Player " + player.getUsername() + " left a Arena. But the Arena could not be found in the arenas Map");
+            Messenger.sendPlayerMessage(player, MessageDesign.PLAYER_MESSAGE, "Du bist in keinem Spiel");
             return;
         }
         arena.stop();

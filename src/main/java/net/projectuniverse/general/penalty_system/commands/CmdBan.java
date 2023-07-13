@@ -1,4 +1,4 @@
-package net.projectuniverse.general.commands;
+package net.projectuniverse.general.penalty_system.commands;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
@@ -15,12 +15,14 @@ import net.projectuniverse.general.database.DBAccessLayer;
 import net.projectuniverse.general.database.DBHandler;
 import net.projectuniverse.general.messenger.MessageDesign;
 import net.projectuniverse.general.messenger.Messenger;
+import net.projectuniverse.general.penalty_system.database.DBALPenaltySystem;
+import net.projectuniverse.general.penalty_system.database.DBHPenaltySystem;
 
 public class CmdBan extends Command {
-    private DBAccessLayer sql;
-    private DBHandler dbHandler;
+    private DBALPenaltySystem sql;
+    private DBHPenaltySystem dbHandler;
 
-    public CmdBan(DBAccessLayer sql, DBHandler dbHandler) {
+    public CmdBan(DBALPenaltySystem sql, DBHPenaltySystem dbHandler) {
         super("ban");
         this.sql = sql;
         this.dbHandler = dbHandler;

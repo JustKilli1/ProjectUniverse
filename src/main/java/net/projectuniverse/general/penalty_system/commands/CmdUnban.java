@@ -1,4 +1,4 @@
-package net.projectuniverse.general.commands;
+package net.projectuniverse.general.penalty_system.commands;
 
 import net.minestom.server.command.builder.Command;
 import net.minestom.server.command.builder.arguments.ArgumentType;
@@ -7,12 +7,13 @@ import net.projectuniverse.general.config.configs.MessagesParams;
 import net.projectuniverse.general.database.DBHandler;
 import net.projectuniverse.general.messenger.MessageDesign;
 import net.projectuniverse.general.messenger.Messenger;
+import net.projectuniverse.general.penalty_system.database.DBHPenaltySystem;
 
 public class CmdUnban extends Command {
 
-    private DBHandler dbHandler;
+    private DBHPenaltySystem dbHandler;
 
-    public CmdUnban(DBHandler dbHandler) {
+    public CmdUnban(DBHPenaltySystem dbHandler) {
         super("unban");
         this.dbHandler = dbHandler;
 

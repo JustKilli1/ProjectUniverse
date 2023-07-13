@@ -15,10 +15,10 @@ import java.sql.SQLException;
  * */
 public class MySQL {
 
+    private final ILogger logger;
     private ConfigManager configManager;
     private String host, port, database, username, password;
     private Connection con;
-    private ILogger logger;
 
     public MySQL(ILogger logger, ConfigManager configManager) {
         this.logger = logger;

@@ -1,5 +1,6 @@
 package net.projectuniverse.general.config;
 
+import net.projectuniverse.general.IReloadable;
 import net.projectuniverse.general.logging.ILogger;
 import net.projectuniverse.general.logging.LogLevel;
 import net.projectuniverse.general.logging.loggers.LoggerBuilder;
@@ -9,7 +10,7 @@ import org.simpleyaml.configuration.file.YamlFile;
 import java.io.IOException;
 import java.util.List;
 
-public class ConfigManager {
+public class ConfigManager implements IReloadable {
 
     protected static final ILogger configLogger = new LoggerBuilder("Config").addOutputPrinter(new TerminalPrinter()).build();
     private static final String DIR_PATH = "server_configurations/";
@@ -62,11 +63,16 @@ public class ConfigManager {
         return true;
     }
 
-    public void reload() {
+    @Override
+    public boolean reload() {
         try {
+            configLogger.log(LogLevel.INFO, "Reloading...");
             file.load();
+            configLogger.log(LogLevel.INFO, "Reloading successful!");
+            return true;
         } catch(Exception ex) {
             configLogger.log(LogLevel.ERROR, "Could not reload Config File " + file.getFilePath(), ex);
+            return false;
         }
     }
 

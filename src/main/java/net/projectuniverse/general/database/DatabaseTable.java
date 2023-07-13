@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Represents a database.
+ * Represents a database table.
  */
 
-public record Database(String name, List<Column> fields) {
+public record DatabaseTable(String name, List<Column> fields) {
 
     /**
      * Returns the database creation query for creating a table with the given name and fields.
@@ -29,7 +29,7 @@ public record Database(String name, List<Column> fields) {
      * The DatabaseBuilder class is used to build instances of the Database class.
      * It provides methods to set the name of the database and add fields to it.
      */
-    public static class DatabaseBuilder {
+    public static class DatabaseTableBuilder {
 
         /**
          * Represents the name of the Database Table.
@@ -48,7 +48,7 @@ public record Database(String name, List<Column> fields) {
          * @param fields a list of column objects representing the fields of the database (must not be null)
          * @throws IllegalArgumentException if name or fields parameter is null
          */
-        public DatabaseBuilder(String name, List<Column> fields) {
+        public DatabaseTableBuilder(String name, List<Column> fields) {
             if (name == null || fields == null) {
                 throw new IllegalArgumentException("Name and fields must not be null");
             }
@@ -61,7 +61,7 @@ public record Database(String name, List<Column> fields) {
          *
          * @param name the name of the database
          */
-        public DatabaseBuilder(String name) {
+        public DatabaseTableBuilder(String name) {
             this(name, new ArrayList<>());
         }
 
@@ -72,7 +72,7 @@ public record Database(String name, List<Column> fields) {
          * @throws IllegalArgumentException if the column is null
          * @return the DatabaseBuilder instance with the added field
          */
-        public DatabaseBuilder addField(Column column) {
+        public DatabaseTableBuilder addField(Column column) {
             if (column == null) throw new IllegalArgumentException("Field name and type must not be null");
             fields.add(column);
             return this;
@@ -83,44 +83,16 @@ public record Database(String name, List<Column> fields) {
          *
          * @return The newly created Database object.
          */
-        public Database build() {
-            return new Database(name, fields);
+        public DatabaseTable build() {
+            return new DatabaseTable(name, fields);
         }
     }
 
-    /**
-     * The ColumnType enum represents the different types of columns that can be used in a database.
-     */
-    public static enum ColumnType {
-        INTEGER("INTEGER"),
-        TEXT("TEXT"),
-        LONG_TEXT("LONGTEXT"),
-        VARCHAR_1("VARCHAR(1)"),
-        VARCHAR_2("VARCHAR(2)"),
-        VARCHAR_3("VARCHAR(3)"),
-        VARCHAR_5("VARCHAR(5)"),
-        VARCHAR_10("VARCHAR(10)"),
-        VARCHAR_15("VARCHAR(15)"),
-        VARCHAR_20("VARCHAR(20)")
-        ;
-        private final String sqlType;
-
-        private ColumnType(String sqlType) {
-            this.sqlType = sqlType;
-        }
-
-        @Override
-        public String toString() {
-            return sqlType;
-        }
-    }
-
-    /**
+        /**
      * The DBColumn class represents a column in a database table.
      * Each DBColumn object has a name, type, primary key indicator, auto-increment indicator, and not null indicator.
      */
-
-    public record Column(String name, Database.ColumnType type, boolean isPrimaryKey, boolean isAutoIncrement, boolean isNotNull, String defaultValue) {
+    public record Column(String name, ColumnType type, boolean isPrimaryKey, boolean isAutoIncrement, boolean isNotNull, String defaultValue) {
 
         /**
          * Returns a string representation of the object.
@@ -155,4 +127,30 @@ public record Database(String name, List<Column> fields) {
         }
     }
 
+    /**
+     * The ColumnType enum represents the different types of columns that can be used in a database.
+     */
+    public static enum ColumnType {
+        INTEGER("INTEGER"),
+        TEXT("TEXT"),
+        LONG_TEXT("LONGTEXT"),
+        VARCHAR_1("VARCHAR(1)"),
+        VARCHAR_2("VARCHAR(2)"),
+        VARCHAR_3("VARCHAR(3)"),
+        VARCHAR_5("VARCHAR(5)"),
+        VARCHAR_10("VARCHAR(10)"),
+        VARCHAR_15("VARCHAR(15)"),
+        VARCHAR_20("VARCHAR(20)")
+        ;
+        private final String sqlType;
+
+        private ColumnType(String sqlType) {
+            this.sqlType = sqlType;
+        }
+
+        @Override
+        public String toString() {
+            return sqlType;
+        }
+    }
 }

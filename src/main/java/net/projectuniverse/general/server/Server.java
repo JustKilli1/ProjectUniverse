@@ -12,7 +12,7 @@ import net.projectuniverse.general.config.ConfigManager;
 import net.projectuniverse.general.config.ConfigValue;
 import net.projectuniverse.general.database.DBAccessLayer;
 import net.projectuniverse.general.database.DBHandler;
-import net.projectuniverse.general.database.Database;
+import net.projectuniverse.general.database.DatabaseTable;
 import net.projectuniverse.general.database.DatabaseCreator;
 import net.projectuniverse.general.instance.InstanceHandler;
 import net.projectuniverse.general.listener.ChatListener;
@@ -21,7 +21,6 @@ import net.projectuniverse.general.logging.ILogger;
 import net.projectuniverse.general.logging.LogLevel;
 import net.projectuniverse.general.logging.loggers.LoggerBuilder;
 import net.projectuniverse.general.logging.output.TerminalPrinter;
-import net.projectuniverse.general.money_system.ModuleMoneySystem;
 import net.projectuniverse.general.terminal.ServerTerminal;
 import net.projectuniverse.modules.tower_defence.commands.CmdLeave;
 import net.projectuniverse.modules.tower_defence.commands.CmdMap;
@@ -35,8 +34,8 @@ public class Server {
     public static final ILogger SERVER_LOGGER = new LoggerBuilder("Server").addOutputPrinter(new TerminalPrinter()).build();
     public static ModuleLoader MODULE_LOADER;
     public static ConfigManager MYSQL_CONFIG;
-    private static DBAccessLayer sql;
-    private static DBHandler dbHandler;
+    public static DBAccessLayer SQL;
+    public static DBHandler DB_HANDLER;
     private static ConfigManager serverConfig;
     private static MinecraftServer server;
     private static ServerTerminal terminal;
@@ -55,8 +54,8 @@ public class Server {
         terminal.start();
 
         MYSQL_CONFIG = new ConfigManager("mysql");
-        sql = new DBAccessLayer();
-        dbHandler = new DBHandler(sql);
+        SQL = new DBAccessLayer();
+        DB_HANDLER = new DBHandler(SQL);
 
         try {
             //TODO IS SHIT
@@ -137,9 +136,6 @@ public class Server {
         MinecraftServer.getCommandManager().register(new CmdClearChat());
         MinecraftServer.getCommandManager().register(new CmdMuteChat());
         MinecraftServer.getCommandManager().register(new CmdTeamChat());
-        MinecraftServer.getCommandManager().register(new CmdKick());
-        MinecraftServer.getCommandManager().register(new CmdBan(sql, dbHandler));
-        MinecraftServer.getCommandManager().register(new CmdUnban(dbHandler));
         MinecraftServer.getCommandManager().register(new CmdGameMode());
         MinecraftServer.getCommandManager().register(new CmdTeleport());
         MinecraftServer.getCommandManager().register(new CmdPlay());
@@ -172,7 +168,7 @@ public class Server {
      */
     private static void createDatabase() {
         SERVER_LOGGER.log(LogLevel.INFO, "Create Database Tables...");
-        DatabaseCreator databaseCreator = new DatabaseCreator(SERVER_LOGGER, sql, getDatabaseList());
+        DatabaseCreator databaseCreator = new DatabaseCreator(SERVER_LOGGER, SQL, getDatabaseList());
         databaseCreator.create();
         SERVER_LOGGER.log(LogLevel.INFO, "Database Tables created.");
     }
@@ -182,8 +178,8 @@ public class Server {
      *
      * @return The list of databases.
      */
-    private static List<Database> getDatabaseList() {
-        return List.of(buildPlayerDatabase(), buildPunishmentReasonDatabase());
+    private static List<DatabaseTable> getDatabaseList() {
+        return List.of(buildPlayerDatabase());
     }
 
     /**
@@ -191,30 +187,16 @@ public class Server {
      *
      * @return The constructed player database.
      */
-    private static Database buildPlayerDatabase() {
-        return new Database.DatabaseBuilder("Player")
-                .addField(new Database.Column("PlayerID", Database.ColumnType.INTEGER, true, true, true, null))
-                .addField(new Database.Column("UUID", Database.ColumnType.TEXT, false, false, true, ""))
-                .addField(new Database.Column("Name", Database.ColumnType.TEXT, false, false, true, null))
+    private static DatabaseTable buildPlayerDatabase() {
+        return new DatabaseTable.DatabaseTableBuilder("Player")
+                .addField(new DatabaseTable.Column("PlayerID", DatabaseTable.ColumnType.INTEGER, true, true, true, null))
+                .addField(new DatabaseTable.Column("UUID", DatabaseTable.ColumnType.TEXT, false, false, true, ""))
+                .addField(new DatabaseTable.Column("Name", DatabaseTable.ColumnType.TEXT, false, false, true, null))
                 .build();
     }
 
-    /**
-     * Builds and returns the database for punishment reasons.
-     *
-     * @return The constructed punishment reason database.
-     */
-    private static Database buildPunishmentReasonDatabase() {
-        return new Database.DatabaseBuilder("PunishmentSystemReason")
-                .addField(new Database.Column("ReasonID", Database.ColumnType.INTEGER, true, true, true, null))
-                .addField(new Database.Column("PlayerId", Database.ColumnType.INTEGER, false, false, true, null))
-                .addField(new Database.Column("Reason", Database.ColumnType.LONG_TEXT, false, false, false, null))
-                .addField(new Database.Column("Duration", Database.ColumnType.INTEGER, false, false, false, "9999"))
-                .addField(new Database.Column("DurationId", Database.ColumnType.VARCHAR_1, false, false, false, "y"))
-                .build();
-    }
     private static void registerListener() {
-        new JoinListener(sql, dbHandler, spawnInstance);
+        new JoinListener(SQL, DB_HANDLER, spawnInstance);
         new ChatListener();
     }
 

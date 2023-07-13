@@ -2,14 +2,12 @@ package net.projectuniverse.general.database;
 
 
 import net.minestom.server.entity.Player;
-import net.projectuniverse.general.config.ConfigManager;
 import net.projectuniverse.general.logging.ILogger;
 import net.projectuniverse.general.logging.LogLevel;
 import net.projectuniverse.general.logging.loggers.LoggerBuilder;
 import net.projectuniverse.general.logging.output.TerminalPrinter;
 import net.projectuniverse.general.server.Server;
 
-import javax.xml.crypto.Data;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -35,7 +33,7 @@ public class DBAccessLayer {
      * @param database the Database object containing the database creation query
      * @return true if the database was created successfully, false otherwise
      */
-    public boolean createDatabase(Database database) {
+    public boolean createDatabase(DatabaseTable database) {
         String sqlQuery = database.getDatabaseCreationQuery();
         return executeSQLRequest(sqlQuery);
     }
@@ -57,25 +55,7 @@ public class DBAccessLayer {
         return querySQLRequest(sqlQuery);
     }
 
-    public boolean addPunishmentReason(int playerId, String reason, int duration, char durationId) {
-        String sqlQuery = "INSERT INTO PunishmentSystemReason (PlayerId, Reason, Duration, DurationId) VALUES(" +
-                playerId + ", " +
-                "'" + reason + "', " +
-                duration + ", " +
-                "'" + durationId + "'" +
-                ");";
-        return executeSQLRequest(sqlQuery);
-    }
 
-    public boolean removePunishmentReason(int playerId) {
-        String sqlQuery = "DELETE FROM PunishmentSystemReason WHERE PlayerId=" + playerId;
-        return executeSQLRequest(sqlQuery);
-    }
-
-    public ResultSet getPunishment(int playerId) {
-        String sqlQuery = "SELECT * FROM PunishmentSystemReason WHERE PlayerID=" + playerId;
-        return querySQLRequest(sqlQuery);
-    }
 
     public void disable() {
         mySql.disconnect();
