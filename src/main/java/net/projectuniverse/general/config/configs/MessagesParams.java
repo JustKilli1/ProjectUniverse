@@ -2,6 +2,11 @@ package net.projectuniverse.general.config.configs;
 
 import net.projectuniverse.general.config.ConfigParam;
 
+/**
+ * This class represents the configuration parameters for messages.
+ * Each parameter consists of a name and a default value.
+ */
+
 public class MessagesParams {
 
     public static final ConfigParam MUTED = new ConfigParam("muted", "Muted");

@@ -10,6 +10,11 @@ import org.jline.utils.AttributedStyle;
 
 import java.util.regex.Pattern;
 
+/**
+ * The TerminusHighlighter class implements the Highlighter interface to provide highlighting functionality
+ * for the Terminus terminal.
+ */
+
 public class TerminusHighlighter implements Highlighter {
 
     @Override
@@ -20,6 +25,13 @@ public class TerminusHighlighter implements Highlighter {
     public void setErrorIndex(int errorIndex) {
     }
 
+    /**
+     * Highlights the given buffer by applying different styles to each word.
+     *
+     * @param reader the LineReader object
+     * @param buffer the buffer to highlight
+     * @return the highlighted buffer as an AttributedString
+     */
     @Override
     public AttributedString highlight(LineReader reader, String buffer) {
         AttributedStringBuilder builder = new AttributedStringBuilder();

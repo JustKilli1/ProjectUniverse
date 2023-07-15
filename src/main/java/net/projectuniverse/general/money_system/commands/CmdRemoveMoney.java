@@ -16,12 +16,24 @@ import net.projectuniverse.general.money_system.PlayerPurse;
 import net.projectuniverse.general.money_system.database.DBALMoney;
 import net.projectuniverse.general.money_system.database.DBHMoney;
 
+/**
+ * CmdRemoveMoney is a class that represents a command to remove money from a player's purse.
+ * It extends the UniverseCommand class.
+ */
+
 public class CmdRemoveMoney extends UniverseCommand {
 
     private final ILogger logger;
     private final DBALMoney sql;
     private final DBHMoney dbHandler;
 
+    /**
+     * Removes Money from the Specified Player's purse.
+     *
+     * @param logger      the logger instance used for logging messages
+     * @param sql         the SQL database abstraction layer for handling money
+     * @param dbHandler   the database handler for managing player purses
+     */
     public CmdRemoveMoney(ILogger logger, DBALMoney sql, DBHMoney dbHandler) {
         super("removemoney", "Removes Money from the Specified Players purse", "removemoney (player-name)");
         this.logger = logger;

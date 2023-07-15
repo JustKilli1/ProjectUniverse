@@ -18,12 +18,24 @@ import net.projectuniverse.general.messenger.MessageDesign;
 import net.projectuniverse.general.messenger.Messenger;
 import net.projectuniverse.general.server.Server;
 
+/**
+ * The JoinListener class listens for player join events and performs certain actions when a player joins the server.
+ */
+
 public class JoinListener {
 
     private DBAccessLayer sql;
     private DBHandler dbHandler;
     private InstanceContainer spawningInstance;
 
+    /**
+     * Initializes a JoinListener with the given parameters.
+     * When initialized, it automatically calls the onJoin() method.
+     *
+     * @param sql               the DBAccessLayer object used for database access
+     * @param dbHandler         the DBHandler object used for database handling
+     * @param spawningInstance  the InstanceContainer object representing the spawning instance
+     */
     public JoinListener(DBAccessLayer sql, DBHandler dbHandler, InstanceContainer spawningInstance) {
         this.sql = sql;
         this.dbHandler = dbHandler;
@@ -31,6 +43,13 @@ public class JoinListener {
         onJoin();
     }
 
+    /**
+     * Performs actions when a player joins the server.
+     * This method is called automatically when a JoinListener is initialized.
+     * It handles player login events, sets the spawning instance, respawn point,
+     * logs connection message, adds the player to the database if not already present,
+     * broadcasts a player joined message, and sets the player's game mode to creative.
+     */
     private void onJoin() {
         GlobalEventHandler globalEventHandler = MinecraftServer.getGlobalEventHandler();
         globalEventHandler.addListener(PlayerLoginEvent.class, event -> {

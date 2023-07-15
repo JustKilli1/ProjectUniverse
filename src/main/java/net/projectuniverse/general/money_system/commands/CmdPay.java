@@ -14,11 +14,22 @@ import net.projectuniverse.general.money_system.PlayerPurse;
 import net.projectuniverse.general.money_system.database.DBALMoney;
 import net.projectuniverse.general.money_system.database.DBHMoney;
 
+/**
+ * The CmdPay class is a command that allows a player to pay a specified amount to another player.
+ * It extends the UniverseCommand class.
+ */
+
 public class CmdPay extends UniverseCommand {
 
     private final DBALMoney sql;
     private final DBHMoney dbHandler;
 
+    /**
+     * Constructor for CmdPay class.
+     *
+     * @param sql The DBALMoney object connected to the database.
+     * @param dbHandler The DBHMoney object used for handling money transactions.
+     */
     public CmdPay(DBALMoney sql, DBHMoney dbHandler) {
         super("pay", "Pays a specified Amount to another Player", "pay [Player-Name] [Amount]");
         this.sql = sql;

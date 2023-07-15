@@ -8,6 +8,13 @@ import net.projectuniverse.general.gui.items.ClickableItem;
 
 import java.util.List;
 
+/**
+ * This class represents a pageable inventory that extends the SingletonInventory class.
+ * It allows for creating inventories with multiple pages, where each page displays a subset of elements from a given list.
+ *
+ * @param <T> the type of elements in the inventory
+ */
+
 public abstract class PageableInventory<T> extends SingletonInventory {
 
     private final List<T> elements;
@@ -31,20 +38,45 @@ public abstract class PageableInventory<T> extends SingletonInventory {
 
     public void fill() {}
 
+    /**
+     * Calculates the next available slot in the inventory.
+     *
+     * @return The index of the next available slot in the inventory, starting from 0.
+     */
     public int calculateNextPageSlot() {
         return this.getInventory().getSize() - 1;
     }
 
+    /**
+     * Calculates the slot index for the behavior page in the inventory.
+     *
+     * @return The index of the behavior page slot in the inventory, starting from 0.
+     */
     public int calculateBehaviorPageSlot() {
         return this.getInventory().getSize() - 9;
     }
 
+    /**
+     * Calculates the slot index for the page count slot in the inventory.
+     *
+     * @return The index of the page count slot in the inventory, starting from 0.
+     */
     public int calculatePageCountSlot() {
         return this.getInventory().getSize() - 5;
     }
 
+    /**
+     * Called when the page of the inventory is changed.
+     *
+     * @param inventory The PageableInventory for which the page is being changed.
+     */
     public void onPageChange(PageableInventory<T> inventory) {}
 
+    /**
+     * Builds the page based on the provided ID.
+     *
+     * @param id The ID of the page to be built.
+     */
     public void buildPage(int id) {
 
         this.currentPage = id;
@@ -75,6 +107,9 @@ public abstract class PageableInventory<T> extends SingletonInventory {
         onPageChange(this);
     }
 
+    /**
+     * Clears the items in the inventory slots.
+     */
     public void clear() {
         for (int slot : possibleSlots) {
             getInventory().setItemStack(slot, ItemStack.AIR);
@@ -85,6 +120,12 @@ public abstract class PageableInventory<T> extends SingletonInventory {
         return (int) Math.ceil((double) elements.size() / (double) possibleSlots.length);
     }
 
+    /**
+     * Constructs a clickable item from the given value.
+     *
+     * @param value The value used to construct the clickable item.
+     * @return The constructed clickable item.
+     */
     public abstract ClickableItem constructItem(T value);
 
     public int getCurrentPage() {

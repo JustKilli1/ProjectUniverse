@@ -3,6 +3,10 @@ package net.projectuniverse.general.money_system;
 import net.minestom.server.entity.Player;
 import net.projectuniverse.general.money_system.database.DBALMoney;
 
+/**
+ * Represents a purse for a player in a game.
+ */
+
 public class PlayerPurse {
 
     private final String playerName;

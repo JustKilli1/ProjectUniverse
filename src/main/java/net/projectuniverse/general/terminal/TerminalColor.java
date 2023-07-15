@@ -2,6 +2,10 @@ package net.projectuniverse.general.terminal;
 
 import java.util.List;
 
+/**
+ * The TerminalColor enum provides ANSI color codes that can be used to add colors to terminal output.
+ */
+
 public enum TerminalColor {
 
     RESET("\u001B[0m"),

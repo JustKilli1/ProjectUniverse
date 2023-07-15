@@ -6,6 +6,9 @@ public class CmdPerformance extends UniverseCommand{
 
      private static final long MEGABYTE = 1024L * 1024L;
 
+    /**
+     * Represents a command that displays the current server performance.
+     */
     public CmdPerformance() {
         super("performance", "Shows the current Server Performance", "performance");
 

@@ -65,7 +65,7 @@ public class ModulePenaltySystem extends Module {
     }
 
     private void registerListener() {
-        new JoinListener(SQL, DB_HANDLER);
+        new JoinListener(DB_HANDLER);
     }
 
     /**

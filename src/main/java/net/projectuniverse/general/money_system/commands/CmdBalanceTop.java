@@ -11,6 +11,11 @@ import net.projectuniverse.general.money_system.database.DBHMoney;
 
 import java.util.List;
 
+/**
+ * Represents a command that shows the top 10 richest players on the server.
+ * Extends the UniverseCommand class.
+ */
+
 public class CmdBalanceTop extends UniverseCommand {
 
 
@@ -18,6 +23,12 @@ public class CmdBalanceTop extends UniverseCommand {
     private final DBALMoney sql;
     private final DBHMoney dbHandler;
 
+    /**
+     * Initializes a new instance of the CmdBalanceTop class.
+     *
+     * @param sql The DBALMoney object used for database access and querying.
+     * @param dbHandler The DBHMoney object used for handling money-related operations.
+     */
     public CmdBalanceTop(DBALMoney sql, DBHMoney dbHandler) {
         super("baltop", "Shows the top 10 Richest Players on the Server", "baltop");
         this.sql = sql;

@@ -1,11 +1,15 @@
 package net.projectuniverse.general.config.configs;
 
-import net.projectuniverse.general.IReloadable;
 import net.projectuniverse.general.config.ConfigManager;
 import net.projectuniverse.general.config.ConfigValue;
 import net.projectuniverse.general.logging.LogLevel;
 
 import java.lang.reflect.Field;
+
+/**
+ * Represents a class for managing message configurations.
+ * Extends the {@link ConfigManager} class.
+ */
 
 public class MessagesConfig extends ConfigManager {
 

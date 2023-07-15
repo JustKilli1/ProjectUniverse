@@ -5,6 +5,11 @@ import net.projectuniverse.general.database.DBAccessLayer;
 
 import java.sql.ResultSet;
 
+/**
+ * The DBALPenaltySystem class is used to manage punishment reasons for players.
+ * It extends the DBAccessLayer class to interact with the database.
+ */
+
 public class DBALPenaltySystem extends DBAccessLayer {
 
     /**

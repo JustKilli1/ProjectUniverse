@@ -10,9 +10,14 @@ import net.projectuniverse.general.config.configs.MessagesParams;
 import net.projectuniverse.general.messenger.MessageDesign;
 import net.projectuniverse.general.messenger.Messenger;
 
-public class CmdGameMode extends Command {
+public class CmdGameMode extends UniverseCommand {
+    /**
+     * Creates a new instance of the CmdGameMode class.
+     * This command is used to change the game mode of a player.
+     * The command format is "/gamemode [ModeId]" or "/gm [ModeId]".
+     */
     public CmdGameMode() {
-        super("gamemode", "gm");
+        super("gamemode", "Changes the Gamemode of the Player", "gamemode [Mode-Id]", "gm");
 
         setDefaultExecutor(new DefaultExecutor("/gamemode [ModeId]"));
 

@@ -1,20 +1,29 @@
 package net.projectuniverse.general.penalty_system.commands;
 
-import net.minestom.server.command.builder.Command;
 import net.minestom.server.command.builder.arguments.ArgumentType;
+import net.projectuniverse.general.commands.UniverseCommand;
 import net.projectuniverse.general.config.configs.MessagesConfig;
 import net.projectuniverse.general.config.configs.MessagesParams;
-import net.projectuniverse.general.database.DBHandler;
 import net.projectuniverse.general.messenger.MessageDesign;
 import net.projectuniverse.general.messenger.Messenger;
 import net.projectuniverse.general.penalty_system.database.DBHPenaltySystem;
 
-public class CmdUnban extends Command {
+/**
+ * The CmdUnban class represents a command for unbanning a player.
+ * It extends the UniverseCommand class.
+ */
+
+public class CmdUnban extends UniverseCommand {
 
     private DBHPenaltySystem dbHandler;
 
+    /**
+     * Command to unban a player.
+     *
+     * @param dbHandler The DBHPenaltySystem instance used for accessing the penalty system database.
+     */
     public CmdUnban(DBHPenaltySystem dbHandler) {
-        super("unban");
+        super("unban", "Unbans a player from the server", "unban [PlayerName]" );
         this.dbHandler = dbHandler;
 
         var playerArg = ArgumentType.String("player-name");

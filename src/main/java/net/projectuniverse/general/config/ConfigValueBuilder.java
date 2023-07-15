@@ -1,5 +1,13 @@
 package net.projectuniverse.general.config;
 
+/**
+ * A builder class for creating ConfigValue objects.
+ * <p>
+ * This class provides a convenient way to construct ConfigValue objects by allowing
+ * method chaining to set various properties of the ConfigValue.
+ * </p>
+ */
+
 public class ConfigValueBuilder {
 
     private ConfigValue configValue;

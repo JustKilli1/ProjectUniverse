@@ -12,10 +12,21 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * A class that provides completion suggestions for the Terminus command line interface.
+ */
+
 public class TerminusCompleter implements Completer {
     private static final Set<Candidate> SHELL_COMMANDS = Set.of(ServerTerminal.SHELL_COMMANDS.stream()
             .map(cmd -> new Candidate(cmd.name())).toArray(Candidate[]::new));
 
+    /**
+     * Completes the input line during tab completion.
+     *
+     * @param reader     the line reader.
+     * @param line       the parsed line object.
+     * @param candidates the list of completion candidates.
+     */
     @Override
     public void complete(LineReader reader, ParsedLine line, List<Candidate> candidates) {
         if (line.wordIndex() == 0) {

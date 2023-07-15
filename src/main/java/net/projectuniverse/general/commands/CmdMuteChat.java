@@ -10,12 +10,19 @@ import net.projectuniverse.general.config.configs.MessagesConfig;
 import net.projectuniverse.general.config.configs.MessagesParams;
 import net.projectuniverse.general.messenger.MessageDesign;
 
-public class CmdMuteChat extends Command {
+public class CmdMuteChat extends UniverseCommand {
 
     private static boolean globalMute;
 
+    /**
+     * Constructor for the CmdMuteChat class.
+     * This method initializes the command with its aliases and sets up the necessary event handler.
+     * When executed, it toggles the globalMute flag and sends a server message.
+     * It also cancels chat events if the player does not have the IGNORE_CHAT_MUTE permission.
+     * If globalMute is true, it sends a chat muted message to the player.
+     */
     public CmdMuteChat() {
-        super("mutechat", "mc", "muteall");
+        super("mutechat", "Mutes the Chat", "mutechat", "mc", "muteall");
 
         addSyntax((sender, context) -> {
             globalMute = !globalMute;
@@ -34,8 +41,6 @@ public class CmdMuteChat extends Command {
                    player.sendMessage(MessageDesign.apply(MessageDesign.SERVER_MESSAGE, MessagesConfig.CHAT_MUTED.getValue()));
            }
         });
-
-
     }
 
 }

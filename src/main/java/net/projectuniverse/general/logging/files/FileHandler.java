@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Represents a class for handling files.
+ */
+
 public class FileHandler {
 
     private File file;

@@ -4,6 +4,10 @@ import net.projectuniverse.general.logging.LogLevel;
 
 import java.util.List;
 
+/**
+ * This interface represents an output printer for logging messages.
+ */
+
 public interface IOutputPrinter {
 
     /**

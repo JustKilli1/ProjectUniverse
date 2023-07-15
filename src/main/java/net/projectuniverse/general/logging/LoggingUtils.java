@@ -4,6 +4,11 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.List;
 
+/**
+ * LoggingUtils is a utility class that provides methods for logging purposes.
+ * This class contains methods to convert an exception stack trace to a string and to concatenate multiple messages into a single string.
+ */
+
 public class LoggingUtils {
 
     /**
@@ -19,6 +24,12 @@ public class LoggingUtils {
         return strWriter.toString();
     }
 
+    /**
+     * Utils Method to combine a list of strings into a single string message.
+     * @param messages A list of string messages to be combined.
+     * @param oneLine Flag indicating whether the messages should be combined into a single line or not.
+     * @return A string containing the combined messages.
+     */
     public static String getMessageStr(List<String> messages, boolean oneLine) {
         StringBuilder combined = new StringBuilder();
         for(int i = 0; i < messages.size(); i++) {

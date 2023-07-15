@@ -8,6 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CmdTest extends UniverseCommand{
+    /**
+     * Represents a test command that can be used to test things.
+     *
+     * This command opens a test inventory for the player.
+     */
     public CmdTest() {
         super("test", "A Test Command to Test things", "/test");
 

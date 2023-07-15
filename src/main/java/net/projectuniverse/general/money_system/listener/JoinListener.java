@@ -11,12 +11,26 @@ import net.projectuniverse.general.money_system.database.DBALMoney;
 import net.projectuniverse.general.money_system.database.DBHMoney;
 
 
+/**
+ * JoinListener is a class that listens for player join events and performs certain actions when a player joins.
+ * It adds new player purses for UNIS and COINS currencies if the player does not already have them.
+ * It logs the addition of player purses using a provided logger.
+ */
+
 public class JoinListener {
 
     private final ILogger logger;
     private DBALMoney sql;
     private DBHMoney dbHandler;
 
+    /**
+     * Constructs a new JoinListener with the specified logger, SQL, and DBHandler.
+     * This class listens for new join events and performs actions when a user joins.
+     *
+     * @param logger    the logger used for logging join events
+     * @param sql       the SQL database access layer for managing money data
+     * @param dbHandler the database handler used for performing actions on the SQL database
+     */
     public JoinListener(ILogger logger, DBALMoney sql, DBHMoney dbHandler) {
         this.logger = logger;
         this.sql = sql;
@@ -24,6 +38,16 @@ public class JoinListener {
         onJoin();
     }
 
+    /**
+     * Listens for join events and performs actions when a player joins.
+     *
+     * This method adds a new player purse for the joined player if the player does not already have a purse.
+     * The player is given an initial amount of UNIS and COINS currencies.
+     *
+     * @param logger    the logger used for logging events
+     * @param sql       the SQL database access layer for managing money data
+     * @param dbHandler the database handler used for performing actions on the SQL database
+     */
     private void onJoin() {
         GlobalEventHandler globalEventHandler = MinecraftServer.getGlobalEventHandler();
         globalEventHandler.addListener(PlayerLoginEvent.class, event -> {

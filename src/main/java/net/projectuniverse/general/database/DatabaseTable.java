@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 /**
  * Represents a database table.
  */
-
 public record DatabaseTable(String name, List<Column> fields) {
 
     /**

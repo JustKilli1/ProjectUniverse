@@ -9,9 +9,12 @@ import net.projectuniverse.general.config.configs.MessagesParams;
 import net.projectuniverse.general.messenger.MessageDesign;
 import net.projectuniverse.general.messenger.Messenger;
 
-public class CmdTeleport extends Command {
+public class CmdTeleport extends UniverseCommand {
+    /**
+     * A command to teleport a player to another player.
+     */
     public CmdTeleport() {
-        super("teleport", "tp");
+        super("teleport", "Teleports a Player to another Player", "teleport [player-name]", "tp");
         var playerArg = ArgumentType.Entity("player-name");
 
         addSyntax((sender, context) -> {

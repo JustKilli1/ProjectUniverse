@@ -13,12 +13,23 @@ import net.projectuniverse.general.money_system.PlayerPurse;
 import net.projectuniverse.general.money_system.database.DBALMoney;
 import net.projectuniverse.general.money_system.database.DBHMoney;
 
+/**
+ * Represents a command for displaying a player's money.
+ * Extends the UniverseCommand class.
+ */
+
 public class CmdMoney extends UniverseCommand {
 
 
     private final DBALMoney sql;
     private final DBHMoney dbHandler;
 
+    /**
+     * Creates a new instance of CmdMoney.
+     *
+     * @param sql The DBALMoney object used for database access.
+     * @param dbHandler The DBHMoney object used for handling database operations.
+     */
     public CmdMoney(DBALMoney sql, DBHMoney dbHandler) {
         super("money", "Shows how much money a Player has", "money (Player-Name)");
         this.sql = sql;

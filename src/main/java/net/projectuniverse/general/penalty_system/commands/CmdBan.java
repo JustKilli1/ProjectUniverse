@@ -8,6 +8,7 @@ import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.minestom.server.entity.Player;
 import net.minestom.server.utils.entity.EntityFinder;
 import net.projectuniverse.base.ColorDesign;
+import net.projectuniverse.general.commands.UniverseCommand;
 import net.projectuniverse.general.commands.command_executor.DefaultExecutor;
 import net.projectuniverse.general.config.configs.MessagesConfig;
 import net.projectuniverse.general.config.configs.MessagesParams;
@@ -18,12 +19,18 @@ import net.projectuniverse.general.messenger.Messenger;
 import net.projectuniverse.general.penalty_system.database.DBALPenaltySystem;
 import net.projectuniverse.general.penalty_system.database.DBHPenaltySystem;
 
-public class CmdBan extends Command {
+public class CmdBan extends UniverseCommand {
     private DBALPenaltySystem sql;
     private DBHPenaltySystem dbHandler;
 
+    /**
+     * Creates a new instance of the CmdBan command.
+     *
+     * @param sql The DBALPenaltySystem object used for database operations.
+     * @param dbHandler The DBHPenaltySystem object used for handling database queries.
+     */
     public CmdBan(DBALPenaltySystem sql, DBHPenaltySystem dbHandler) {
-        super("ban");
+        super("ban", "Bans a player from the server", "ban [PlayerName] [Reason...]");
         this.sql = sql;
         this.dbHandler = dbHandler;
 

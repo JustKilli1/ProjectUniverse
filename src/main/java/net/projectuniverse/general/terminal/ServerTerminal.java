@@ -25,6 +25,10 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * A class representing a server terminal.
+ */
+
 public class ServerTerminal implements Runnable {
 
     public static final ILogger logger = new LoggerBuilder("Terminal").addOutputPrinter(new TerminalFilePrinter()).build();
@@ -74,6 +78,10 @@ public class ServerTerminal implements Runnable {
         }
     }
 
+    /**
+     * Runs the Terminal
+     * @Override
+     */
     @Override
     public void run() {
 
@@ -107,6 +115,10 @@ public class ServerTerminal implements Runnable {
         }
     }
 
+    /**
+     * Executes the given command
+     * @param command the command to be executed
+     */
     public void executeCommand(String command) {
         String[] words = command.split(" ");
         if(SHELL_COMMANDS.stream().anyMatch(cmd -> words[0].equals(cmd.name()))) {
@@ -136,16 +148,31 @@ public class ServerTerminal implements Runnable {
         }
     }
 
+    /**
+     * Prints the given message in the terminal with optional colors.
+     * @param msg the message to be printed
+     * @param colors the list of TerminalColor to be applied to the message
+     */
     public static void print(String msg, List<TerminalColor> colors) {
         if(lineReader == null) return;
         String message = prefix + TerminalColor.apply(msg, colors);
         lineReader.printAbove(message);
         logger.log(null, message);
     }
+    /**
+     * Prints the given message in the terminal with the specified text color.
+     * @param msg the message to be printed
+     * @param textColor the TerminalColor to be applied to the message
+     */
     public static void print(String msg, TerminalColor textColor) {
         print(msg, List.of(textColor));
     }
 
+    /**
+     * Prints the given message in the terminal.
+     *
+     * @param msg the message to be printed
+     */
     public static void print(String msg) {
         if(lineReader == null) return;
         String message = prefix + msg;

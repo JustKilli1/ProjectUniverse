@@ -44,6 +44,9 @@ public class ModuleMoneySystem extends Module {
     }
 
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<DatabaseTable> getDatabase() {
         return List.of(buildPlayerMoneyTable());
@@ -63,10 +66,16 @@ public class ModuleMoneySystem extends Module {
                 .build();
     }
 
+    /**
+     * Register a new listener for the module.
+     */
     private void registerListener() {
         new JoinListener(moduleLogger, sql, dbHandler);
     }
 
+    /**
+     * Register commands for the module.
+     */
     private void registerCommands() {
         MinecraftServer.getCommandManager().register(new CmdPay(sql, dbHandler));
         MinecraftServer.getCommandManager().register(new CmdMoney(sql, dbHandler));
@@ -75,12 +84,17 @@ public class ModuleMoneySystem extends Module {
         MinecraftServer.getCommandManager().register(new CmdBalanceTop(sql, dbHandler));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void stop() {
         moduleLogger.log(LogLevel.INFO, "Shutting down...");
         moduleLogger.log(LogLevel.INFO, "Shutting down successfully.");
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean reload() {
         return true;

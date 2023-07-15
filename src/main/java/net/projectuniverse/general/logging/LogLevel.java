@@ -1,5 +1,10 @@
 package net.projectuniverse.general.logging;
 
+/**
+ * The {@code LogLevel} enum represents different levels of logging.
+ * Each level has a unique name associated with it.
+ */
+
 public enum LogLevel {
 
     INFO("Info"),

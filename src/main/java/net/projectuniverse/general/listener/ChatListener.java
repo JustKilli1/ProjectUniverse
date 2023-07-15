@@ -19,6 +19,10 @@ import net.projectuniverse.general.logging.output.TerminalPrinter;
 import net.projectuniverse.general.messenger.MessageDesign;
 import net.projectuniverse.general.messenger.Messenger;
 
+/**
+ * The ChatListener class is responsible for listening to player chat events and performing actions based on the chat messages.
+ */
+
 public class ChatListener {
 
     private static final ILogger logger = new LoggerBuilder("PlayerChat").addOutputPrinter(new TerminalPrinter()).build();
@@ -27,6 +31,10 @@ public class ChatListener {
         onChat();
     }
 
+    /**
+     * The onChat method is a private method that handles the player chat event.
+     * It listens for the PlayerChatEvent and processes the chat message accordingly.
+     */
     private void onChat() {
         GlobalEventHandler eventHandler = MinecraftServer.getGlobalEventHandler();
 

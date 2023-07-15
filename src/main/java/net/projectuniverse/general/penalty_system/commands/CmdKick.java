@@ -1,22 +1,42 @@
 package net.projectuniverse.general.penalty_system.commands;
 
-import net.minestom.server.command.builder.Command;
 import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.minestom.server.entity.Player;
 import net.minestom.server.utils.entity.EntityFinder;
 import net.projectuniverse.general.AdminPerm;
+import net.projectuniverse.general.commands.UniverseCommand;
 import net.projectuniverse.general.commands.command_executor.DefaultExecutor;
 import net.projectuniverse.general.config.configs.MessagesConfig;
 import net.projectuniverse.general.config.configs.MessagesParams;
 import net.projectuniverse.general.messenger.MessageDesign;
 import net.projectuniverse.general.messenger.Messenger;
 
-public class CmdKick extends Command {
+/**
+ * Represents a command that kicks a player from the universe.
+ * Inherits from the UniverseCommand class.
+ *
+ * Usage: /kick [Player-Name] [Reason...]
+ * Aliases: /k
+ */
 
+public class CmdKick extends UniverseCommand {
+
+    /**
+     * Represents a command for kicking a player.
+     * This command is used to kick a specified player with an optional reason.
+     * The kick command can only be executed by players with appropriate permissions.
+     *
+     * Command Syntax:
+     *     kick [Player-Name] [Reason...]
+     *
+     * Examples:
+     *     kick JohnDoe Disruptive Behavior
+     *     kick JaneSmith AFK too long
+     */
     public CmdKick() {
-        super("kick", "k");
+        super("kick", "Kicks a Player", "kick [Player-Name] [Reason...]", "k");
 
-        setDefaultExecutor(new DefaultExecutor("/kick [PlayerName] [Reason...]"));
+        setDefaultExecutor(new DefaultExecutor(getUsage()));
 
         var playerArg = ArgumentType.Entity("player-name");
         var reasonArg = ArgumentType.StringArray("reason");

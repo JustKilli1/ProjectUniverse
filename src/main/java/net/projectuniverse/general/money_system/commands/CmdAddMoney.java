@@ -16,12 +16,23 @@ import net.projectuniverse.general.money_system.PlayerPurse;
 import net.projectuniverse.general.money_system.database.DBALMoney;
 import net.projectuniverse.general.money_system.database.DBHMoney;
 
+/**
+ * The CmdAddMoney class is a command that adds money to a specified player's purse.
+ */
+
 public class CmdAddMoney extends UniverseCommand {
 
     private final ILogger logger;
     private final DBALMoney sql;
     private final DBHMoney dbHandler;
 
+    /**
+     * Adds Money to the Specified Player's purse.
+     *
+     * @param logger     The ILogger object used for logging messages.
+     * @param sql        The DBALMoney object used for database access.
+     * @param dbHandler  The DBHMoney object used for handling player purse data.
+     */
     public CmdAddMoney(ILogger logger, DBALMoney sql, DBHMoney dbHandler) {
         super("addmoney", "Adds Money to the Specified Player purse", "addmoney (player-name)");
         this.logger = logger;

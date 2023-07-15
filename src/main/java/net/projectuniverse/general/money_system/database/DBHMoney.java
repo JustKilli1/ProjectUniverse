@@ -19,6 +19,13 @@ public class DBHMoney extends DBHandler {
         this.sql = sql;
     }
 
+    /**
+     * Retrieves the PlayerPurse for the given player and currency from the SQL database.
+     *
+     * @param player   The player for which to retrieve the purse.
+     * @param currency The currency of the purse to retrieve.
+     * @return An Optional containing the PlayerPurse if it exists in the database, otherwise returns an empty Optional.
+     */
     public Optional<PlayerPurse> getPlayerPurse(Player player, PlayerPurse.Currency currency) {
         try {
             ResultSet result = sql.getPlayerPurse(player, currency);
@@ -32,6 +39,13 @@ public class DBHMoney extends DBHandler {
         }
     }
 
+    /**
+     * Retrieves a list of the richest players based on the specified currency and limit.
+     *
+     * @param currency The currency of the player purses to consider.
+     * @param limit    The maximum number of players to retrieve.
+     * @return A list of PlayerPurse objects representing the richest players, or an empty list if no players are found.
+     */
     public List<PlayerPurse> getRichestPlayers(PlayerPurse.Currency currency, int limit) {
         List<PlayerPurse> richestPlayers = new ArrayList<>();
         try {

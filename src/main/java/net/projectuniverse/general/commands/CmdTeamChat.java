@@ -8,13 +8,22 @@ import net.projectuniverse.general.messenger.MessageDesign;
 import java.util.HashSet;
 import java.util.Set;
 
-public class CmdTeamChat extends Command {
+public class CmdTeamChat extends UniverseCommand {
 
     public static final String prefix = "[TeamChat] ";
     private static Set<Player> teamChatMember = new HashSet<>();
 
+    /**
+     * Toggles the team chat for a player.
+     *
+     * When a player executes the teamchat command, this method is triggered and it either activates or deactivates
+     * the team chat for the player depending on their current state.
+     *
+     * @param sender the command sender
+     * @param context the command context
+     */
     public CmdTeamChat() {
-        super ("teamchat", "tc");
+        super ("teamchat", "Enables the TeamChat", "teamchat",  "tc");
 
         addSyntax((sender, context) -> {
             if(!(sender instanceof Player)) return;
