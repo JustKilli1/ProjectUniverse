@@ -81,7 +81,7 @@ public class Server {
         createDatabase();
         startModules();
 
-        SERVER_LOGGER.log(LogLevel.INFO, "Bound IP-Adresse: " + ip);
+        SERVER_LOGGER.log(LogLevel.INFO, "Bound IP-Address: " + ip);
         SERVER_LOGGER.log(LogLevel.INFO, "Bound Port: " + port);
         SERVER_LOGGER.log(LogLevel.INFO, "Project Universe startup complete.");
         SERVER_LOGGER.log(LogLevel.INFO, "Hello c:");
@@ -104,7 +104,6 @@ public class Server {
 
     private static void createSpawnInstance() {
         SERVER_LOGGER.log(LogLevel.INFO, "Creating spawn instance...");
-        new InstanceHandler();
         // Create the instance
         spawnInstance = InstanceHandler.TOWER_DEFENCE_ARENA;
         InstanceHandler.addInstance("lobby", spawnInstance);
@@ -116,8 +115,7 @@ public class Server {
     private static void loadServerConfig() {
         SERVER_LOGGER.log(LogLevel.INFO, "Loading Server Configuration...");
         createDefaultServerConfig();
-        ip = serverConfig.getValue("server.base.ip-adresse");
-        System.out.println(ip);
+        ip = serverConfig.getValue("server.base.ip-address");
         port = Utils.convertToInt(serverConfig.getValue("server.base.port")).orElse(25565);
         mojangAuth = Utils.convertToBool(serverConfig.getValue("server.base.use-mojang-auth")).orElse(true);
         if(mojangAuth) MojangAuth.init();
@@ -127,7 +125,7 @@ public class Server {
     private static void createDefaultServerConfig() {
         serverConfig = new ConfigManager("server");
 
-        serverConfig.addDefault(new ConfigValue("server.base.ip-adresse", "127.0.0.1"));
+        serverConfig.addDefault(new ConfigValue("server.base.ip-address", "127.0.0.1"));
         serverConfig.addDefault(new ConfigValue("server.base.port", "25565"));
         serverConfig.addDefault(new ConfigValue("server.base.use-mojang-auth", "true"));
     }
@@ -148,7 +146,6 @@ public class Server {
 
     /**
      * Create Database Tables
-     *
      * This method creates the necessary database tables for the server to function properly.
      * It initializes a DatabaseCreator object and uses it to create the tables.
      *
