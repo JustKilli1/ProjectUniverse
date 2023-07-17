@@ -21,7 +21,7 @@ public class InstanceHandler {
     private static final ILogger instanceLogger = new LoggerBuilder("InstanceManager").addOutputPrinter(new TerminalPrinter()).build();
     private static Map<String, InstanceContainer> instances = new HashMap<>();
 
-    public InstanceHandler() {
+    static {
         new File("instances").mkdirs();
     }
 
