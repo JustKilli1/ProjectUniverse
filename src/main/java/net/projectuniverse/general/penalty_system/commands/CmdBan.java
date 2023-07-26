@@ -35,7 +35,7 @@ public class CmdBan extends UniverseCommand {
         this.dbHandler = dbHandler;
 
 
-        setDefaultExecutor(new DefaultExecutor("/ban [PlayerName] [Reason...]"));
+        setDefaultExecutor(new DefaultExecutor(getUsage()));
 
         var playerArg = ArgumentType.Entity("player-name");
         var reasonArg = ArgumentType.StringArray("reason");

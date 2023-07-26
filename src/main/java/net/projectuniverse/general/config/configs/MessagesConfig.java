@@ -13,6 +13,7 @@ import java.lang.reflect.Field;
 
 public class MessagesConfig extends ConfigManager {
 
+    public static final ConfigValue ERROR = new ConfigValue("generell.error", "An Error occurred please Contact an Administrator");
     public static final ConfigValue NO_PERMISSION = new ConfigValue("generell.no_permission", "You don't have Permission to use this Command");
     public static final ConfigValue PLAYER_NOT_FOUND = new ConfigValue("generell.player_not_found", "Could not find a Player with the Name " + MessagesParams.PLAYER.getName(), MessagesParams.PLAYER);
     public static final ConfigValue PLAYER_JOINED = new ConfigValue("generell.player_join_message", "Player " + MessagesParams.PLAYER.getName() + " joined", MessagesParams.PLAYER);
@@ -40,9 +41,9 @@ public class MessagesConfig extends ConfigManager {
     public static final ConfigValue TRANSACTION_FAILED = new ConfigValue("money_system.transactions.pay.transaction_failed", "The Transaction Failed please Contact an Administrator.");
     public static final ConfigValue TRANSACTION_SUCCESS = new ConfigValue("money_system.transactions.pay.transaction_success", "The Transaction was Successful. You Transferred " + MessagesParams.AMOUNT + MessagesParams.CURRENCY_SYMBOL + " to " + MessagesParams.PLAYER, MessagesParams.AMOUNT, MessagesParams.CURRENCY_SYMBOL, MessagesParams.PLAYER);
     public static final ConfigValue TRANSACTION_SUCCESS_TARGET = new ConfigValue("money_system.transactions.pay.transaction_success_target", MessagesParams.PLAYER + " send you " + MessagesParams.AMOUNT + MessagesParams.CURRENCY_SYMBOL, MessagesParams.AMOUNT, MessagesParams.PLAYER, MessagesParams.CURRENCY_SYMBOL);
-    public static final ConfigValue SHOW_PLAYER_MONEY = new ConfigValue("money_system.transactions.money.show_player_money", MessagesParams.CURRENCY + ": " + MessagesParams.AMOUNT + MessagesParams.CURRENCY_SYMBOL, MessagesParams.AMOUNT, MessagesParams.CURRENCY, MessagesParams.CURRENCY_SYMBOL);
-    public static final ConfigValue SHOW_PLAYER_MONEY_TARGET = new ConfigValue("money_system.transactions.money.show_player_money_target", MessagesParams.PLAYER + ": " + MessagesParams.AMOUNT + MessagesParams.CURRENCY_SYMBOL, MessagesParams.AMOUNT, MessagesParams.PLAYER, MessagesParams.CURRENCY_SYMBOL);
+    public static final ConfigValue SHOW_PLAYER_MONEY = new ConfigValue("money_system.transactions.money.show_player_money", MessagesParams.PLAYER + " " + MessagesParams.CURRENCY + ": " + MessagesParams.AMOUNT + MessagesParams.CURRENCY_SYMBOL,MessagesParams.PLAYER, MessagesParams.AMOUNT, MessagesParams.CURRENCY, MessagesParams.CURRENCY_SYMBOL);
     public static final ConfigValue ADD_SERVER_MONEY = new ConfigValue("money_system.transactions.money.add_server_money", "You received " + MessagesParams.AMOUNT + " " + MessagesParams.CURRENCY + " from the Server.", MessagesParams.AMOUNT, MessagesParams.CURRENCY);
+    public static final ConfigValue CURRENCY_NOT_FOUND = new ConfigValue("money_system.transactions.money.currency_not_found", "The Currency " + MessagesParams.CURRENCY + " doesn't exist.", MessagesParams.CURRENCY);
     public static final ConfigValue REMOVE_SERVER_MONEY = new ConfigValue("money_system.transactions.money.remove_server_money", "The Server removed " + MessagesParams.AMOUNT + " " + MessagesParams.CURRENCY + " from your Account.", MessagesParams.AMOUNT, MessagesParams.CURRENCY);
     private static final MessagesConfig instance = new MessagesConfig();
 

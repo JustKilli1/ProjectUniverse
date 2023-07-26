@@ -13,7 +13,7 @@ public class MoneySystemAPI {
         this.dbHandler = dbHandler;
     }
 
-    public Optional<PlayerPurse> getPlayerPurse(Player player, PlayerPurse.Currency currency) {
+    public Optional<PlayerPurse> getPlayerPurse(Player player, UniCurrency currency) {
         return dbHandler.getPlayerPurse(player, currency);
     }
 

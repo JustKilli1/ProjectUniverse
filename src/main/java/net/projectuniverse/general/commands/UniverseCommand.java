@@ -1,13 +1,23 @@
 package net.projectuniverse.general.commands;
 
+import net.minestom.server.command.CommandSender;
 import net.minestom.server.command.builder.Command;
+import net.minestom.server.command.builder.CommandContext;
 import net.minestom.server.command.builder.arguments.ArgumentString;
 import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.minestom.server.command.builder.arguments.minecraft.ArgumentEntity;
 import net.minestom.server.command.builder.arguments.number.ArgumentInteger;
+import net.minestom.server.entity.Player;
+import net.minestom.server.utils.entity.EntityFinder;
 import net.projectuniverse.general.commands.command_executor.DefaultExecutor;
+import net.projectuniverse.general.config.configs.MessagesConfig;
+import net.projectuniverse.general.config.configs.MessagesParams;
+import net.projectuniverse.general.messenger.MessageDesign;
+import net.projectuniverse.general.messenger.Messenger;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Optional;
 
 /**
  * This class represents an abstract UniverseCommand.
@@ -36,6 +46,18 @@ public abstract class UniverseCommand extends Command {
         this.description = description;
         this.usage = usage.contains("/") ? usage : "/" + usage;
         setDefaultExecutor(new DefaultExecutor(usage));
+    }
+
+    public Optional<Player> getPlayerFromArgument(CommandSender sender, CommandContext context) {
+        EntityFinder playerFinder = context.get(PLAYER_ARGUMENT);
+        Player targetPlayer = playerFinder.findFirstPlayer(sender);
+        if(targetPlayer == null) {
+            Messenger.sendMessage(sender, MessageDesign.SERVER_MESSAGE, MessagesConfig.PLAYER_NOT_FOUND.clone()
+                    .setConfigParamValue(MessagesParams.PLAYER.clone().setValue(PLAYER_ARGUMENT.toString()))
+                    .getValue());
+            return Optional.empty();
+        }
+        return Optional.of(targetPlayer);
     }
 
     public String getDescription() {

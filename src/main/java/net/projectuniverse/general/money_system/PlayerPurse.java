@@ -3,6 +3,8 @@ package net.projectuniverse.general.money_system;
 import net.minestom.server.entity.Player;
 import net.projectuniverse.general.money_system.database.DBALMoney;
 
+import java.util.Optional;
+
 /**
  * Represents a purse for a player in a game.
  */
@@ -10,12 +12,12 @@ import net.projectuniverse.general.money_system.database.DBALMoney;
 public class PlayerPurse {
 
     private final String playerName;
-    private final Currency currency;
+    private final UniCurrency currency;
     private final DBALMoney sql;
     private Player player;
     private int amount;
 
-    public PlayerPurse(Player player, Currency currency, DBALMoney sql, int amount) {
+    public PlayerPurse(Player player, UniCurrency currency, DBALMoney sql, int amount) {
         this.currency = currency;
         this.player = player;
         this.playerName = this.player.getUsername();
@@ -23,14 +25,14 @@ public class PlayerPurse {
         this.amount = amount;
     }
 
-    public PlayerPurse(String playerName, Currency currency, DBALMoney sql, int amount) {
+    public PlayerPurse(String playerName, UniCurrency currency, DBALMoney sql, int amount) {
         this.playerName = playerName;
         this.currency = currency;
         this.sql = sql;
         this.amount = amount;
     }
 
-    public PlayerPurse(Player player, Currency currency, DBALMoney sql) {
+    public PlayerPurse(Player player, UniCurrency currency, DBALMoney sql) {
         this(player, currency, sql, 0);
     }
 
@@ -71,7 +73,7 @@ public class PlayerPurse {
         return updateAmount(amount - value);
     }
 
-    public Currency getCurrency() {
+    public UniCurrency getCurrency() {
         return currency;
     }
 
@@ -81,70 +83,6 @@ public class PlayerPurse {
 
     public String getPlayerName() {
         return playerName;
-    }
-
-    /**
-     * Defines the usable Currency's
-     * */
-    public enum Currency {
-
-        /**
-         * Standard ProjectUniverse Currency
-         * <p>display name: Uni</p>
-         * <p>Symbol: 💰</p>
-         * */
-        UNIS("Uni", "€"),
-        /**
-         * Premium ProjectUniverse Currency
-         * <p>display name: Coin</p>
-         * <p>Symbol: 🪙</p>
-         * */
-        COINS("Coin", "$")
-        ;
-        /**
-         * Field for the Display Name of the Currency inGame
-         * */
-        private String displayName;
-        /**
-         * Field for the Symbol that used for the Currency inGame
-         * */
-        private String symbol;
-
-        Currency(String displayName, String symbol) {
-            this.displayName = displayName;
-            this.symbol = symbol;
-        }
-
-        public String getDisplayName() {
-            return displayName;
-        }
-
-        public String getSymbol() {
-            return symbol;
-        }
-    }
-
-    /**
-     * Represents the Result of an Transaction
-     * */
-    public enum TransactionResult {
-        /**
-         * The Transaction succeeded
-         * */
-        SUCCESS,
-        /**
-         * The Transaction is still pending
-         * */
-        PENDING,
-        /**
-         * The Transaction Failed
-         * */
-        FAILED,
-        /**
-         * The Transaction Failed because the Player has not enough money
-         * */
-        NOT_ENOUGH_MONEY
-        ;
     }
 
 }

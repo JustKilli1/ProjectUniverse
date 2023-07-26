@@ -1,7 +1,11 @@
 package net.projectuniverse.general.money_system;
 
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.command.builder.arguments.ArgumentType;
+import net.minestom.server.command.builder.arguments.ArgumentWord;
 import net.projectuniverse.general.Module;
+import net.projectuniverse.general.config.ConfigManager;
+import net.projectuniverse.general.config.ConfigValue;
 import net.projectuniverse.general.database.DatabaseTable;
 import net.projectuniverse.general.database.DatabaseCreator;
 import net.projectuniverse.general.logging.LogLevel;
@@ -12,6 +16,7 @@ import net.projectuniverse.general.money_system.database.DBALMoney;
 import net.projectuniverse.general.money_system.database.DBHMoney;
 import net.projectuniverse.general.money_system.listener.JoinListener;
 
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -21,6 +26,8 @@ import java.util.List;
 
 public class ModuleMoneySystem extends Module {
 
+    public static final ArgumentWord CURRENCY_ARG = ArgumentType.Word("Currency").from(Arrays.stream(UniCurrency.values()).map(Enum::toString).toArray(String[]::new));
+    private static final ConfigManager configManager = new ConfigManager("money_system");
     private final DBALMoney sql;
     private final DBHMoney dbHandler;
 
@@ -36,6 +43,7 @@ public class ModuleMoneySystem extends Module {
     @Override
     public void start() {
         moduleLogger.log(LogLevel.INFO, "Startup...");
+        createDefaultServerConfig();
         createDatabase();
         registerListener();
         registerCommands();
@@ -81,7 +89,7 @@ public class ModuleMoneySystem extends Module {
         MinecraftServer.getCommandManager().register(new CmdMoney(sql, dbHandler));
         MinecraftServer.getCommandManager().register(new CmdAddMoney(moduleLogger, sql, dbHandler));
         MinecraftServer.getCommandManager().register(new CmdRemoveMoney(moduleLogger, sql, dbHandler));
-        MinecraftServer.getCommandManager().register(new CmdBalanceTop(sql, dbHandler));
+        MinecraftServer.getCommandManager().register(new CmdBalanceTop(dbHandler));
     }
 
     /**
@@ -92,6 +100,22 @@ public class ModuleMoneySystem extends Module {
         moduleLogger.log(LogLevel.INFO, "Shutting down...");
         moduleLogger.log(LogLevel.INFO, "Shutting down successfully.");
     }
+
+    /**
+     * Creates the default Money System configuration.
+     * This method adds default configuration values for each {@link UniCurrency}.
+     * The configuration values specify the starting amount of each currency on the server.
+     */
+    private void createDefaultServerConfig() {
+        for(UniCurrency currency : UniCurrency.values()) {
+            configManager.addDefault(new ConfigValue(String.format("currency.%s.start_amount", currency.toString().toLowerCase()), "1000"));
+        }
+    }
+
+    public static ConfigManager getConfigManager() {
+        return configManager;
+    }
+
     /**
      * {@inheritDoc}
      */

@@ -4,11 +4,16 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.event.player.PlayerLoginEvent;
+import net.projectuniverse.base.Utils;
 import net.projectuniverse.general.logging.ILogger;
 import net.projectuniverse.general.logging.LogLevel;
+import net.projectuniverse.general.money_system.ModuleMoneySystem;
 import net.projectuniverse.general.money_system.PlayerPurse;
+import net.projectuniverse.general.money_system.UniCurrency;
 import net.projectuniverse.general.money_system.database.DBALMoney;
 import net.projectuniverse.general.money_system.database.DBHMoney;
+
+import java.util.Optional;
 
 
 /**
@@ -52,13 +57,18 @@ public class JoinListener {
         GlobalEventHandler globalEventHandler = MinecraftServer.getGlobalEventHandler();
         globalEventHandler.addListener(PlayerLoginEvent.class, event -> {
             final Player player = event.getPlayer();
-            if(dbHandler.getPlayerPurse(player, PlayerPurse.Currency.UNIS).isPresent()) return;
-            if(dbHandler.getPlayerPurse(player, PlayerPurse.Currency.COINS).isPresent()) return;
-            sql.addNewPlayerPurse(player, PlayerPurse.Currency.UNIS, 1000);
-            sql.addNewPlayerPurse(player, PlayerPurse.Currency.COINS, 100);
-            logger.log(LogLevel.INFO, "New Player Purse added for Player " + player.getUsername());
+
+            for(UniCurrency currency : UniCurrency.values()) {
+                Optional<PlayerPurse> targetPurseOpt = dbHandler.getPlayerPurse(player, currency);
+                if(targetPurseOpt.isPresent()) return;
+
+                Optional<Integer> startAmountOpt = Utils.convertToInt(ModuleMoneySystem.getConfigManager().getValue(String.format("currency.%s.start_amount", currency.toString().toLowerCase())));
+                if(startAmountOpt.isEmpty()) return;
+                int startAmount = startAmountOpt.get();
+
+                sql.addNewPlayerPurse(player, currency, startAmount);
+                logger.log(LogLevel.INFO, String.format("New %s Player Purse added for Player %s", currency.toString(), player.getUsername()));
+            }
         });
     }
-
-
 }

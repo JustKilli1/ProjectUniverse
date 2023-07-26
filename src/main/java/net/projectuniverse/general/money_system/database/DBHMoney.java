@@ -4,6 +4,7 @@ import net.minestom.server.entity.Player;
 import net.projectuniverse.general.database.DBHandler;
 import net.projectuniverse.general.logging.LogLevel;
 import net.projectuniverse.general.money_system.PlayerPurse;
+import net.projectuniverse.general.money_system.UniCurrency;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class DBHMoney extends DBHandler {
      * @param currency The currency of the purse to retrieve.
      * @return An Optional containing the PlayerPurse if it exists in the database, otherwise returns an empty Optional.
      */
-    public Optional<PlayerPurse> getPlayerPurse(Player player, PlayerPurse.Currency currency) {
+    public Optional<PlayerPurse> getPlayerPurse(Player player, UniCurrency currency) {
         try {
             ResultSet result = sql.getPlayerPurse(player, currency);
             if(result == null) return Optional.empty();
@@ -46,7 +47,7 @@ public class DBHMoney extends DBHandler {
      * @param limit    The maximum number of players to retrieve.
      * @return A list of PlayerPurse objects representing the richest players, or an empty list if no players are found.
      */
-    public List<PlayerPurse> getRichestPlayers(PlayerPurse.Currency currency, int limit) {
+    public List<PlayerPurse> getRichestPlayers(UniCurrency currency, int limit) {
         List<PlayerPurse> richestPlayers = new ArrayList<>();
         try {
             ResultSet result = sql.getRichestPlayers(currency, limit);

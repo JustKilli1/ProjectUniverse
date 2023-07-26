@@ -81,8 +81,8 @@ public class Server {
         createDatabase();
         startModules();
 
-        SERVER_LOGGER.log(LogLevel.INFO, "Bound IP-Address: " + ip);
-        SERVER_LOGGER.log(LogLevel.INFO, "Bound Port: " + port);
+        SERVER_LOGGER.log(LogLevel.INFO, String.format("Bound IP-Address: %s", ip));
+        SERVER_LOGGER.log(LogLevel.INFO, String.format("Bound Port: %d", port));
         SERVER_LOGGER.log(LogLevel.INFO, "Project Universe startup complete.");
         SERVER_LOGGER.log(LogLevel.INFO, "Hello c:");
 
