@@ -74,7 +74,7 @@ public class DBHPenaltySystem extends DBHandler {
             if(resultOpt.isEmpty()) return Optional.empty();
             return Optional.ofNullable(resultOpt.get().getString("Reason"));
         } catch(Exception ex) {
-            logger.log(LogLevel.ERROR, "Could not get Punishment Reson for Player " + player.getUsername(), ex);
+            logger.log(LogLevel.ERROR, "Could not get Punishment Reason for Player " + player.getUsername(), ex);
             return Optional.empty();
         }
     }

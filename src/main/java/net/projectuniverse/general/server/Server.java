@@ -22,9 +22,6 @@ import net.projectuniverse.general.logging.LogLevel;
 import net.projectuniverse.general.logging.loggers.LoggerBuilder;
 import net.projectuniverse.general.logging.output.TerminalPrinter;
 import net.projectuniverse.general.terminal.ServerTerminal;
-import net.projectuniverse.modules.tower_defence.commands.CmdLeave;
-import net.projectuniverse.modules.tower_defence.commands.CmdMap;
-import net.projectuniverse.modules.tower_defence.commands.CmdPlay;
 
 import java.util.List;
 
@@ -110,6 +107,7 @@ public class Server {
         // Set the ChunkGenerator
         spawnInstance.setGenerator(unit ->
                 unit.modifier().fillHeight(0, 40, Block.GRASS_BLOCK));
+        spawnInstance.saveChunksToStorage();
         SERVER_LOGGER.log(LogLevel.INFO, "Spawn instance created.");
     }
     private static void loadServerConfig() {
@@ -136,9 +134,6 @@ public class Server {
         MinecraftServer.getCommandManager().register(new CmdTeamChat());
         MinecraftServer.getCommandManager().register(new CmdGameMode());
         MinecraftServer.getCommandManager().register(new CmdTeleport());
-        MinecraftServer.getCommandManager().register(new CmdPlay());
-        MinecraftServer.getCommandManager().register(new CmdLeave());
-        MinecraftServer.getCommandManager().register(new CmdMap());
         MinecraftServer.getCommandManager().register(new CmdTest());
         MinecraftServer.getCommandManager().register(new CmdWarp());
         MinecraftServer.getCommandManager().register(new CmdPerformance());
