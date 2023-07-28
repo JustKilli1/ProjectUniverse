@@ -27,10 +27,6 @@ public class Cactus {
         this(instance, new HashMap<>(), cactusBaseBlock, cactusBasePos);
     }
 
-    public Cactus(InstanceContainer instance, Pos pos, Block block, Block cactusBaseBlock, Pos cactusBasePos) {
-        this(instance, Map.of(pos, block), cactusBaseBlock, cactusBasePos);
-    }
-
     public void addBlock(Pos pos, Block block) {
         if(block == Block.CACTUS) {
             cactusMap.put(pos, block);
