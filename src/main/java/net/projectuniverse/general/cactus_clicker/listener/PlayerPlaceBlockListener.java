@@ -19,24 +19,24 @@ public class PlayerPlaceBlockListener {
         globalEventHandler.addListener(PlayerBlockPlaceEvent.class, event -> {
             Instance instance = event.getInstance();
             Block targetBlock = event.getBlock();
-            if(targetBlock != Block.CACTUS) return;
-            //check if block is placed on sand or cactus
-            Block placedOn = instance.getBlock(event.getBlockPosition().add(0, -1, 0));
-            if(placedOn != Block.SAND && placedOn != Block.RED_SAND && placedOn != Block.CACTUS) {
-                event.setCancelled(true);
-                return;
-            }
-
-            //Check if surrounding blocks are air
-            Block blockAbove = instance.getBlock(event.getBlockPosition().add(0, 1, 0));
-            Block blockNorth = instance.getBlock(event.getBlockPosition().add(0, 0, 1));
-            Block blockEast = instance.getBlock(event.getBlockPosition().add(1, 0, 0));
-            Block blockSouth = instance.getBlock(event.getBlockPosition().add(0, 0, -1));
-            Block blockWest = instance.getBlock(event.getBlockPosition().add(-1, 0, 0));
-
-            if(blockAbove != Block.AIR || blockNorth != Block.AIR || blockEast != Block.AIR || blockSouth != Block.AIR || blockWest != Block.AIR) event.setCancelled(true);
-
+            if(targetBlock.equals(Block.CACTUS)) handleCactusPlace(instance, event);
         });
+    }
+
+    private void handleCactusPlace(Instance instance, PlayerBlockPlaceEvent event) {
+        //check if block is placed on sand or cactus
+        Block placedOn = instance.getBlock(event.getBlockPosition().add(0, -1, 0));
+        if(placedOn != Block.SAND && placedOn != Block.RED_SAND && placedOn != Block.CACTUS) {
+            event.setCancelled(true);
+            return;
+        }
+
+        //Check if surrounding blocks are air
+        Block blockAbove = instance.getBlock(event.getBlockPosition().add(0, 1, 0));Block blockNorth = instance.getBlock(event.getBlockPosition().add(0, 0, 1));
+        Block blockEast = instance.getBlock(event.getBlockPosition().add(1, 0, 0));
+        Block blockSouth = instance.getBlock(event.getBlockPosition().add(0, 0, -1));
+        Block blockWest = instance.getBlock(event.getBlockPosition().add(-1, 0, 0));
+        if(blockAbove != Block.AIR || blockNorth != Block.AIR || blockEast != Block.AIR || blockSouth != Block.AIR || blockWest != Block.AIR) event.setCancelled(true);
     }
 
 }
