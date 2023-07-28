@@ -29,7 +29,7 @@ public abstract class Module implements IReloadable{
      * @param description the description of the module
      * @param moduleLogger the logger for the module
      */
-    protected Module(String name, String description) {
+    public Module(String name, String description) {
         this.name = name;
         this.description = description;
         this.moduleLogger = new LoggerBuilder(this.name).addOutputPrinter(new TerminalPrinter()).build();
