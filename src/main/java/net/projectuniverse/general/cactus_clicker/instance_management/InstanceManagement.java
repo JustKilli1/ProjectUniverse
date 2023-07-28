@@ -35,6 +35,7 @@ public class InstanceManagement {
         if(!hasInstance(player)) return false;
         AnvilLoader loader = new AnvilLoader(buildSavePath(player));
         CactusClickerIsland island = getIsland(player);
+        if(island == null) return false;
         loader.saveChunks(island.instance().getChunks());
         return true;
     }

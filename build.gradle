@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'net.projectuniverse'
-version '0.9.16-dev'
+version '0.9.17-dev'
 
 repositories {
     mavenCentral()

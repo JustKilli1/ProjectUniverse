@@ -29,6 +29,7 @@ public class CmdPlay extends UniverseCommand {
 
            CactusClickerIsland island = InstanceManagement.getIsland(player);
            player.setInstance(island.instance());
+
         });
 
     }
