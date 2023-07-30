@@ -5,8 +5,14 @@ import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.minestom.server.entity.Player;
 import net.minestom.server.instance.AnvilLoader;
 import net.minestom.server.instance.InstanceContainer;
+import net.minestom.server.instance.block.BlockManager;
+import net.minestom.server.instance.block.rule.vanilla.AxisPlacementRule;
+import net.minestom.server.instance.block.rule.vanilla.RedstonePlacementRule;
+import net.minestom.server.timer.Scheduler;
+import net.minestom.server.timer.TaskSchedule;
 import net.projectuniverse.general.cactus_clicker.Cactus;
 import net.projectuniverse.general.cactus_clicker.instance_management.CactusCounter;
+import net.projectuniverse.general.cactus_clicker.instance_management.InstanceManagement;
 import net.projectuniverse.general.gui.inventories.TestInventory;
 import net.projectuniverse.general.instance.InstanceImporter;
 
@@ -48,15 +54,9 @@ public class CmdTest extends UniverseCommand{
         });
 
         addSyntax((sender, context) -> {
-           Player player = (Player) sender;/*
-
-            InstanceContainer saveInstance = instance.copy();
-*//*            return chunkLoader.saveChunks(getChunks());*//*
-            AnvilLoader loader = new AnvilLoader("instances/testlul");
-            loader.saveChunks(saveInstance.getChunks());
-            //saveInstance.saveChunksToStorage();*/
+           Player player = (Player) sender;
             CactusCounter counter = new CactusCounter();
-            List<Cactus> cacti = counter.count(instance2);
+            List<Cactus> cacti = counter.count(InstanceManagement.getIsland(player).getInstance());
             for(Cactus cactus : cacti) {
                 printCactus(cactus);
             }
@@ -66,6 +66,11 @@ public class CmdTest extends UniverseCommand{
                 printCactus(cactus);
             }
             System.out.println(cacti);
+/*            Scheduler scheduler = MinecraftServer.getSchedulerManager();
+            scheduler.submitTask(() -> {
+                System.out.println("Running directly and then every second!");
+                return TaskSchedule.seconds(1);
+            });*/
         }, testIntArg);
 
     }

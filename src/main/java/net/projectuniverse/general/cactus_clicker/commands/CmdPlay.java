@@ -1,9 +1,13 @@
 package net.projectuniverse.general.cactus_clicker.commands;
 
 import net.minestom.server.entity.Player;
+import net.projectuniverse.general.cactus_clicker.Cactus;
+import net.projectuniverse.general.cactus_clicker.instance_management.CactusCounter;
 import net.projectuniverse.general.cactus_clicker.instance_management.InstanceManagement;
 import net.projectuniverse.general.cactus_clicker.island.CactusClickerIsland;
 import net.projectuniverse.general.commands.UniverseCommand;
+
+import java.util.List;
 
 public class CmdPlay extends UniverseCommand {
 
@@ -28,8 +32,11 @@ public class CmdPlay extends UniverseCommand {
            }
 
            CactusClickerIsland island = InstanceManagement.getIsland(player);
-           player.setInstance(island.instance());
-
+           player.setInstance(island.getInstance()).thenRun(() -> {
+               List<Cactus> cactusList = new CactusCounter().count(island.getInstance());
+               InstanceManagement.addCactus(player, cactusList);
+               System.out.println("Cactus List: " + InstanceManagement.getIsland(player).getCactusList().size());
+           });
         });
 
     }

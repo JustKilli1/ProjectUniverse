@@ -31,6 +31,7 @@ public class ModuleCactusClicker extends Module {
         createDatabase();
         registerListener();
         registerCommands();
+        CactusHarvester.init();
         moduleLogger.log(LogLevel.INFO, "Started successfully.");
     }
 
