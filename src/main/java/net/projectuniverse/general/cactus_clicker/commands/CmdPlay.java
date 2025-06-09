@@ -21,7 +21,7 @@ public class CmdPlay extends UniverseCommand {
      */
     public CmdPlay() {
         super("play", "Teleports you to your Cactus Clicker Island", "play");
-
+        // review test
         addSyntax((sender, context) -> {
            if(!(sender instanceof Player player)) return;
 
